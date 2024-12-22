@@ -1,0 +1,15 @@
+{
+  "version": "v1",
+  "scripts": {
+    "build-installer": "bun build ./src/init.ts --compile --minify --outfile ./dist/make_emubox",
+    "build-main": "bun build ./src/main.ts --target=bun-linux-x64 --compile --minify --outfile dist/emubox",
+    "dev": "bun build-main && ./dist/emubox",
+    "dev-installer": "bun build-installer && ./dist/make_emubox"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^7.1.0",
+    "@types/bun": "^1.1.14",
+    "@types/node": "^22.10.2",
+    "chalk": "^5.3.0"
+  }
+}

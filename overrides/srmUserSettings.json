@@ -1,0 +1,10 @@
+{
+    "environmentVariables": {
+		"steamDirectory": "",
+		"userAccounts": [],
+		"romsDirectory": "ROMDIR",
+		"retroarchPath": "",
+		"raCoresDirectory": "",
+		"localImagesDirectory": ""
+	}
+}
