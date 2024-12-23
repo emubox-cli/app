@@ -23,9 +23,12 @@ jobs:
                 bun build-main
                 bun build-installer
 
-            - name: Upload Artifacts
-              uses: actions/upload-artifact@v4
-              with:
-                name: emubox
-                path: dist/
+            - name: Push to Dist
+              uses: s0/git-publish-subdir-action@develop
+              env:
+                REPO: self
+                BRANCH: dist
+                FOLDER: dist
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                MESSAGE: "{msg} `{sha}`"
          
