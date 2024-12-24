@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "lib": ["ESNext"],
+        "module": "ESNext",
+        "target": "ESNext",
+        "moduleDetection": "force",
+        "moduleResolution": "bundler",
+
+        "strict": true,
+        "skipLibCheck": true,
+        "noFallthroughCasesInSwitch": true,
+        "paths": {
+            "cmd/*": ["./src/cmd/*"],
+            "funcs/*": ["./src/funcs/*"],
+            "utils/*": ["./src/utils/*"]
+        }
+    }
+}
