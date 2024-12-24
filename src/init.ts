@@ -1,10 +1,10 @@
 import { $ } from "bun";
-import { input } from "@inquirer/prompts";
-import { configExists, dir, writeConfig } from "./utils/config";
+import input from "@inquirer/input";
+import { configExists, dir, writeConfig } from "utils/config";
 import chalk from "chalk";
 import { userInfo } from "os";
 import { exists } from "fs/promises";
-import { SUPPORTED_CONSOLES } from "./utils/apps";
+import { SUPPORTED_CONSOLES } from "utils/apps";
 
 if (userInfo().uid === 0) {
     console.log(chalk.yellow("Please don't run this as root."));
@@ -73,11 +73,12 @@ await $`
     distrobox enter emubox -- sudo locale-gen "$LANG" 
 
     # DEBUG FUNCTIONALITY: build binary and export it to user apps
-    # bun build ./src/main.ts --compile --outfile ./emubox
-    # cp ./emubox $HOME/.local/bin/emubox
+    # bun build-main
+    # cp ./dist/emubox $HOME/.local/bin/emubox
 
     # download binary, copy to .local/bin
-    # curl https://github.com/skullbite/emubox | bash 
+    curl -o $HOME/.local/bin/emubox https://emubox.wolves-are.gay/emubox
+    chmod +x $HOME/.local/bin/emubox
 `;
 
 console.log(chalk.green.bold("Emubox container successfully created!"));

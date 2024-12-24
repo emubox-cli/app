@@ -1,6 +1,6 @@
 import { $, file, write } from "bun";
 import { getAppFromShort } from "../utils/apps";
-import { dir, InstallationTypes, openConfig, writeConfig } from "../utils/config";
+import { dir, InstallationTypes, openConfig, writeConfig } from "utils/config";
 import chalk from "chalk";
 
 export default async function(app: string, installOpt: InstallationTypes) {
@@ -73,6 +73,6 @@ export default async function(app: string, installOpt: InstallationTypes) {
         writeConfig(config);
 
     } catch (e) {
-        console.error(chalk.red(`Failed to install ${emu.name}: ${e.message}`));
+        console.error(chalk.red(`Failed to install ${emu.name}: ${(e as Error).message}`));
     }
 }

@@ -1,8 +1,8 @@
 import { file, write } from "bun";
-import { homedir } from "os"
-import { join } from "path"
+import { homedir } from "os";
+import { join } from "path";
 
-export function dir(...path) {
+export function dir(...path: string[]) {
     return join(homedir(), ".emubox", ...path);
 }
 
