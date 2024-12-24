@@ -1,0 +1,6 @@
+#!/bin/bash
+
+curl -o /tmp/make_emubox https://emubox.wolves-are.gay/make_emubox
+chmod +x /tmp/make_emubox
+/tmp/make_emubox
+rm -f /tmp/make_emubox

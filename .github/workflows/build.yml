@@ -22,6 +22,11 @@ jobs:
                 bun i
                 bun build-main
                 bun build-installer
+            
+            - name: Copy Installer and README
+              run: |
+                cp install dist/install
+                cp README.md dist/README.md
 
             - name: Push to Dist
               uses: s0/git-publish-subdir-action@develop
@@ -30,5 +35,5 @@ jobs:
                 BRANCH: dist
                 FOLDER: dist
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                MESSAGE: "{msg} `{sha}`"
+                MESSAGE: "[`{sha}`] {msg}"
          
