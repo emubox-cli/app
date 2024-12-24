@@ -25,18 +25,13 @@ emubox: emubox [--help|-h] [COMMAND]
         update                    update emubox container
 `;
 
-let [ , , cmd, ...rest ] = process.argv;
+const [ , , cmd, ...rest ] = process.argv;
 
 if (!cmd || process.argv.length === 2) {
     console.log(HELP_MSG);
     process.exit();
 }
 
-// because running via distrobox causes the args to mash together
-if (cmd.split(" ").length) {
-    rest = cmd.split(" ");
-    cmd = rest.shift()!;
-}
 
 switch (cmd) {
     case "i":
@@ -54,9 +49,11 @@ switch (cmd) {
         remove(...rest);
         break;
     case "uninstall":
+        await doContainerCheck();
         uninstall();
         break;
     case "update":
+        await doContainerCheck();
         update();
         break;
     case "-v":
@@ -69,18 +66,12 @@ switch (cmd) {
         console.log(HELP_MSG);
 }
 
-// todo: find a different way to do this
-// decolors all text entering distrobox and breaks args
 async function doContainerCheck() {
-    const [ , , ...args ] = process.argv;
     if (!hostname().startsWith("emubox.")) {
         const boxList = await $`distrobox ls`.quiet().text();
         if (!boxList.includes("emubox")) {
             console.error("Emubox container wasn't found, please run the installer again.")
             process.exit();
         }
-        console.log("Entering emubox container...");
-        await $`distrobox enter emubox -- ./dist/emubox ${args.join(" ")}`;
-        process.exit();
     }
 }

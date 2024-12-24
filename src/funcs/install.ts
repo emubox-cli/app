@@ -2,6 +2,7 @@ import { $, file, write } from "bun";
 import { getAppFromShort } from "../utils/apps";
 import { dir, InstallationTypes, openConfig, writeConfig } from "utils/config";
 import chalk from "chalk";
+import containerPrefix from "utils/containerPrefix";
 
 export default async function(app: string, installOpt: InstallationTypes) {
     const config = await openConfig();
@@ -24,10 +25,10 @@ export default async function(app: string, installOpt: InstallationTypes) {
             case "aur":
                 // todo: fix exported app not launching in steam game mode
                 launchCode = `~/.local/bin/${emu.installOptions.aurBinAlt ?? emu.installOptions.aurBin}`;
-                await $`paru -S --noconfirm ${emu.installOptions.aur}`;
-                await $`distrobox-export -el "none" --app ${emu.installOptions.aurBin}`;
+                await $`${containerPrefix}paru -S --noconfirm ${emu.installOptions.aur}`;
+                await $`${containerPrefix}distrobox-export -el "none" --app ${emu.installOptions.aurBin}`;
                 await $`
-                    distrobox-export \
+                    ${containerPrefix}distrobox-export \
                         -el "none" \
                         --bin /usr/bin/${emu.installOptions.aurBinAlt ?? emu.installOptions.aurBin} \
                         --export-path $HOME/.local/bin

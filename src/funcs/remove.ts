@@ -1,6 +1,7 @@
 import { $ } from "bun";
 import { getAppFromShort } from "../utils/apps";
 import { openConfig, writeConfig } from "../utils/config";
+import containerPrefix from "utils/containerPrefix";
 
 export default async function(app: string) {
     const config = await openConfig();
@@ -22,12 +23,12 @@ export default async function(app: string) {
         switch (target.source) {
             case "aur":
                 await $`
-                    distrobox-export \
+                    ${containerPrefix}distrobox-export \
                         --bin /usr/bin/${emu.installOptions.aurBin} \
                         --export-path $HOME/.local/bin \
                         --delete
                 `.nothrow();
-                await $`paru -Rs --noconfirm ${emu.installOptions.aur}`;
+                await $`${containerPrefix}paru -Rs --noconfirm ${emu.installOptions.aur}`;
                 break;
             case "flatpak":
                 await $`distrobox-host-exec flatpak remove -u ${emu.installOptions.flatpak}`;
