@@ -27,6 +27,7 @@ jobs:
                 cp install dist/install
                 cp README.md dist/README.md
                 echo "emubox.wolves-are.gay" >> dist/CNAME
+                echo "${{ github.sha }}" >> dist/latest
 
             - name: Push to Dist
               uses: s0/git-publish-subdir-action@develop
