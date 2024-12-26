@@ -1,6 +1,5 @@
 import { $ } from "bun";
 import { hostname } from "os";
-import { version } from "../package.json";
 import install from "cmd/install";
 import ls from "cmd/ls";
 import remove from "cmd/remove";
@@ -65,7 +64,8 @@ switch (cmd) {
         break;
     case "-v":
     case "--version":
-        console.log(version);
+        // @ts-expect-error provided by build command
+        console.log(_SHA);
         break;
     case "-h":
     case "--help":
