@@ -1,10 +1,30 @@
 #!/bin/bash
 
-# stackoverflow teaching me things i didn't know
-# https://stackoverflow.com/a/14909927
-trap 'rm -f /tmp/make_emubox' 0
-trap 'exit $?' 1 2 3 15
+if [ "$EUID" == 0 ]
+    then echo "Please don't run this a root."
+    exit
+fi
 
-curl -o /tmp/make_emubox https://emubox.wolves-are.gay/make_emubox
-chmod +x /tmp/make_emubox
-/tmp/make_emubox
+mkdir $HOME/.emubox
+mkdir $HOME/.emubox/launchers
+# mkdir $HOME/.emubox/apps
+
+distrobox create \
+    -Y \
+    --no-entry \
+    --name emubox \
+    --unshare-netns \
+    --image ghcr.io/ublue-os/arch-distrobox:latest \
+    --nvidia
+
+distrobox enter emubox -- \
+    sudo pacman -Syu --noconfirm \
+        archlinux-keyring \
+        noto-fonts \
+        noto-fonts-cjk
+# distrobox enter emubox -- sudo locale-gen "$LANG" 
+
+echo "Downloading emubox package manager..."
+curl -o $HOME/.local/bin/emubox https://emubox.wolves-are.gay/emubox
+chmod +x $HOME/.local/bin/emubox
+echo "Emubox installation complete! Run 'emubox init' to get started"

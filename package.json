@@ -1,10 +1,8 @@
 {
   "version": "v1",
   "scripts": {
-    "build-installer": "bun build ./src/init.ts --target=bun-linux-x64 --compile --minify --outfile dist/make_emubox",
     "build-main": "bun build ./src/main.ts --target=bun-linux-x64 --compile --minify --outfile dist/emubox",
-    "dev": "bun build-main && ./dist/emubox",
-    "dev-installer": "bun build-installer && ./dist/make_emubox"
+    "dev": "bun build-main && ./dist/emubox"
   },
   "dependencies": {
     "@inquirer/confirm": "^5.1.1",
