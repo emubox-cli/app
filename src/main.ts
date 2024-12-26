@@ -26,7 +26,7 @@ emubox: emubox [--help|-h] [COMMAND]
         uninstall                 remove emubox and the distrobox container
         install, i <...EMU_IDS>   install provided emulators
         remove, rm <...EMU_IDS>   remove provided emulators
-        update                    update emubox container
+        update                    update emubox container and package manager
 `;
 
 const [ , , cmd, ...rest ] = process.argv;
@@ -78,7 +78,7 @@ async function doContainerCheck() {
         console.log(chalk.yellow("Please run 'emubox init' first."));
         process.exit();
     }
-    
+
     if (!hostname().startsWith("emubox.")) {
         const boxList = await $`distrobox ls`.quiet().text();
         if (!boxList.includes("emubox")) {
