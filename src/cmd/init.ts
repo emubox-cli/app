@@ -1,11 +1,16 @@
 import { $ } from "bun";
-import { dir, writeConfig } from "utils/config";
+import { configExists, dir, writeConfig } from "utils/config";
 import input from "@inquirer/input";
 
 import { SUPPORTED_CONSOLES } from "utils/apps";
 import { exists } from "fs/promises";
 
 export default async function() {
+    if (await configExists()) {
+        console.log("Already initialized");
+        return;
+    }
+
     const saveDir = await input({
         message: "Please provide a save directory.",
         default: dir("saves"),

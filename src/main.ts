@@ -6,6 +6,9 @@ import ls from "cmd/ls";
 import remove from "cmd/remove";
 import uninstall from "cmd/uninstall";
 import update from "cmd/update";
+import init from "cmd/init";
+import { configExists } from "utils/config";
+import chalk from "chalk";
 
 const HELP_MSG = 
 `
@@ -18,6 +21,7 @@ emubox: emubox [--help|-h] [COMMAND]
 
 
     Commands:
+        init                      initialize emubox directories and config
         list, ls                  list all availible emulators in emubox 
         uninstall                 remove emubox and the distrobox container
         install, i <...EMU_IDS>   install provided emulators
@@ -34,6 +38,9 @@ if (!cmd || process.argv.length === 2) {
 
 
 switch (cmd) {
+    case "init":
+        init();
+        break;
     case "i":
     case "install":
         await doContainerCheck();
@@ -67,6 +74,11 @@ switch (cmd) {
 }
 
 async function doContainerCheck() {
+    if (!await configExists()) {
+        console.log(chalk.yellow("Please run 'emubox init' first."));
+        process.exit();
+    }
+    
     if (!hostname().startsWith("emubox.")) {
         const boxList = await $`distrobox ls`.quiet().text();
         if (!boxList.includes("emubox")) {
