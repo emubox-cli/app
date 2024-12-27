@@ -5,6 +5,7 @@ if [ "$EUID" == 0 ]
     exit
 fi
 
+mkdir $HOME/.local/bin > /dev/null 2>&1
 mkdir $HOME/.emubox > /dev/null 2>&1
 mkdir $HOME/.emubox/launchers > /dev/null 2>&1
 # mkdir $HOME/.emubox/apps
