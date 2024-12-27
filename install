@@ -5,12 +5,13 @@ if [ "$EUID" == 0 ]
     exit
 fi
 
-mkdir $HOME/.emubox
-mkdir $HOME/.emubox/launchers
+mkdir $HOME/.emubox > /dev/null
+mkdir $HOME/.emubox/launchers > /dev/null
 # mkdir $HOME/.emubox/apps
 
 distrobox create \
     -Y \
+    -H $HOME/.emubox/container \
     --no-entry \
     --name emubox \
     --unshare-netns \
