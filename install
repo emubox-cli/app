@@ -5,25 +5,23 @@ if [ "$EUID" == 0 ]
     exit
 fi
 
-mkdir $HOME/.emubox > /dev/null
-mkdir $HOME/.emubox/launchers > /dev/null
+mkdir $HOME/.emubox > /dev/null 2>&1
+mkdir $HOME/.emubox/launchers > /dev/null 2>&1
 # mkdir $HOME/.emubox/apps
 
 distrobox create \
     -Y \
-    -H $HOME/.emubox/container \
     --no-entry \
     --name emubox \
-    --unshare-netns \
-    --image ghcr.io/ublue-os/arch-distrobox:latest \
-    --nvidia
+    --image ghcr.io/ublue-os/arch-distrobox:latest 
 
 distrobox enter emubox -- \
     sudo pacman -Syu --noconfirm \
         archlinux-keyring \
         noto-fonts \
         noto-fonts-cjk
-# distrobox enter emubox -- sudo locale-gen "$LANG" 
+distrobox enter emubox -- \
+    sudo locale-gen "$LANG" 
 
 echo "Downloading emubox package manager..."
 curl -o $HOME/.local/bin/emubox https://emubox.wolves-are.gay/emubox
