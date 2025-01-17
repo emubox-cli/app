@@ -5,10 +5,7 @@ A distrobox container with a package manager for emulators, inspired by [Emudeck
 ### Installation
 Requires distrobox
 ```
-curl -o emubox_install https://emubox.wolves-are.gay/install
-chmod +x emubox_install
-./emubox_install
-rm emubox_install
+sh -c "$(curl -sSL https://emubox.wolves-are.gay/install)"
 ```
 
 
