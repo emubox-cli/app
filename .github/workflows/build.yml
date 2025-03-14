@@ -25,6 +25,7 @@ jobs:
             - name: Copy Installer and README
               run: |
                 cp install dist/install
+                cp box-init dist/box-init
                 cp README.md dist/README.md
                 echo "emubox.wolves-are.gay" >> dist/CNAME
                 echo "${{ github.sha }}" >> dist/latest

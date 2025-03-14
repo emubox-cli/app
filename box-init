@@ -1,0 +1,10 @@
+#!/bin/bash
+
+sudo pacman -Syu --noconfirm \
+    archlinux-keyring \
+    noto-fonts \
+    noto-fonts-cjk
+
+sudo locale-gen "$LANG"
+mkdir -p ~/.local/share/applications
+mkdir ~/.local/share/bin
