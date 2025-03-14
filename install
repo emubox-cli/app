@@ -11,7 +11,7 @@ mkdir -p $HOME/.emubox/launchers
 distrobox create emubox \
     -Y \
     --no-entry \
-    --home $HOME/.emubox
+    --home $HOME/.emubox \
     --image ghcr.io/ublue-os/arch-distrobox:latest 
 
 distrobox enter emubox -- sh -c "$(curl -sSL https://emubox.wolves-are.gay/box-init)"
