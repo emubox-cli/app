@@ -6,5 +6,4 @@ sudo pacman -Syu --noconfirm \
     noto-fonts-cjk
 
 sudo locale-gen "$LANG"
-mkdir -p ~/.local/share/applications
-mkdir ~/.local/share/bin
+mkdir -p ~/.local/share/bin
