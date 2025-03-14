@@ -11,5 +11,3 @@ sh -c "$(curl -sSL https://emubox.wolves-are.gay/install)"
 
 ### Development
 `bun dev` build and run the emubox binary
-
-`bun dev-installer` build and run emubox installer
