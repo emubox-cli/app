@@ -6,6 +6,7 @@ if [ "$EUID" == 0 ]
 fi
 
 mkdir -p $HOME/.emubox/launchers
+mkdir -p $HOME/.local/bin
 # mkdir $HOME/.emubox/apps
 
 distrobox create emubox \
