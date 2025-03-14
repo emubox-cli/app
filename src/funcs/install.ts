@@ -30,9 +30,8 @@ export default async function(app: string, installOpt: InstallationTypes) {
                 await $`
                     ${containerPrefix}distrobox-export \
                         -el "none" \
-                        --bin /usr/bin/${emu.installOptions.aurBinAlt ?? emu.installOptions.aurBin} \
-                        --export-path $HOME/.local/bin
-                `;
+                        --bin /usr/bin/${emu.installOptions.aurBinAlt ?? emu.installOptions.aurBin}
+		`;
                 break;
             /*case "flatpak":
                 launchCode = `flatpak run -u ${emu.installOptions.flatpak}`;
