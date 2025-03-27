@@ -233,6 +233,24 @@ const apps: BoxApp[] = [
             github: "greemdev/ryujinx",
             githubRe: /ryujinx-.*-x64\.AppImage/
         }
+    },
+    {
+        name: "Citron",
+        short: "citron",
+        consoles: ["switch"],
+        installOptions: {
+            aur: "citron-bin",
+            aurBin: "citron"
+        }
+    },
+    {
+        name: "Azahar",
+        short: "azahar",
+        consoles: ["3ds"],
+        installOptions: {
+            aur: "azahar-git",
+            aurBin: "azahar"
+        }
     }
 ];
 
