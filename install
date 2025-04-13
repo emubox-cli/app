@@ -20,6 +20,7 @@ distrobox create emubox \
 distrobox enter emubox -- sh -c "$(curl -sSL https://emubox.wolves-are.gay/box-init)"
 
 echo "Downloading emubox package manager..."
-#curl -o $HOME/.local/bin/emubox https://emubox.wolves-are.gay/emubox
-#chmod +x $HOME/.local/bin/emubox
-echo "Emubox installation complete! Run 'emubox init' to get started"
+curl -o $HOME/.local/bin/emubox https://emubox.wolves-are.gay/emubox
+chmod +x $HOME/.local/bin/emubox
+# echo "Emubox installation complete! Run 'emubox init' to get started"
+$HOME/.local/bin/emubox init
