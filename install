@@ -1,13 +1,15 @@
 #!/bin/bash
 
 if [ "$EUID" == 0 ]
-    then echo "Please don't run this a root."
+    then echo "Please don't run this as root."
     exit
 fi
 
 mkdir -p $HOME/.emubox/launchers
-mkdir -p $HOME/.local/bin
-# mkdir $HOME/.emubox/apps
+mkdir -p $HOME/.local/applications
+mkdir -p $HOME/.local/share/icons/emubox
+mkdir $HOME/.local/bin
+mkdir $HOME/.emubox/apps
 
 distrobox create emubox \
     -Y \
@@ -18,6 +20,6 @@ distrobox create emubox \
 distrobox enter emubox -- sh -c "$(curl -sSL https://emubox.wolves-are.gay/box-init)"
 
 echo "Downloading emubox package manager..."
-curl -o $HOME/.local/bin/emubox https://emubox.wolves-are.gay/emubox
-chmod +x $HOME/.local/bin/emubox
+#curl -o $HOME/.local/bin/emubox https://emubox.wolves-are.gay/emubox
+#chmod +x $HOME/.local/bin/emubox
 echo "Emubox installation complete! Run 'emubox init' to get started"
