@@ -44,8 +44,10 @@ export interface BoxApp {
         aurBin?: string;
         // because retroarch had to be different and i'm not retyping all this rn
         aurBinAlt?: string;
-        github?: string;
-        githubRe?: RegExp;
+        customGit?: string;
+        gitRepo?: string;
+        gitRe?: RegExp;
+        unzipTarget?: string;
         libretroCore?: string;
 
     };
@@ -81,7 +83,9 @@ const apps: BoxApp[] = [
             flatpak: "org.ppsspp.PPSSPP",
             aur: "ppsspp-git",
             aurBin: "PPSSPPSDL",
-            libretroCore: "ppsspp"
+            libretroCore: "ppsspp",
+            gitRepo: "pkgforge-dev/PPSSPP-AppImage",
+            gitRe: /ppsspp-.*-anylinux-x86_64\.AppImage/
         }
     },
     {
@@ -92,8 +96,8 @@ const apps: BoxApp[] = [
             flatpak: "org.duckstation.DuckStation",
             aur: "duckstation-git",
             aurBin: "duckstation",
-            github: "stenzek/duckstation",
-            githubRe: /DuckStation-x64\.AppImage/
+            gitRepo: "stenzek/duckstation",
+            gitRe: /DuckStation-x64\.AppImage/
         }
     },
     {
@@ -120,8 +124,8 @@ const apps: BoxApp[] = [
             flatpak: "net.pcsx2.PCSX2",
             aur: "pcsx2-git",
             aurBin: "PCSX2",
-            github: "pcsx2/pcsx2",
-            githubRe: /pcsx2-v.*-linux-appimage-x64-Qt\.AppImage/,
+            gitRepo: "pcsx2/pcsx2",
+            gitRe: /pcsx2-v.*-linux-appimage-x64-Qt\.AppImage/,
             libretroCore: "pcsx2"
         }
     },
@@ -132,9 +136,11 @@ const apps: BoxApp[] = [
         installOptions: {
             flatpak: "net.rpcs3.RPCS3",
             aur: "rpcs3-git",
-            aurBin: "rpcs3"
+            aurBin: "rpcs3",
+            gitRepo: "RPCS3/rpcs3-binaries-linux",
+            gitRe: /rpcs3-v.*-.*-.*_linux64.AppImage/
         }
-    },
+    }, 
     {
         name: "Snes9x",
         short: "snes9x",
@@ -144,7 +150,9 @@ const apps: BoxApp[] = [
             flatpakOverrideFs: true,
             aur: "snes9x-gtk-git",
             aurBin: "snes9x-gtk",
-            libretroCore: "snes9x"
+            libretroCore: "snes9x",
+            gitRepo: "snes9xgit/snes9x",
+            gitRe: /Snes9x-*.-x86_64\.AppImage/
         }
     },
     {
@@ -155,8 +163,8 @@ const apps: BoxApp[] = [
             flatpak: "io.mgba.mGBA",
             aur: "mgba-qt-git",
             aurBin: "mgba-qt",
-            github: "mgba-emu/mgba",
-            githubRe: /mGBA-.*-appimage-x64\.appimage/,
+            gitRepo: "mgba-emu/mgba",
+            gitRe: /mGBA-.*-appimage-x64\.appimage/,
             libretroCore: "mgba"
         }
     },
@@ -168,8 +176,8 @@ const apps: BoxApp[] = [
             flatpak: "com.github.Rosalie241.RMG",
             aur: "rmg-git",
             aurBin: "RMG",
-            github: "rosalie241/rmg",
-            githubRe: /RMG-Portable-Linux64-v.*\.AppImage/
+            gitRepo: "rosalie241/rmg",
+            gitRe: /RMG-Portable-Linux64-v.*\.AppImage/
         }
     },
     {
@@ -188,9 +196,9 @@ const apps: BoxApp[] = [
             flatpak: "net.kuribo64.melonDS",
             aur: "melonds-git",
             aurBin: "melonDS",
-            // they do zips for linux, i'll figure that out later
-            /*github: "melonds-emu/melonds",
-            githubRe: /  /,*/
+            gitRepo: "melonds-emu/melonds",
+            gitRe: /melonDS-appimage-x86_64.zip/,
+            unzipTarget: "melonDS-x86_64.AppImage",
             libretroCore: "melonds"
         }
     },
@@ -202,7 +210,9 @@ const apps: BoxApp[] = [
             flatpak: "org.DolphinEmu.dolphin-emu",
             aur: "dolphin-emu-git",
             aurBin: "dolphin-emu",
-            libretroCore: "dolphin"
+            libretroCore: "dolphin",
+            gitRepo: "pkgforge-dev/Dolphin-emu-AppImage",
+            gitRe: /Dolphin_Emulator-.*-.*-anylinux.squashfs-x86_64.AppImage/
         }
     },
     {
@@ -211,7 +221,9 @@ const apps: BoxApp[] = [
         consoles: ["wiiu"],
         installOptions: {
             aur: "cemu-git",
-            aurBin: "Cemu"
+            aurBin: "Cemu",
+            gitRepo: "cemu-project/Cemu",
+            gitRe: /Cemu-.*-x86_64.AppImage/
         }
     },
     {
@@ -230,8 +242,8 @@ const apps: BoxApp[] = [
         installOptions: {
             aur: "ryujinx-git",
             aurBin: "ryujinx",
-            github: "greemdev/ryujinx",
-            githubRe: /ryujinx-.*-x64\.AppImage/
+            gitRepo: "Ryubing/Stable-Releases",
+            gitRe: /ryujinx-.*-x64\.AppImage/
         }
     },
     {
@@ -240,7 +252,9 @@ const apps: BoxApp[] = [
         consoles: ["switch"],
         installOptions: {
             aur: "citron-bin",
-            aurBin: "citron"
+            aurBin: "citron",
+            gitRepo: "pkgforge-dev/Citron-AppImage",
+            gitRe: /Citron-v.*-anylinux-x86_64_v3\.AppImage/
         }
     },
     {

@@ -2,28 +2,29 @@ import install from "../funcs/install";
 import { InstallationTypes } from "../utils/config";
 
 const HELP_MSG = `
-emubox install: emubox install <...EMULATOR_IDS>
+emubox install: emubox install [--appimage] <...EMULATOR_IDS>
     Install emulators/utilites from "emubox list" in your container.
 
     Apps, as well as their binaries will be exported to the host.
+
+    Options:
+        --appimage        Install the appimage variant of targeted apps
 `;
 export default async function(...toInstall: string[]) {
+    let method: InstallationTypes = "aur";
+    const useAppimage = toInstall.findIndex(f => f === "--appimage");
+
+    if (useAppimage !== -1) {
+        method = "github"
+        toInstall.splice(useAppimage, 1);
+    }
+
     if (!toInstall.length) {
         console.log(HELP_MSG);
         return;
     }
-    const method: InstallationTypes = "aur";
-    /*const flatpak = toInstall.indexOf("--flatpak");
-    if (flatpak !== -1) {
-        method = "flatpak";
-        
-        toInstall.splice(
-            flatpak,
-            1
-        );
-    }
 
-    const raCore = (toInstall.indexOf("--core") ?? toInstall.indexOf("-c"));
+    /*const raCore = (toInstall.indexOf("--core") ?? toInstall.indexOf("-c"));
     if (raCore != -1) {
         const config = await openConfig();
         if (!config.installed.find(d => d.short === "retroarch")) {

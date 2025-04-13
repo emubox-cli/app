@@ -3,6 +3,7 @@ import containerPrefix from "utils/containerPrefix";
 
 export default async function() {
     await $`${containerPrefix} paru -Syu`;
+    // todo: update appimages
     const latest = (await $`curl https://emubox.wolves-are.gay/latest`.text()).replace("\n", "");
 
     // @ts-expect-error defined in build

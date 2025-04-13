@@ -3,7 +3,8 @@
 sudo pacman -Syu --noconfirm \
     archlinux-keyring \
     noto-fonts \
-    noto-fonts-cjk
+    noto-fonts-cjk \
+    fuse2
 
 sudo locale-gen "$LANG"
 mkdir -p ~/.local/share/bin
