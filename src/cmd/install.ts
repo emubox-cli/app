@@ -15,7 +15,7 @@ export default async function(...toInstall: string[]) {
     const useAppimage = toInstall.findIndex(f => f === "--appimage");
 
     if (useAppimage !== -1) {
-        method = "github"
+        method = "github";
         toInstall.splice(useAppimage, 1);
     }
 

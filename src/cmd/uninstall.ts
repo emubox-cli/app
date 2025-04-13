@@ -2,6 +2,7 @@ import confirm from "@inquirer/confirm";
 import { openConfig, writeConfig } from "../utils/config";
 import chalk from "chalk";
 import { $ } from "bun";
+import remove from "funcs/remove";
 
 const CONFIRMATION_MSG = [
     "Are you sure you want to uninstall emubox?",
@@ -29,7 +30,12 @@ export default async function() {
         await $`rm $HOME/.emubox/config.json`;
     else {
         const config = await openConfig();
+        for (const i of config.installed)
+            if (i.source === "github") 
+                remove(i.short)
+        
         config.installed = [];
+
     
         writeConfig(config);
     }
@@ -37,7 +43,7 @@ export default async function() {
     await $`
         distrobox rm emubox -Y
 
-        rm ~/.local/bin/emubox
+        rm $HOME/.local/bin/emubox
     `.nothrow();
 
     console.log(chalk.bold("Emubox has been removed from your system."));

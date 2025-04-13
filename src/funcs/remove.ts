@@ -34,15 +34,14 @@ export default async function(app: string) {
             await $`flatpak remove -u ${emu.installOptions.flatpak}`;
             break;
         case "github":
-            console.log("Removing executable...")
+            console.log("Removing executable...");
             await $`rm $HOME/.emubox/apps/${target.file!}`;
             await $`rm $HOME/.emubox/launchers/${target.short}.sh`;
-            console.log("Removing icon and desktop files...")
+            console.log("Removing icon and desktop files...");
             await $`rm $HOME/.local/share/applications/${target.short}.desktop`;
             await $`rm $HOME/.local/share/icons/${target.short}.png`;
-            
             break;
-            
+    
     }
 
     config.installed.splice(

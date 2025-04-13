@@ -56,7 +56,7 @@ export default async function(app: string, installOpt: InstallationTypes) {
                 const releases = await (await fetch(`https://api.github.com/repos/${emu.installOptions.gitRepo}/releases`) as any).json();
                 let latest = releases[0];
                 if (latest.prerelease) 
-                    latest = releases[1]
+                    latest = releases[1];
                 const targetAsset = latest.assets.find((d: { name: string }) => d.name.match(emu.installOptions.gitRe!));
                 if (!targetAsset) 
                     throw new Error("No asset found");
