@@ -47,6 +47,7 @@ export interface BoxApp {
         customGit?: string;
         gitRepo?: string;
         gitRe?: string;
+        unzipSubdir?: string;
         unzipTarget?: string;
         libretroCore?: string;
 

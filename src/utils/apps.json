@@ -207,7 +207,11 @@
         "consoles": ["3ds"],
         "installOptions": {
             "aur": "azahar-git",
-            "aurBin": "azahar"
+            "aurBin": "azahar",
+            "gitRepo": "azahar-emu/azahar",
+            "gitRe": "azahar-.*-linux-appimage.tar.gz",
+            "unzipSubdir": "azahar-.*-linux-appimage",
+            "unzipTarget": "azahar.AppImage"
         }
     }
 ]

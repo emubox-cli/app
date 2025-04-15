@@ -6,6 +6,7 @@ import containerPrefix from "utils/containerPrefix";
 import { homedir, platform } from "os";
 import makeDesktopFile from "utils/makeDesktopFile";
 import { join } from "path";
+import { readdir } from "fs/promises";
 
 export default async function(app: string, installOpt: InstallationTypes) {
     const config = await openConfig();
@@ -54,11 +55,26 @@ export default async function(app: string, installOpt: InstallationTypes) {
                     throw new Error("No asset found");
 
                 console.log(`Downloading ${targetAsset.name}...`);
-                if (targetAsset.name.endsWith(".zip")) {
+                if (emu.installOptions.unzipTarget) {
                     await $`curl -OL ${targetAsset.browser_download_url}`.cwd("/tmp");
                     console.log(`Unzipping ${targetAsset.name}...`);
-                    await $`unzip -q ${targetAsset.name} -d ${emu.id}`.quiet().cwd("/tmp");
-                    await $`cp ${emu.id}/${emu.installOptions.unzipTarget} $HOME/.emubox/apps/${emu.installOptions.unzipTarget}`.cwd("/tmp");
+                    if (targetAsset.name.endsWith(".tar.gz"))
+                        await $`
+                            mkdir ${emu.id}
+                            tar -xvzf ${targetAsset.name} -C ${emu.id}
+                        
+                        `.quiet().cwd("/tmp");
+                    else 
+                        await $`${containerPrefix}unzip -q ${targetAsset.name} -d ${emu.id}`.quiet().cwd("/tmp");
+                    let subDir = null;
+                    if (emu.installOptions.unzipSubdir) {
+                        const dir = (await readdir(join("/", "tmp", emu.id))).find(d => d.match(emu.installOptions.unzipSubdir!));
+                        if (!dir)
+                            throw new Error("Subdirectory specified but not found.");
+
+                        subDir = dir + "/";
+                    }
+                    await $`cp ${emu.id}/${subDir}${emu.installOptions.unzipTarget} $HOME/.emubox/apps/${emu.installOptions.unzipTarget}`.cwd("/tmp");
                     targetAsset.name = emu.installOptions.unzipTarget;
                 }
                 else {
