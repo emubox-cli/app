@@ -13,7 +13,7 @@ export interface Config {
     romDir: string;
     coreDir: string;
     installed: {
-        short: string;
+        id: string;
         source: InstallationTypes;
         file?: string
     }[];
