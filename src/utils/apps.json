@@ -96,7 +96,7 @@
             "aurBin": "snes9x-gtk",
             "libretroCore": "snes9x",
             "gitRepo": "snes9xgit/snes9x",
-            "gitRe": "Snes9x-*.-x86_64.AppImage"
+            "gitRe": "Snes9x-.*-x86_64.AppImage"
         }
     },
     {
