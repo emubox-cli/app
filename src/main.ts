@@ -6,13 +6,14 @@ import remove from "cmd/remove";
 import uninstall from "cmd/uninstall";
 import update from "cmd/update";
 import init from "cmd/init";
+import run from "cmd/run";
 import { configExists } from "utils/config";
 import chalk from "chalk";
 
 const HELP_MSG = 
 `
 emubox: emubox [--help|-h] [COMMAND]
-    Manage emulators applications via emubox.
+    Manage emulator applications via emubox.
 
     Options:
         -h, --help                show this help text and exit
@@ -26,6 +27,7 @@ emubox: emubox [--help|-h] [COMMAND]
         install, i <...EMU_IDS>   install provided emulators
         remove, rm <...EMU_IDS>   remove provided emulators
         update                    update emubox container and package manager
+        run                       
 `;
 
 const [ , , cmd, ...rest ] = process.argv;
@@ -34,6 +36,11 @@ if (!cmd || process.argv.length === 2) {
     console.log(HELP_MSG);
     process.exit();
 }
+
+const debug = rest.indexOf("--debug");
+export const debugMode = debug !== -1;
+if (debugMode)
+    rest.splice(debug, 1);
 
 
 switch (cmd) {
@@ -62,6 +69,10 @@ switch (cmd) {
         await doContainerCheck();
         update();
         break;
+    case "run":
+        await doContainerCheck();
+        run(...rest);
+        break;
     case "-v":
     case "--version":
         // @ts-expect-error provided by build command
@@ -76,14 +87,14 @@ switch (cmd) {
 async function doContainerCheck() {
     if (!await configExists()) {
         console.log(chalk.yellow("Please run 'emubox init' first."));
-        process.exit();
+        process.exit(1);
     }
 
     if (!hostname().startsWith("emubox.")) {
         const boxList = await $`distrobox ls`.quiet().text();
         if (!boxList.includes("emubox")) {
             console.error("Emubox container wasn't found, please run the installer again.")
-            process.exit();
+            process.exit(1);
         }
     }
 }
