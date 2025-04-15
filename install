@@ -1,26 +1,38 @@
 #!/bin/bash
 
-if [ "$EUID" == 0 ]
-    then echo "Please don't run this as root."
+debug=0
+while getopts ":debug" arg; do
+    case $arg in
+        debug) debug=1
+    esac
+done
+
+if [ "$EUID" == 0 ]; then 
+    echo "Please don't run this as root."
     exit
 fi
 
-mkdir -p $HOME/.emubox/launchers
+mkdir -p $HOME/.emubox/apps
 mkdir -p $HOME/.local/applications
 mkdir -p $HOME/.local/share/icons/emubox
-mkdir $HOME/.local/bin
-mkdir $HOME/.emubox/apps
+mkdir -p $HOME/.local/bin
 
 distrobox create emubox \
     -Y \
     --no-entry \
     --home $HOME/.emubox \
-    --image ghcr.io/ublue-os/arch-distrobox:latest 
+    --image ghcr.io/ublue-os/arch-distrobox:latest \
+    --additional-packages "archlinux-keyring noto-fonts noto-fonts-cjk fuse2" \
+    --init-hooks "sudo locale-gen \"$LANG\""
 
-distrobox enter emubox -- sh -c "$(curl -sSL https://emubox.wolves-are.gay/box-init)"
 
-echo "Downloading emubox package manager..."
-curl -o $HOME/.local/bin/emubox https://emubox.wolves-are.gay/emubox
-chmod +x $HOME/.local/bin/emubox
-# echo "Emubox installation complete! Run 'emubox init' to get started"
-$HOME/.local/bin/emubox init
+distrobox enter emubox -- echo "Box initialized!"
+
+if [ $debug == 0 ]; then
+    echo "Downloading emubox package manager..."
+    curl -o $HOME/.local/bin/emubox https://emubox.wolves-are.gay/emubox
+    chmod +x $HOME/.local/bin/emubox
+    $HOME/.local/bin/emubox init
+else
+    echo "Skipping binary install..."
+fi
