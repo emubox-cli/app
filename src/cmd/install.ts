@@ -12,11 +12,17 @@ emubox install: emubox install [--appimage] <...EMULATOR_IDS>
 `;
 export default async function(...toInstall: string[]) {
     let method: InstallationTypes = "aur";
-    const useAppimage = toInstall.findIndex(f => f === "--appimage");
+    const useAppimage = toInstall.indexOf("--appimage");
+    const useFlatpak = toInstall.indexOf("--flatpak");
 
     if (useAppimage !== -1) {
         method = "github";
         toInstall.splice(useAppimage, 1);
+    }
+
+    if (useFlatpak !== -1) {
+        method = "flatpak";
+        toInstall.splice(useFlatpak, 1);
     }
 
     if (!toInstall.length) {

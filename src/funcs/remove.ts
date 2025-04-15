@@ -1,12 +1,12 @@
 import { $ } from "bun";
-import { getAppFromShort } from "../utils/apps";
+import { getAppFromId } from "../utils/apps";
 import { openConfig, writeConfig } from "../utils/config";
 import containerPrefix from "utils/containerPrefix";
 
 export default async function(app: string) {
     const config = await openConfig();
-    const target = config.installed.find(d => d.short === app);
-    const emu = getAppFromShort(app);
+    const target = config.installed.find(d => d.id === app);
+    const emu = getAppFromId(app);
     
     if (!emu) {
         console.error(`'${app}' not found`);
@@ -17,8 +17,6 @@ export default async function(app: string) {
         console.error(`'${app}' isn't installed`);
         return;
     }
-    
-    await $`rm $HOME/.emubox/launchers/${target.short}.sh`.nothrow();
     
     switch (target.source) {
         case "aur":
@@ -31,15 +29,14 @@ export default async function(app: string) {
             await $`${containerPrefix}paru -Rs --noconfirm ${emu.installOptions.aur}`;
             break;
         case "flatpak":
-            await $`flatpak remove -u ${emu.installOptions.flatpak}`;
+            await $`flatpak remove --system -y ${emu.installOptions.flatpak}`;
             break;
         case "github":
             console.log("Removing executable...");
             await $`rm $HOME/.emubox/apps/${target.file!}`;
-            await $`rm $HOME/.emubox/launchers/${target.short}.sh`;
             console.log("Removing icon and desktop files...");
-            await $`rm $HOME/.local/share/applications/${target.short}.desktop`;
-            await $`rm $HOME/.local/share/icons/${target.short}.png`;
+            await $`rm $HOME/.local/share/applications/${target.id}.desktop`;
+            await $`rm $HOME/.local/share/icons/emubox/${target.id}.png`;
             break;
     
     }
@@ -52,5 +49,5 @@ export default async function(app: string) {
     
     writeConfig(config);
 
-    console.log(`'${target.short}' has been removed.`);
+    console.log(`'${target.id}' has been removed.`);
 }
