@@ -98,7 +98,6 @@ export default async function(app: string, installOpt: InstallationTypes) {
                         icon: join(homedir(), ".local", "share", "icons", "emubox", emu.id + ".png")
                     })
                 );
-                await $`update-desktop-database ~/.local/share/applications`;
                 break;
             /*case "libretro":
                // todo: download core from buildbot, disallow method if retroarch isn't installed.
