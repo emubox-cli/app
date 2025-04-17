@@ -1,9 +1,11 @@
 #!/bin/bash
 
 debug=0
-while getopts ":debug" arg; do
+update=0
+while getopts ":du" arg; do
     case $arg in
-        debug) debug=1
+        d) debug=1 ;;
+        u) update=1
     esac
 done
 
@@ -12,26 +14,30 @@ if [ "$EUID" == 0 ]; then
     exit
 fi
 
-mkdir -p $HOME/.emubox/apps
-mkdir -p $HOME/.local/applications
-mkdir -p $HOME/.local/share/icons/emubox
-mkdir -p $HOME/.local/bin
+if [ $update == 0 ]; then
+    mkdir -p $HOME/.emubox/apps
+    mkdir -p $HOME/.emubox/manifests
+    mkdir -p $HOME/.local/applications
+    mkdir -p $HOME/.local/share/icons/emubox
+    mkdir -p $HOME/.local/bin
 
-distrobox create emubox \
-    -Y \
-    --no-entry \
-    --home $HOME/.emubox \
-    --image ghcr.io/ublue-os/arch-distrobox:latest \
-    --additional-packages "archlinux-keyring noto-fonts noto-fonts-cjk fuse2" \
-    --init-hooks "sudo locale-gen \"$LANG\""
-
-
-distrobox enter emubox -- echo "Box initialized!"
+    distrobox create emubox \
+        -Y \
+        --no-entry \
+        --home $HOME/.emubox \
+        --image ghcr.io/ublue-os/arch-distrobox:latest \
+        --additional-packages "archlinux-keyring noto-fonts noto-fonts-cjk fuse2" \
+        --init-hooks "sudo locale-gen \"$LANG\""
+    
+    distrobox enter emubox -- echo "Box initialized!"
+fi
 
 if [ $debug == 0 ]; then
     echo "Downloading emubox package manager..."
     curl -o $HOME/.local/bin/emubox https://emubox.wolves-are.gay/emubox
     chmod +x $HOME/.local/bin/emubox
+    # echo -e "#!/bin/bash\ncurl -o $HOME/.local/bin/emubox https://emubox.wolves-are.gay/emubox" >> $HOME/.local/bin/emubox-update
+    echo "Initializing emubox..."
     $HOME/.local/bin/emubox init
 else
     echo "Skipping binary install..."
