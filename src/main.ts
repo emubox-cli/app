@@ -7,8 +7,10 @@ import uninstall from "cmd/uninstall";
 import update from "cmd/update";
 import init from "cmd/init";
 import run from "cmd/run";
+import genManifest from "cmd/gen-manifest";
 import { configExists } from "utils/config";
 import chalk from "chalk";
+
 
 const HELP_MSG = 
 `
@@ -72,6 +74,10 @@ switch (cmd) {
     case "run":
         await doContainerCheck();
         run(...rest);
+        break;
+    case "gen-manifest":
+        await doContainerCheck();
+        genManifest(rest[0]);
         break;
     case "-v":
     case "--version":

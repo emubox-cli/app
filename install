@@ -16,6 +16,7 @@ fi
 
 if [ $update == 0 ]; then
     mkdir -p $HOME/.emubox/apps
+    mkdir -p $HOME/.emubox/manifests
     mkdir -p $HOME/.local/applications
     mkdir -p $HOME/.local/share/icons/emubox
     mkdir -p $HOME/.local/bin
@@ -28,7 +29,6 @@ if [ $update == 0 ]; then
         --additional-packages "archlinux-keyring noto-fonts noto-fonts-cjk fuse2" \
         --init-hooks "sudo locale-gen \"$LANG\""
     
-
     distrobox enter emubox -- echo "Box initialized!"
 fi
 
@@ -36,6 +36,8 @@ if [ $debug == 0 ]; then
     echo "Downloading emubox package manager..."
     curl -o $HOME/.local/bin/emubox https://emubox.wolves-are.gay/emubox
     chmod +x $HOME/.local/bin/emubox
+    # echo -e "#!/bin/bash\ncurl -o $HOME/.local/bin/emubox https://emubox.wolves-are.gay/emubox" >> $HOME/.local/bin/emubox-update
+    echo "Initializing emubox..."
     $HOME/.local/bin/emubox init
 else
     echo "Skipping binary install..."

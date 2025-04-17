@@ -1,4 +1,4 @@
-type SupportedConsoles =
+export type SupportedConsoles =
     "#util" |
     "snes" |
     "gba" |
@@ -50,7 +50,6 @@ export interface BoxApp {
         unzipSubdir?: string;
         unzipTarget?: string;
         libretroCore?: string;
-
     };
 }
 

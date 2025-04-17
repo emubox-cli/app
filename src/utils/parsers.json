@@ -1,0 +1,22 @@
+[
+    {
+        "id": "snes",
+        "launchOptions": "run snes9x {}",
+        "query": "{}(.smc|.SMC|.sfc|.SFC|.swc|.SWC)"
+    },
+    {
+        "id": "gc",
+        "launchOptions": "run dolphin-emu -b -e {}",
+        "query": "{}(.ciso|.CISO|.dol|.DOL|.elf|.ELF|.gcm|.GCM|.gcz|.GCZ|.iso|.ISO|.nkit.iso|.NKIT.ISO|.rvz|.RVZ|.wad|.WAD|.wia|.WIA)"
+    },
+    {
+        "id": "wii",
+        "launchOptions": "run dolphin-emu -b -e {}",
+        "query": "{}(.ciso|.CISO|.dol|.DOL|.elf|.ELF|.gcm|.GCM|.gcz|.GCZ|.iso|.ISO|.nkit.iso|.NKIT.ISO|.rvz|.RVZ|.wad|.WAD|.wia|.WIA)"
+    },
+    {
+        "id": "3ds",
+        "launchOptions": "run azahar {}",
+        "query": "{}(.3ds|.3DS|.3dsx|.3DSX|.app|.APP|.axf|.AXF|.cci|.CCI|.cxi|.CXI|.elf|.ELF)"
+    }
+]
