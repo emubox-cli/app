@@ -31,7 +31,7 @@ export async function generateManifest(dirId: SupportedConsoles | "emulators") {
         }
 
         write(
-            join(MANIFEST_DIR, dirId + ".json"),
+            join(MANIFEST_DIR, dirId, dirId + ".json"),
             JSON.stringify(coolData)
         );
 
@@ -63,7 +63,7 @@ export async function generateManifest(dirId: SupportedConsoles | "emulators") {
     }
 
     write(
-        join(MANIFEST_DIR, dirId + ".json"),
+        join(MANIFEST_DIR, dirId, dirId + ".json"),
         JSON.stringify(coolData)
     );
 }

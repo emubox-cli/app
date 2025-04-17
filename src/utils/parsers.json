@@ -18,5 +18,15 @@
         "id": "3ds",
         "launchOptions": "run azahar {}",
         "query": "{}(.3ds|.3DS|.3dsx|.3DSX|.app|.APP|.axf|.AXF|.cci|.CCI|.cxi|.CXI|.elf|.ELF)"
+    },
+    {
+        "id": "switch",
+        "launchOptions": "run citron -f -g {}",
+        "query": "{}(.kip|.KIP|.nca|.NCA|.nro|.NRO|.nso|.NSO|.nsp|.NSP|.xci|.XCI)"
+    },
+    {
+        "id": "gba",
+        "launchOptions": "run mgba -f {}(.7z|.7Z|.gb|.GB|.zip|.ZIP)",
+        "query": "{}(.7z|.7Z|.gba|.GBA|.zip|.ZIP)"
     }
 ]
