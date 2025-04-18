@@ -28,12 +28,12 @@ export default async function(...remainingArgs: string[]) {
 
     switch (installData.source) {
         case "aur": 
-            await $`${containerPrefix}${targetApp?.installOptions.aurBin} ${remainingArgs}`;
+            await $`${containerPrefix}${targetApp?.installOptions.aurBin} ${remainingArgs}`.nothrow();
             break;
         case "flatpak":
-            await $`${containerPrefix}flatpak run --system ${targetApp?.installOptions.flatpak} ${remainingArgs}`;
+            await $`${containerPrefix}flatpak run --system ${targetApp?.installOptions.flatpak} ${remainingArgs}`.nothrow();
             break;
         case "github":
-            await $`${containerPrefix}$HOME/.emubox/apps/${installData.file} ${remainingArgs}`;
+            await $`${containerPrefix}$HOME/.emubox/apps/${installData.file} ${remainingArgs}`.nothrow();
     }
 }
