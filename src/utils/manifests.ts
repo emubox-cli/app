@@ -4,7 +4,7 @@ import { dir, openConfig } from "./config";
 import { join } from "path";
 import { readdir } from "fs/promises";
 import { homedir } from "os";
-import { file, write } from "bun";
+import { write } from "bun";
 
 const MANIFEST_DIR = dir("manifests");
 const parsers = (await import("./parsers.json")).default;
@@ -37,7 +37,9 @@ export async function generateManifest(dirId: SupportedConsoles | "emulators") {
 
         return;
     }
-    const parserData = parsers.find(d => d.id === dirId)!;
+    const parserData = parsers.find(d => d.id === dirId);
+    if (!parserData) 
+        throw new Error(`No parser found for `)
     
     const targetRomDir = join(config.romDir, dirId);
     if (!await exists(targetRomDir)) {
@@ -47,9 +49,8 @@ export async function generateManifest(dirId: SupportedConsoles | "emulators") {
 
     for (const i of await readdir(targetRomDir)) {
         const title = i.split(".").shift()!;
-        let reCleanedTitle = i.replaceAll(/[.*+?^${}()|[\]\\]/g, "\\$&");
         
-        const parserRe = new RegExp(parserData.query.replace("{}", reCleanedTitle))
+        const parserRe = new RegExp(parserData.query);
         if (!parserRe.test(i)) 
             continue;
 
