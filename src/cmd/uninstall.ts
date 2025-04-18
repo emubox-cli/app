@@ -42,7 +42,10 @@ export default async function() {
 
     await $`distrobox rm emubox -Y`.nothrow();
     if (!debugMode)
-        await $`rm $HOME/.local/bin/emubox`;
+        await $`
+            rm $HOME/.local/bin/emubox
+            rm $HOME/.local/bin/emubox-update
+        `;
 
     console.log(chalk.bold("Emubox has been removed from your system."));
 }
