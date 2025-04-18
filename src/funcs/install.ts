@@ -1,9 +1,9 @@
-import { $, file, sleep, write } from "bun";
+import { $, file, write } from "bun";
 import { getAppFromId } from "../utils/apps";
-import { dir, InstallationTypes, openConfig, writeConfig } from "utils/config";
+import { InstallationTypes, openConfig, writeConfig } from "utils/config";
 import chalk from "chalk";
 import containerPrefix from "utils/containerPrefix";
-import { homedir, platform } from "os";
+import { homedir } from "os";
 import makeDesktopFile from "utils/makeDesktopFile";
 import { join } from "path";
 import { readdir } from "fs/promises";
@@ -22,7 +22,7 @@ export default async function(app: string, installOpt: InstallationTypes) {
         return;
     }
 
-    const extraInstallData: any = {};
+    const extraInstallData: { file?: string } = {};
     
     try {
         switch (installOpt) {
@@ -46,7 +46,8 @@ export default async function(app: string, installOpt: InstallationTypes) {
                 if (!emu.installOptions.gitRepo) 
                     throw TypeError(`No github releases availible for '${app}'`);
                 console.log(`Looking for latest release at ${emu.installOptions.gitRepo}...`);
-                const releases = await (await fetch(`https://api.github.com/repos/${emu.installOptions.gitRepo}/releases`) as any).json();
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                const releases: { [x: string]: any }[] = await (await fetch(`https://api.github.com/repos/${emu.installOptions.gitRepo}/releases`)).json() as any;
                 let latest = releases[0];
                 if (latest.prerelease) 
                     latest = releases[1];

@@ -53,7 +53,7 @@ export interface BoxApp {
     };
 }
 
-// @ts-ignore "Erm actually string[] doesn't support SupportedConsole[]" 🤓
+// @ts-expect-error "Erm actually string[] doesn't support SupportedConsole[]" 🤓
 const apps: BoxApp[] = (await import("./apps.json")).default;
 
 export function getAppFromId(id: string) {
