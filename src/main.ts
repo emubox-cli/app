@@ -23,7 +23,7 @@ emubox: emubox [--help|-h] [COMMAND]
 
 
     Commands:
-        init                      initialize emubox directories and config
+        init                      initialize emubox directories and config 
         list, ls                  list all availible emulators in emubox 
         uninstall                 remove emubox and the distrobox container
         install, i <...EMU_IDS>   install provided emulators
@@ -47,7 +47,7 @@ if (debugMode)
 
 switch (cmd) {
     case "init":
-        init();
+        init(...rest);
         break;
     case "i":
     case "install":

@@ -1,13 +1,26 @@
 import { $ } from "bun";
-import { configExists, dir, writeConfig } from "utils/config";
+import { configExists, dir, openConfig, writeConfig } from "utils/config";
 import input from "@inquirer/input";
-
 import { SUPPORTED_CONSOLES } from "utils/apps";
 import { exists } from "fs/promises";
+import install from "funcs/install";
 
-export default async function() {
+export default async function(...dumbArgs: string[]) {
     if (await configExists()) {
-        console.log("Already initialized");
+        if (!dumbArgs.includes("--restore")) {
+            console.log("Already initialized");
+            return;
+        }
+
+        console.log("Config already exists, restoring...");
+        const config = await openConfig();
+        const previouslyInstalled = Object.freeze(config.installed);
+        config.installed = [];
+        writeConfig(config);
+
+        for (const i of previouslyInstalled)
+            await install(i.id, i.source);
+        
         return;
     }
 

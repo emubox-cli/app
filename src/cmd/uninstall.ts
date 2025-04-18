@@ -34,8 +34,6 @@ export default async function() {
         for (const i of config.installed)
             if (i.source === "github") 
                 remove(i.id);
-        
-        config.installed = [];
 
         writeConfig(config);
     }
