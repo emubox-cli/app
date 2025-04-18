@@ -28,5 +28,15 @@
         "id": "gba",
         "launchOptions": "run mgba -f {}(.7z|.7Z|.gb|.GB|.zip|.ZIP)",
         "query": ".*(.7z|.7Z|.gba|.GBA|.zip|.ZIP)"
+    },
+    {
+        "id": "nds",
+        "launchOptions": "run melonds -f {}",
+        "query": ".*(.7z|.7Z|.nds|.NDS|.zip|.ZIP)"
+    },
+    {
+        "id": "ps2",
+        "launchOptions": "run pcsx2 {} -batch -fullscreen -nogui",
+        "query": ".*(.bin|.BIN|.chd|.CHD|.cso|.CSO|.dump|.DUMP|.gz|.GZ|.img|.IMG|.iso|.ISO|.mdf|.MDF|.nrg|.NRG)"
     }
 ]
