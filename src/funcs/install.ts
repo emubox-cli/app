@@ -75,7 +75,7 @@ export default async function(app: string, installOpt: InstallationTypes) {
 
                         subDir = dir + "/";
                     }
-                    await $`cp ${emu.id}/${subDir}${emu.installOptions.unzipTarget} $HOME/.emubox/apps/${emu.installOptions.unzipTarget}`.cwd("/tmp");
+                    await $`cp ${emu.id}/${subDir ?? ""}${emu.installOptions.unzipTarget} $HOME/.emubox/apps/${emu.installOptions.unzipTarget}`.cwd("/tmp");
                     targetAsset.name = emu.installOptions.unzipTarget;
                 }
                 else {
