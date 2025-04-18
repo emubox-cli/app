@@ -40,7 +40,7 @@ else
     echo "Skipping binary install..." 
 fi
 
-if [ $(test -e $HOME/.emubox/config.json) ]; then
+if [ -f $HOME/.emubox/config.json ]; then
     $HOME/.local/bin/emubox init --restore
 else
     $HOME/.local/bin/emubox init
