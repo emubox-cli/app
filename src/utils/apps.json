@@ -17,7 +17,9 @@
         "makeLauncher": false,
         "installOptions": {
             "aur": "steam-rom-manager-git",
-            "aurBin": "steam-rom-manager"
+            "aurBin": "steam-rom-manager",
+            "gitRepo": "SteamGridDB/steam-rom-manager",
+            "gitRe": "Steam-ROM-Manager-.*.AppImage"
         }
     },
     {
