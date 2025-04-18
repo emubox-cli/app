@@ -2,7 +2,7 @@ import install from "../funcs/install";
 import { InstallationTypes } from "../utils/config";
 
 const HELP_MSG = `
-emubox install: emubox install [--appimage] <...EMULATOR_IDS>
+emubox install: emubox install [--appimage] [--flatpak] <...EMULATOR_IDS>
     Install emulators/utilites from "emubox list" in your container.
 
     The installed apps will be exported to your app menu/desktop files.
