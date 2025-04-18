@@ -29,7 +29,7 @@ emubox: emubox [--help|-h] [COMMAND]
         install, i <...EMU_IDS>   install provided emulators
         remove, rm <...EMU_IDS>   remove provided emulators
         update                    update emubox container and package manager
-        run                       
+        run                       launch an installed emulator
 `;
 
 const [ , , cmd, ...rest ] = process.argv;
