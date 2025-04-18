@@ -5,10 +5,11 @@ const HELP_MSG = `
 emubox install: emubox install [--appimage] <...EMULATOR_IDS>
     Install emulators/utilites from "emubox list" in your container.
 
-    Apps, as well as their binaries will be exported to the host.
+    The installed apps will be exported to your app menu/desktop files.
 
     Options:
         --appimage        Install the appimage variant of targeted apps
+        --flatpak         Install the flatpak variant
 `;
 export default async function(...toInstall: string[]) {
     let method: InstallationTypes = "aur";
