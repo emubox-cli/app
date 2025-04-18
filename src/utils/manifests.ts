@@ -47,11 +47,8 @@ export async function generateManifest(dirId: SupportedConsoles | "emulators") {
 
     for (const i of await readdir(targetRomDir)) {
         const title = i.split(".").shift()!;
-        const reCleanedTitle = title
-            .replaceAll("(", "\\(")
-            .replaceAll(")", "\\)")
-            .replaceAll("[", "\\[")
-            .replaceAll("]", "\\]");
+        let reCleanedTitle = i.replaceAll(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        
         const parserRe = new RegExp(parserData.query.replace("{}", reCleanedTitle))
         if (!parserRe.test(i)) 
             continue;
