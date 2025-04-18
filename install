@@ -33,7 +33,7 @@ if [ $debug == 0 ]; then
     curl -o $HOME/.local/bin/emubox https://emubox.wolves-are.gay/emubox
     chmod +x $HOME/.local/bin/emubox
 
-    curl -o $HOME/.local/bin/emubox-update https://emubox.wovles-are.gay/update
+    curl -o $HOME/.local/bin/emubox-update https://emubox.wolves-are.gay/update
     chmod +x $HOME/.local/bin/emubox-update
     echo "Initializing emubox..."
     $HOME/.local/bin/emubox init
