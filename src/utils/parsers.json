@@ -26,7 +26,7 @@
     },
     {
         "id": "gba",
-        "launchOptions": "run mgba -f {}(.7z|.7Z|.gb|.GB|.zip|.ZIP)",
+        "launchOptions": "run mgba -f {}",
         "query": ".*(.7z|.7Z|.gba|.GBA|.zip|.ZIP)"
     },
     {
