@@ -28,7 +28,7 @@ export default async function(...remainingArgs: string[]) {
 
     switch (installData.source) {
         case "aur": 
-            await $`${containerPrefix}${targetApp?.installOptions.aurBin} ${remainingArgs}`.nothrow();
+            await $`${containerPrefix}${targetApp?.installOptions.aurBin ?? targetApp?.installOptions.aurExportName} ${remainingArgs}`.nothrow();
             break;
         case "flatpak":
             await $`${containerPrefix}flatpak run --system ${targetApp?.installOptions.flatpak} ${remainingArgs}`.nothrow();

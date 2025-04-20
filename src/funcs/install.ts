@@ -1,7 +1,7 @@
 import { $, file, write } from "bun";
 import { getAppFromId } from "../utils/apps";
 import { InstallationTypes, openConfig, writeConfig } from "utils/config";
-import chalk from "chalk";
+import { yellow, red } from "yoctocolors";
 import containerPrefix from "utils/containerPrefix";
 import { homedir } from "os";
 import makeDesktopFile from "utils/makeDesktopFile";
@@ -18,7 +18,7 @@ export default async function(app: string, installOpt: InstallationTypes) {
     }
 
     if (config.installed.find(d => d.id === app)) {
-        console.error(chalk.yellow(`'${app}' already installed`));
+        console.error(yellow(`'${app}' already installed`));
         return;
     }
 
@@ -28,7 +28,7 @@ export default async function(app: string, installOpt: InstallationTypes) {
         switch (installOpt) {
             case "aur":
                 await $`${containerPrefix}paru -S --noconfirm ${emu.installOptions.aur}`;
-                await $`${containerPrefix}distrobox-export -el "none" --app ${emu.installOptions.aurBin}`;
+                await $`${containerPrefix}distrobox-export -el "none" --app ${emu.installOptions.aurExportName}`;
                 break;
             case "flatpak":
                 if (!emu.installOptions.flatpak) 
@@ -117,6 +117,6 @@ export default async function(app: string, installOpt: InstallationTypes) {
         writeConfig(config);
 
     } catch (e) {
-        console.error(chalk.red(`Failed to install '${emu.name}': ${(e as Error).message}`));
+        console.error(red(`Failed to install '${emu.name}': ${(e as Error).message}`));
     }
 }

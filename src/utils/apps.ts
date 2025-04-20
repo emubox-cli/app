@@ -41,6 +41,7 @@ export interface BoxApp {
         flatpak?: string;
         flatpakOverrideFs?: boolean;
         aur?: string;
+        aurExportName?: string;
         aurBin?: string;
         // for retroarch...
         aurExportTitle?: string;

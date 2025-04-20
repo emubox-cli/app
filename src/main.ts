@@ -9,8 +9,7 @@ import init from "cmd/init";
 import run from "cmd/run";
 import genManifest from "cmd/gen-manifest";
 import { configExists } from "utils/config";
-import chalk from "chalk";
-
+import { yellow } from "yoctocolors";
 
 const HELP_MSG = 
 `
@@ -43,7 +42,6 @@ const debug = rest.indexOf("--debug");
 export const debugMode = debug !== -1;
 if (debugMode)
     rest.splice(debug, 1);
-
 
 switch (cmd) {
     case "init":
@@ -92,7 +90,7 @@ switch (cmd) {
 
 async function doContainerCheck() {
     if (!await configExists()) {
-        console.log(chalk.yellow("Please run 'emubox init' first."));
+        console.log(yellow("Please run 'emubox init' first."));
         process.exit(1);
     }
 
@@ -104,3 +102,8 @@ async function doContainerCheck() {
         }
     }
 }
+
+process.on("uncaughtException", (e) => {
+   console.error("Emubox ran into an error mid process: " + e.message);
+   console.error(e.stack);
+});

@@ -1,14 +1,14 @@
 import confirm from "@inquirer/confirm";
 import { openConfig, writeConfig } from "../utils/config";
-import chalk from "chalk";
+import { yellow, bold } from "yoctocolors";
 import { $ } from "bun";
 import remove from "funcs/remove";
 import { debugMode } from "../main";
 
 const CONFIRMATION_MSG = [
     "Are you sure you want to uninstall emubox?",
-    chalk.yellow("This will delete the emubox container and all apps installed within it."),
-    chalk.yellow("Respective app configurations will not be deleted.")
+    yellow("This will delete the emubox container and all apps installed within it."),
+    yellow("Respective app configurations will not be deleted.")
 ].join("\n");
 
 export default async function() {
@@ -45,5 +45,5 @@ export default async function() {
             rm $HOME/.local/bin/emubox-update
         `;
 
-    console.log(chalk.bold("Emubox has been removed from your system."));
+    console.log(bold("Emubox has been removed from your system."));
 }
