@@ -1,6 +1,7 @@
 import { $ } from "bun";
 import { configExists, dir, openConfig, writeConfig } from "utils/config";
 import input from "@inquirer/input";
+import confirm from "@inquirer/confirm";
 import { SUPPORTED_CONSOLES } from "utils/apps";
 import { exists } from "fs/promises";
 import install from "funcs/install";
@@ -13,10 +14,18 @@ export default async function(...dumbArgs: string[]) {
         }
 
         console.log("Config already exists, restoring...");
+        const confirmRestoration = await confirm({
+            message: "Config from last installation was found, would you like to reinstall the apps from it?",
+            default: true
+        });
+        
         const config = await openConfig();
         const previouslyInstalled = Object.freeze(config.installed);
         config.installed = [];
         writeConfig(config);
+
+        if (!confirmRestoration) 
+            return;
 
         for (const i of previouslyInstalled)
             await install(i.id, i.source);
