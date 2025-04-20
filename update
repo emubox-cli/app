@@ -6,9 +6,9 @@ CURRENT_VER=$($HOME/.local/bin/emubox -v)
 if [ $LATEST_VER != $CURRENT_VER ]; then
     echo "Updating emubox package manager..."
     curl -o $HOME/.local/bin/emubox https://emubox.wolves-are.gay/emubox
-    echo "Updating emubox container and apps..."
-    distrobox enter emubox -- paru -Syu
-
 else
-    echo "Up to date!"
+    echo "Package manager up to date!"
 fi
+
+echo "Updating emubox container and apps..."
+distrobox enter emubox -- paru -Syu
