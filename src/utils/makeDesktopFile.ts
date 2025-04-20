@@ -10,4 +10,4 @@ Name=${name}
 Exec=${exec}
 Icon=${icon}
 Categories=Game;Emulator;
-`
+`;

@@ -39,7 +39,7 @@ export async function generateManifest(dirId: SupportedConsoles | "emulators") {
     }
     const parserData = parsers.find(d => d.id === dirId);
     if (!parserData) 
-        throw new Error(`No parser found for `)
+        throw new Error(`No parser found for '${dirId}'`);
     
     const targetRomDir = join(config.romDir, dirId);
     if (!await exists(targetRomDir)) {
@@ -60,7 +60,7 @@ export async function generateManifest(dirId: SupportedConsoles | "emulators") {
             title,
             target: join(homedir(), ".local", "bin", "emubox"),
             startIn: join(homedir(), ".local", "bin"),
-            launchOptions: parserData.launchOptions.replace("{}", `"${join(targetRomDir, i)}"`),
+            launchOptions: "run " + parserData.launchOptions.replace("{}", `"${join(targetRomDir, i)}"`),
             appendArgsToExecutable: false
         });
     }

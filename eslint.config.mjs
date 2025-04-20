@@ -11,7 +11,8 @@ export default [
   ...tseslint.configs.recommended,
   {
     rules: {
-      "no-case-declarations": "off"
+      "no-case-declarations": "off",
+      "semi": "error"
     }
   }
 ];

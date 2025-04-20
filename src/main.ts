@@ -97,7 +97,7 @@ async function doContainerCheck() {
     if (!hostname().startsWith("emubox.")) {
         const boxList = await $`distrobox ls`.quiet().text();
         if (!boxList.includes("emubox")) {
-            console.error("Emubox container wasn't found, please run the installer again.")
+            console.error("Emubox container wasn't found, please run the installer again.");
             process.exit(1);
         }
     }
