@@ -23,14 +23,7 @@ mkdir -p $HOME/.local/applications
 mkdir -p $HOME/.local/share/icons/emubox
 mkdir -p $HOME/.local/bin
 
-distrobox create emubox \
-    -Y \
-    --no-entry \
-    --home $HOME/.emubox \
-    --image ghcr.io/ublue-os/arch-distrobox:latest \
-    --additional-packages "archlinux-keyring noto-fonts noto-fonts-cjk fuse2 jack2 glibmm libxss libxv" \
-    --init-hooks "sudo locale-gen \"$LANG\""
-    
+distrobox assemble create --file https://emubox.wolves-are.gay/emubox.ini
 distrobox enter emubox -- echo "Box initialized!"
 
 if [ $debug == 0 ]; then
