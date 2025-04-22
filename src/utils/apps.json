@@ -48,22 +48,6 @@
         }
     },
     {
-        "name": "Beetle PSX",
-        "id": "beetle-psx",
-        "consoles": ["psx"],
-        "installOptions": {
-            "libretroCore": "mednafen_psx"
-        }
-    },
-    {
-        "name": "PCSX ReARMed",
-        "id": "pcsx-rearmed",
-        "consoles": ["psx"],
-        "installOptions": {
-            "libretroCore": "pcsx_rearmed"
-        }
-    },
-    {
         "name": "PCSX2",
         "id": "pcsx2",
         "consoles": ["ps2"],
@@ -126,14 +110,6 @@
             "aurExportName": "RMG",
             "gitRepo": "rosalie241/rmg",
             "gitRe": "RMG-Portable-Linux64-v.*.AppImage"
-        }
-    },
-    {
-        "name": "Mupen64+ Next",
-        "id": "m64p-next",
-        "consoles": ["n64"],
-        "installOptions": {
-            "libretroCore": "mupen64plus_next"
         }
     },
     {
