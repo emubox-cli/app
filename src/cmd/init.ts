@@ -13,11 +13,16 @@ export default async function(...dumbArgs: string[]) {
             return;
         }
 
-        console.log("Config already exists, restoring...");
         const confirmRestoration = await confirm({
-            message: "Config from last installation was found, would you like to reinstall the apps from it?",
+            message: "Config from previous installation was found, would you like to reinstall the apps from it?" +
+                "()",
             default: true
         });
+
+        await $`
+            rm -rf $HOME/.emubox/apps
+            mkdir -p $HOME/.emubox/apps
+        `;
         
         const config = await openConfig();
         const previouslyInstalled = Object.freeze(config.installed);
@@ -43,15 +48,10 @@ export default async function(...dumbArgs: string[]) {
         default: dir("roms"),
     });
     
-    const coreDir = await input({
-        message: "Please provide a (retroarch) core directory.",
-        default: dir("cores")
-    });
 
     const config = {
         saveDir,
         romDir,
-        coreDir,
         installed: []
     };
     
@@ -64,8 +64,5 @@ export default async function(...dumbArgs: string[]) {
         }
     }
     
-    await $`
-        mkdir ${saveDir}
-        mkdir ${coreDir}
-    `.quiet().nothrow();
+    await $`mkdir -p ${saveDir}`.quiet().nothrow();
 }

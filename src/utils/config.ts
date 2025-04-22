@@ -11,7 +11,6 @@ export type InstallationTypes = "aur" | "flatpak" | "github";
 export interface Config {
     saveDir: string;
     romDir: string;
-    coreDir: string;
     installed: {
         id: string;
         source: InstallationTypes;
