@@ -12,6 +12,11 @@ if [ "$EUID" == 0 ]; then
     exit
 fi
 
+if ! type distrobox &> /dev/null; then
+    echo "Distrobox not found on system. Exitting..."
+    exit
+fi
+
 mkdir -p $HOME/.emubox/apps
 mkdir -p $HOME/.emubox/manifests
 mkdir -p $HOME/.local/applications
