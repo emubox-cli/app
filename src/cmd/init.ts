@@ -1,10 +1,11 @@
 import { $ } from "bun";
-import { configExists, dir, openConfig, writeConfig } from "utils/config";
+import { configExists, DEFAULT_ROM_DIR, dir, openConfig, writeConfig } from "utils/config";
 import input from "@inquirer/input";
-import confirm from "@inquirer/confirm";
-import { SUPPORTED_CONSOLES } from "utils/apps";
+import select from "@inquirer/select";
+import { /* getAppFromId, */ SUPPORTED_CONSOLES } from "utils/apps";
 import { exists } from "fs/promises";
 import install from "funcs/install";
+// import containerPrefix from "utils/containerPrefix";
 
 export default async function(...dumbArgs: string[]) {
     if (await configExists()) {
@@ -13,10 +14,14 @@ export default async function(...dumbArgs: string[]) {
             return;
         }
 
-        const confirmRestoration = await confirm({
-            message: "Config from previous installation was found, would you like to reinstall the apps from it?" +
-                "()",
-            default: true
+        const confirmRestoration = await select({
+            message: "Config from previous installation was found, would you like to reinstall the apps from it?",
+            choices: [
+                "Yes",
+                "No",
+                // "Select Apps"
+            ],
+            default: "Yes"
         });
 
         await $`
@@ -28,11 +33,28 @@ export default async function(...dumbArgs: string[]) {
         const previouslyInstalled = Object.freeze(config.installed);
         config.installed = [];
         writeConfig(config);
-
-        if (!confirmRestoration) 
+        if (confirmRestoration === "No") 
             return;
+        
+        if (config.romDir !== DEFAULT_ROM_DIR)
+            await $`ln -s ${DEFAULT_ROM_DIR} ${config.romDir}`;
+        /*if (confirmRestoration === "Select Apps") {
+            const appsForReinstall = previouslyInstalled.map(d => {
+                const app = getAppFromId(d.id);
+                return `TRUE "${app?.name} (${d.source})"`;
+            }).join("\n");
+            await $`
+                echo "${appsForReinstall}" >> emubox-reinstall
+                cat emubox-reinstall | ${containerPrefix}zenity \
+                   --list \
+                   --title "Select Apps" \
+                   --checklist \
+                   --column="" --column="Apps"
+                rm emubox-reinstall
+            `.cwd("/tmp");
+        }*/
 
-        for (const i of previouslyInstalled)
+       for (const i of previouslyInstalled)
             await install(i.id, i.source);
         
         return;
@@ -45,7 +67,7 @@ export default async function(...dumbArgs: string[]) {
     
     const romDir = await input({
         message: "Please provide a rom directory.",
-        default: dir("roms"),
+        default: DEFAULT_ROM_DIR,
     });
     
 
@@ -65,4 +87,6 @@ export default async function(...dumbArgs: string[]) {
     }
     
     await $`mkdir -p ${saveDir}`.quiet().nothrow();
+    if (config.romDir !== DEFAULT_ROM_DIR)
+        await $`ln -s ${DEFAULT_ROM_DIR} ${config.romDir}`;
 }

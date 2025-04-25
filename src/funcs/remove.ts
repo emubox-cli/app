@@ -29,7 +29,7 @@ export default async function(app: string) {
             await $`${containerPrefix}paru -Rs --noconfirm ${emu.installOptions.aur}`;
             break;
         case "flatpak":
-            await $`flatpak remove --system -y ${emu.installOptions.flatpak}`;
+            await $`flatpak remove -y ${emu.installOptions.flatpak}`;
             break;
         case "github":
             console.log("Removing executable...");

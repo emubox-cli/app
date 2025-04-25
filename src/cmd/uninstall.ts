@@ -1,5 +1,5 @@
 import confirm from "@inquirer/confirm";
-import { openConfig, writeConfig } from "../utils/config";
+import { DEFAULT_ROM_DIR, openConfig } from "../utils/config";
 import { yellow, bold } from "yoctocolors";
 import { $ } from "bun";
 import remove from "funcs/remove";
@@ -12,6 +12,8 @@ const CONFIRMATION_MSG = [
 ].join("\n");
 
 export default async function() {
+    const config = await openConfig();
+    
     const confirmation = debugMode ? true : await confirm({
         message: CONFIRMATION_MSG,
         default: false
@@ -29,14 +31,11 @@ export default async function() {
 
     if (deleteConfig) 
         await $`rm $HOME/.emubox/config.json`;
-    else {
-        const config = await openConfig();
-        for (const i of config.installed)
-            if (i.source === "github") 
-                remove(i.id);
+    else for (const i of config.installed)
+        remove(i.id);
 
-        writeConfig(config);
-    }
+    if (config.romDir !== DEFAULT_ROM_DIR)
+        await $`unlink ${DEFAULT_ROM_DIR}`;
 
     await $`distrobox rm emubox -Y`.nothrow();
     if (!debugMode)

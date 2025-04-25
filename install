@@ -24,7 +24,6 @@ mkdir -p $HOME/.local/share/icons/emubox
 mkdir -p $HOME/.local/bin
 
 distrobox assemble create --file https://emubox.wolves-are.gay/emubox.ini
-distrobox enter emubox -- echo "Box initialized!"
 
 if [ $debug == 0 ]; then
     echo "Downloading emubox package manager..."

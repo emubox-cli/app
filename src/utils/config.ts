@@ -2,6 +2,8 @@ import { file, write } from "bun";
 import { homedir } from "os";
 import { join } from "path";
 
+export const DEFAULT_ROM_DIR = dir("roms");
+
 export function dir(...path: string[]) {
     return join(homedir(), ".emubox", ...path);
 }
