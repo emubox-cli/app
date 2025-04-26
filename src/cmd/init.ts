@@ -37,7 +37,8 @@ export default async function(...dumbArgs: string[]) {
             return;
         
         if (config.romDir !== DEFAULT_ROM_DIR)
-            await $`ln -s ${DEFAULT_ROM_DIR} ${config.romDir}`;
+            await $`ln -s ${config.romDir} ${DEFAULT_ROM_DIR}`;
+        
         /*if (confirmRestoration === "Select Apps") {
             const appsForReinstall = previouslyInstalled.map(d => {
                 const app = getAppFromId(d.id);
@@ -87,6 +88,6 @@ export default async function(...dumbArgs: string[]) {
     }
     
     await $`mkdir -p ${saveDir}`.quiet().nothrow();
-    if (config.romDir !== DEFAULT_ROM_DIR)
-        await $`ln -s ${DEFAULT_ROM_DIR} ${config.romDir}`;
+    if (romDir !== DEFAULT_ROM_DIR)
+        await $`ln -s ${romDir} ${DEFAULT_ROM_DIR}`;
 }
