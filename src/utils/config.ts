@@ -16,7 +16,8 @@ export interface Config {
     installed: {
         id: string;
         source: InstallationTypes;
-        file?: string
+        file?: string;
+        releaseId?: string;
     }[];
 }
 

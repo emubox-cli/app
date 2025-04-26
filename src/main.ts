@@ -23,11 +23,12 @@ emubox: emubox [--help|-h] [COMMAND]
 
     Commands:
         init                      initialize emubox directories and config 
-        list, ls                  list all availible emulators in emubox 
+        list, ls                  list all availible emulators in emubox
+        gen-manifest <EMU_ID>     create manual manifest file for steam rom manager
         uninstall                 remove emubox and the distrobox container
         install, i <...EMU_IDS>   install provided emulators
         remove, rm <...EMU_IDS>   remove provided emulators
-        update                    update emubox container and package manager
+        update                    update container apps
         run                       launch an installed emulator
 `;
 

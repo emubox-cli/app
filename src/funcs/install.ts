@@ -7,6 +7,7 @@ import { homedir } from "os";
 import makeDesktopFile from "utils/makeDesktopFile";
 import { join } from "path";
 import { readdir } from "fs/promises";
+import getLatestRelease from "utils/getLatestRelease";
 
 export default async function(app: string, installOpt: InstallationTypes) {
     const config = await openConfig();
@@ -22,7 +23,7 @@ export default async function(app: string, installOpt: InstallationTypes) {
         return;
     }
 
-    const extraInstallData: { file?: string } = {};
+    const extraInstallData: { file?: string, releaseId?: string } = {};
     
     try {
         switch (installOpt) {
@@ -37,20 +38,15 @@ export default async function(app: string, installOpt: InstallationTypes) {
                 if (emu.installOptions.flatpakOverrideFs === true) 
                     await $`${containerPrefix}flatpak override \
                         -u ${emu.installOptions.flatpak} \
-                        --filesystem "$HOME" \
                         --filesystem home \
-                        --filesystem /run/media
+                        --filesystem /media
                     `;
                 break;
             case "github":
                 if (!emu.installOptions.gitRepo) 
                     throw TypeError(`No github releases availible for '${app}'`);
                 console.log(`Looking for latest release at ${emu.installOptions.gitRepo}...`);
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                const releases: { [x: string]: any }[] = await (await fetch(`https://api.github.com/repos/${emu.installOptions.gitRepo}/releases`)).json() as any;
-                let latest = releases[0];
-                if (latest.prerelease) 
-                    latest = releases[1];
+                const latest = await getLatestRelease(emu.installOptions.gitRepo);
                 const targetAsset = latest.assets.find((d: { name: string }) => d.name.match(emu.installOptions.gitRe!));
                 if (!targetAsset) 
                     throw new Error("No asset found");
@@ -63,7 +59,6 @@ export default async function(app: string, installOpt: InstallationTypes) {
                         await $`
                             mkdir ${emu.id}
                             tar -xvzf ${targetAsset.name} -C ${emu.id}
-                        
                         `.quiet().cwd("/tmp");
                     else 
                         await $`${containerPrefix}unzip -q ${targetAsset.name} -d ${emu.id}`.quiet().cwd("/tmp");
@@ -84,6 +79,7 @@ export default async function(app: string, installOpt: InstallationTypes) {
                 }
 
                 extraInstallData.file = targetAsset.name;
+                extraInstallData.releaseId = String(latest.id);
                 
                 console.log("Getting icon...");
                 await $`$HOME/.emubox/apps/${targetAsset.name} --appimage-extract`.quiet().cwd("/tmp");

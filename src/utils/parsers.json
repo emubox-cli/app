@@ -20,7 +20,12 @@
         "query": ".*(.3ds|.3DS|.3dsx|.3DSX|.app|.APP|.axf|.AXF|.cci|.CCI|.cxi|.CXI|.elf|.ELF)"
     },
     {
-        "id": "switch",
+        "id": "switch-yuzu",
+        "launchOptions": "citron -f -g {}",
+        "query": ".*(.kip|.KIP|.nca|.NCA|.nro|.NRO|.nso|.NSO|.nsp|.NSP|.xci|.XCI)"
+    },
+    {
+        "id": "switch-ryujinx",
         "launchOptions": "citron -f -g {}",
         "query": ".*(.kip|.KIP|.nca|.NCA|.nro|.NRO|.nso|.NSO|.nsp|.NSP|.xci|.XCI)"
     },

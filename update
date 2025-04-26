@@ -11,4 +11,4 @@ else
 fi
 
 echo "Updating emubox container and apps..."
-distrobox enter emubox -- paru -Syu
+distrobox enter emubox -- paru -Syu --noconfirm
