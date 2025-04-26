@@ -38,7 +38,7 @@ export default async function(...dumbArgs: string[]) {
         
         if (config.romDir !== DEFAULT_ROM_DIR)
             await $`ln -s ${config.romDir} ${DEFAULT_ROM_DIR}`;
-        
+
         /*if (confirmRestoration === "Select Apps") {
             const appsForReinstall = previouslyInstalled.map(d => {
                 const app = getAppFromId(d.id);
@@ -75,7 +75,8 @@ export default async function(...dumbArgs: string[]) {
     const config = {
         saveDir,
         romDir,
-        installed: []
+        installed: [],
+        customLaunchers: {}
     };
     
     writeConfig(config);
