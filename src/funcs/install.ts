@@ -39,7 +39,9 @@ export default async function(app: string, installOpt: InstallationTypes) {
                     await $`${containerPrefix}flatpak override \
                         -u ${emu.installOptions.flatpak} \
                         --filesystem home \
-                        --filesystem /media
+                        --filesystem=/media \
+                        --filesystem=/run/media \
+                        --filesystem=/mnt
                     `;
                 break;
             case "github":
