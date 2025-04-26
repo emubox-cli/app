@@ -4,33 +4,37 @@ import { getAppFromId } from "utils/apps";
 import { openConfig, writeConfig } from "utils/config";
 import containerPrefix from "utils/containerPrefix";
 import getLatestRelease from "utils/getLatestRelease";
-import { bold } from "yoctocolors";
+import { bold, green } from "yoctocolors";
 
 export default async function() {
     const config = await openConfig();
-    const aurUpdatesNeeded = await $`${containerPrefix}paru --query --upgrades`.text();
-    const flatpakUpdatesNeeded = await $`${containerPrefix}flatpak list -u`.text();
+    const aurUpdatesNeeded = await $`${containerPrefix}paru --query --upgrades`.nothrow().text();
+    const flatpakUpdatesNeeded = await $`${containerPrefix}flatpak list -u`.nothrow().text();
     for (const i of config.installed) {
         const dumbIndex = config.installed.indexOf(i);
-        console.log(bold(`[${dumbIndex+1}/${config.installed.length}] ${i.releaseId}`));
+        console.log(bold(`[${dumbIndex+1}/${config.installed.length}] ${i.id}`));
         const app = getAppFromId(i.id)!;
         switch (i.source) {
             case "aur":
-                if (!aurUpdatesNeeded.includes(app.installOptions.aur!))
+                if (!aurUpdatesNeeded.includes(app.installOptions.aur!)) {
+                    console.log(green(`Up to date`));
                     continue;
+                }
 
                 await $`${containerPrefix}paru -S ${app?.installOptions.aurBin}`;
                 break;
             case "flatpak":
-                if (!flatpakUpdatesNeeded.includes(app.installOptions.flatpak!))
+                if (!flatpakUpdatesNeeded.includes(app.installOptions.flatpak!)) {
+                    console.log(green(`Up to date`));
                     continue;
+                }
 
                 await $`${containerPrefix}flatpak update ${app?.installOptions.flatpak}`;
                 break;
             case "github":
                 const latest = await getLatestRelease(app.installOptions.gitRepo!);
                 if (String(latest.id) === i.releaseId) {
-                    console.log(`${app.name}: Up to date`);
+                    console.log(green(`Up to date`));
                     continue;
                 }
                 
