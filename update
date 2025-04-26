@@ -4,7 +4,7 @@ LATEST_VER=$(curl -s https://emubox.wolves-are.gay/latest | tr -d "\n")
 CURRENT_VER=$($HOME/.local/bin/emubox -v)
 
 if [ $LATEST_VER != $CURRENT_VER ]; then
-    echo "Updating emubox package manager..."
+    echo "Updating emubox to $LATEST_VER..."
     curl -o $HOME/.local/bin/emubox https://emubox.wolves-are.gay/emubox
 else
     echo "Package manager up to date!"
