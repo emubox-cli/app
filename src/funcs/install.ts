@@ -29,7 +29,7 @@ export default async function(app: string, installOpt: InstallationTypes) {
         switch (installOpt) {
             case "aur":
                 await $`${containerPrefix}paru -S --noconfirm ${emu.installOptions.aur}`;
-                await $`${containerPrefix}distrobox-export -el "none" --app ${emu.installOptions.aurExportName}`;
+                await $`${containerPrefix}distrobox-export -el "none" --app ${emu.installOptions.aurExportName ?? emu.installOptions.aurBin}`;
                 break;
             case "flatpak":
                 if (!emu.installOptions.flatpak) 

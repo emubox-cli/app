@@ -22,8 +22,7 @@ export default async function(app: string) {
         case "aur":
             await $`
                 ${containerPrefix}distrobox-export \
-                    --bin /usr/bin/${emu.installOptions.aurBin ?? emu.installOptions.aurExportName} \
-                    --export-path $HOME/.local/bin \
+                    --app ${emu.installOptions.aurExportName ?? emu.installOptions.aurBin} \
                     --delete
             `.nothrow();
             await $`${containerPrefix}paru -Rs --noconfirm ${emu.installOptions.aur}`;
