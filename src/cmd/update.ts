@@ -7,13 +7,14 @@ import getLatestRelease from "utils/getLatestRelease";
 import { bold, green } from "yoctocolors";
 
 export default async function() {
+    console.log("Updating apps...");
     const config = await openConfig();
     const aurUpdatesNeeded = await $`${containerPrefix}paru --query --upgrades`.nothrow().text();
     const flatpakUpdatesNeeded = await $`${containerPrefix}flatpak list -u`.nothrow().text();
     for (const i of config.installed) {
         const dumbIndex = config.installed.indexOf(i);
-        console.log(bold(`[${dumbIndex+1}/${config.installed.length}] ${i.id}`));
         const app = getAppFromId(i.id)!;
+        console.log(bold(`[${dumbIndex+1}/${config.installed.length}] ${app.name}`));
         switch (i.source) {
             case "aur":
                 if (!aurUpdatesNeeded.includes(app.installOptions.aur!)) {
@@ -52,5 +53,4 @@ export default async function() {
     }
 
     console.log("Update the package manager itself using 'emubox-update'");
-    console.log("Done!");
 }
