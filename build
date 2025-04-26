@@ -1,0 +1,9 @@
+#!/bin/bash
+
+bun build ./src/main.ts \
+    --target=bun-linux-x64 \
+    --compile \
+    --minify \
+    --outfile dist/emubox \
+    --define="_SHA='debug-$(bun src/makeBuildDate.ts)'" \
+    "$@"

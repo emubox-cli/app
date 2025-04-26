@@ -29,7 +29,7 @@ jobs:
                 cp update dist/update
                 cp emubox.ini dist/emubox.ini
                 echo "emubox.wolves-are.gay" >> dist/CNAME
-                echo "${{ github.sha }}" >> dist/latest
+                echo $(bun dev -v) >> dist/latest
 
             - name: Push to Dist
               uses: s0/git-publish-subdir-action@develop

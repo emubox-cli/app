@@ -10,10 +10,12 @@ import run from "cmd/run";
 import genManifest from "cmd/gen-manifest";
 import { configExists } from "utils/config";
 import { yellow } from "yoctocolors";
+import { version } from "../package.json";
+import displayVersion from "utils/displayVersion";
 
 const HELP_MSG = 
 `
-emubox: emubox [--help|-h] [COMMAND]
+emubox (${version}-${displayVersion}): emubox [--help|-h] [COMMAND]
     Manage emulator applications via emubox.
 
     Options:
@@ -80,8 +82,7 @@ switch (cmd) {
         break;
     case "-v":
     case "--version":
-        // @ts-expect-error provided by build command
-        console.log(_SHA);
+        console.log(`${version}-${displayVersion}`);
         break;
     case "-h":
     case "--help":

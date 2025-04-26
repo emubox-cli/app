@@ -1,6 +1,7 @@
 {
+  "version": "1.0",
   "scripts": {
-    "build-main": "bun build ./src/main.ts --target=bun-linux-x64 --compile --minify --outfile dist/emubox",
+    "build-main": "bash build",
     "dev": "./dist/emubox"
   },
   "dependencies": {
