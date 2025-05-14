@@ -16,6 +16,7 @@
         "consoles": ["#util"],
         "makeLauncher": false,
         "installOptions": {
+            "flatpak": "com.steamgriddb.steam-rom-manager",
             "aur": "steam-rom-manager-git",
             "aurExportName": "steam-rom-manager",
             "gitRepo": "SteamGridDB/steam-rom-manager",
