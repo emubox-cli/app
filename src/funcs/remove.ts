@@ -17,6 +17,10 @@ export default async function(app: string) {
         console.error(`'${app}' isn't installed`);
         return;
     }
+
+    if (emu.installOptions.multi) {
+        emu.installOptions = emu.installOptions.multi[target.mIndex!];
+    }
     
     switch (target.source) {
         case "aur":
@@ -37,6 +41,10 @@ export default async function(app: string) {
             await $`rm $HOME/.local/share/applications/${target.id}.desktop`;
             await $`rm $HOME/.local/share/icons/emubox/${target.id}.png`;
             break;
+        case "manual":
+            console.log("Removing icon and desktop files...");
+            await $`rm $HOME/.local/share/applications/${target.id}.desktop`;
+            await $`rm $HOME/.local/share/icons/emubox/${target.id}.png`;
     
     }
 

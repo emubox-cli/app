@@ -152,16 +152,15 @@
         }
     },
     {
-        "name": "Torzu",
-        "id": "torzu",
+        "name": "Ryujinx (Legacy)",
+        "id": "ryujinx-legacy",
         "consoles": ["switch"],
         "installOptions": {
-            "aur": "torzu-git",
-            "aurExportName": "yuzu"
+            "manual": true
         }
     },
     {
-        "name": "Ryujinx",
+        "name": "Ryujinx (Ryubing)",
         "id": "ryujinx",
         "consoles": ["switch"],
         "installOptions": {
@@ -169,6 +168,50 @@
             "aurExportName": "ryujinx",
             "gitRepo": "Ryubing/Stable-Releases",
             "gitRe": "ryujinx-.*-x64.AppImage"
+        }
+    },
+    {
+        "name": "Yuzu (Legacy)",
+        "id": "yuzu-legacy",
+        "installOptions": {
+            "manual": true
+        }
+    },
+    {
+        "name": "Yuzu (Fork)",
+        "id": "yuzu-fork",
+        "consoles": ["switch"],
+        "installOptions": {
+            "multi": [
+                {
+                    "multiName": "Citron",
+                    "multiId": "citron",
+                    "aur": "citron-bin",
+                    "aurExportName": "citron",
+                    "gitRepo": "pkgforge-dev/Citron-AppImage",
+                    "gitRe": "Citron-v.*-anylinux-x86_64_v3.AppImage"
+                },
+                {
+                    "multiName": "Sudachi",
+                    "multiId": "sudachi",
+                    "aur": "sudachi",
+                    "aurExportName": "sudachi"
+                },
+                {
+                    "multiName": "Torzu",
+                    "multiId": "torzu",
+                    "aur": "torzu-git",
+                    "aurExportName": "yuzu",
+                    "gitRepo": "pkgforge-dev/Torzu-AppImage",
+                    "gitRe": "Torzu-.*-anylinux-x86_64_v3.AppImage"
+                },
+                {
+                    "multiName": "Eden",
+                    "multiId": "eden",
+                    "aur": "eden-git",
+                    "aurExportName": "eden"
+                }
+            ]
         }
     },
     {

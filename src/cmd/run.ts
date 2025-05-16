@@ -21,7 +21,7 @@ export default async function(...remainingArgs: string[]) {
         return;
     }
     
-    const targetApp = getAppFromId(emuId);
+    const targetApp = getAppFromId(emuId)!;
     const installData = config.installed.find(d => d.id === emuId);
     if (!installData) {
         if (!targetApp) 
@@ -31,6 +31,10 @@ export default async function(...remainingArgs: string[]) {
         return;
     }
 
+    if (targetApp.installOptions.multi) {
+        targetApp.installOptions = targetApp.installOptions.multi[installData.mIndex!];
+    }
+
     switch (installData.source) {
         case "aur": 
             await $`${containerPrefix}${targetApp?.installOptions.aurBin ?? targetApp?.installOptions.aurExportName} ${remainingArgs}`.nothrow();
@@ -38,7 +42,11 @@ export default async function(...remainingArgs: string[]) {
         case "flatpak":
             await $`${containerPrefix}flatpak run --system ${targetApp?.installOptions.flatpak} ${remainingArgs}`.nothrow();
             break;
+        case "manual":
+            await $`${containerPrefix}${installData.file} ${remainingArgs}`.nothrow();
+            break;
         case "github":
             await $`${containerPrefix}$HOME/.emubox/apps/${installData.file} ${remainingArgs}`.nothrow();
+            break;
     }
 }

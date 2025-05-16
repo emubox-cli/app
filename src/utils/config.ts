@@ -8,7 +8,7 @@ export function dir(...path: string[]) {
     return join(homedir(), ".emubox", ...path);
 }
 
-export type InstallationTypes = "aur" | "flatpak" | "github";
+export type InstallationTypes = "aur" | "flatpak" | "github" | "manual";
 
 export interface Config {
     saveDir: string;
@@ -16,6 +16,7 @@ export interface Config {
     customLaunchers: { [x: string]: string };
     installed: {
         id: string;
+        mIndex?: number;
         source: InstallationTypes;
         file?: string;
         releaseId?: string;

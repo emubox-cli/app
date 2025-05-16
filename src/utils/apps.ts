@@ -38,6 +38,10 @@ export interface BoxApp {
     makeLauncher?: boolean;
     overrideAvailible?: boolean;
     installOptions: {
+        multi?: BoxApp["installOptions"][];
+        multiName?: string;
+        multiId?: string;
+        manual: boolean;
         flatpak?: string;
         flatpakOverrideFs?: boolean;
         aur?: string;

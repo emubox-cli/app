@@ -1,16 +1,18 @@
 [
     {
         "parserType": "Glob",
-        "configTitle": "Emulators",
+        "configTitle": "PPSSPP",
         "steamDirectory": "${steamdirglobal}",
-        "romDirectory": "EMUBOX_DIR/launchers",
+        "romDirectory": "<emubox>/roms/psp",
         "steamCategories": [
-            "Emulators"
+            "PSP"
         ],
-        "executableArgs": "",
+        "executableArgs": "run ppsspp \"${filePath}\"",
         "executableModifier": "",
         "startInDirectory": "",
         "titleModifier": "",
+        "fetchControllerTemplatesButton": null,
+        "removeControllersButton": null,
         "steamInputEnabled": "1",
         "imageProviders": [
             "sgdb",
@@ -27,10 +29,10 @@
             ]
         },
         "parserInputs": {
-            "glob": "${title}.@(sh|SH)"
+            "glob": "${title}@(.elf|.ELF|.cso|.CSO|.iso|.ISO|.pbp|.PBP|.prx|.PRX)"
         },
         "executable": {
-            "path": "",
+            "path": "<emubox-bin>",
             "shortcutPassthrough": false,
             "appendArgsToExecutable": false
         },
@@ -70,6 +72,7 @@
                 ],
                 "sizes": [],
                 "sizesHero": [],
+                "sizesTall": null,
                 "sizesIcon": []
             }
         },
@@ -87,576 +90,31 @@
             "logo": null,
             "icon": null
         },
-        "parserId": "173190773171877582",
-        "version": 25
-    },
-    {
-        "parserType": "Glob",
-        "configTitle": "mGBA",
-        "steamDirectory": "${steamdirglobal}",
-        "romDirectory": "/gba",
-        "steamCategories": [
-            "GBA"
-        ],
-        "executableArgs": "-f \"${filePath}\"",
-        "executableModifier": "",
-        "startInDirectory": "",
-        "titleModifier": "",
-        "steamInputEnabled": "1",
-        "imageProviders": [
-            "sgdb",
-            "steamCDN"
-        ],
-        "onlineImageQueries": [
-            "${fuzzyTitle}"
-        ],
-        "imagePool": "",
-        "drmProtect": false,
-        "userAccounts": {
-            "specifiedAccounts": [
-                "Global"
-            ]
-        },
-        "parserInputs": {
-            "glob": "${title}.@(ZIP|zip|GBA|gba)"
-        },
-        "executable": {
-            "path": "EMUBOX_DIR/launchers/mgba.sh",
-            "shortcutPassthrough": false,
-            "appendArgsToExecutable": false
-        },
-        "titleFromVariable": {
-            "limitToGroups": [],
-            "caseInsensitiveVariables": false,
-            "skipFileIfVariableWasNotFound": false
-        },
-        "fuzzyMatch": {
-            "replaceDiacritics": true,
-            "removeCharacters": true,
-            "removeBrackets": true
-        },
-        "controllers": {
-            "ps4": null,
-            "ps5": null,
-            "ps5_edge": null,
-            "xbox360": null,
-            "xboxone": null,
-            "xboxelite": null,
-            "switch_joycon_left": null,
-            "switch_joycon_right": null,
-            "switch_pro": null,
-            "neptune": null,
-            "steamcontroller_gordon": null
-        },
-        "imageProviderAPIs": {
-            "sgdb": {
-                "nsfw": false,
-                "humor": false,
-                "styles": [],
-                "stylesHero": [],
-                "stylesLogo": [],
-                "stylesIcon": [],
-                "imageMotionTypes": [
-                    "static"
-                ],
-                "sizes": [],
-                "sizesHero": [],
-                "sizesIcon": []
-            }
-        },
-        "defaultImage": {
-            "tall": null,
-            "long": null,
-            "hero": null,
-            "logo": null,
-            "icon": null
-        },
-        "localImages": {
-            "tall": null,
-            "long": null,
-            "hero": null,
-            "logo": null,
-            "icon": null
-        },
-        "parserId": "173205216778833570",
-        "version": 25
-    },
-    {
-        "parserType": "Glob",
-        "configTitle": "MelonDS",
-        "steamDirectory": "${steamdirglobal}",
-        "romDirectory": "ROMS_DIR/nds",
-        "steamCategories": [
-            "DS"
-        ],
-        "executableArgs": "-f \"${filePath}\"",
-        "executableModifier": "",
-        "startInDirectory": "",
-        "titleModifier": "",
-        "steamInputEnabled": "1",
-        "imageProviders": [
-            "sgdb",
-            "steamCDN"
-        ],
-        "onlineImageQueries": [
-            "${fuzzyTitle}"
-        ],
-        "imagePool": "",
-        "drmProtect": false,
-        "userAccounts": {
-            "specifiedAccounts": [
-                "Global"
-            ]
-        },
-        "parserInputs": {
-            "glob": "${title}.@(ZIP|zip|NDS|nds)"
-        },
-        "executable": {
-            "path": "EMUBOX_DIR/launchers/melonds.sh",
-            "shortcutPassthrough": false,
-            "appendArgsToExecutable": false
-        },
-        "titleFromVariable": {
-            "limitToGroups": [],
-            "caseInsensitiveVariables": false,
-            "skipFileIfVariableWasNotFound": false
-        },
-        "fuzzyMatch": {
-            "replaceDiacritics": true,
-            "removeCharacters": true,
-            "removeBrackets": true
-        },
-        "controllers": {
-            "ps4": null,
-            "ps5": null,
-            "ps5_edge": null,
-            "xbox360": null,
-            "xboxone": null,
-            "xboxelite": null,
-            "switch_joycon_left": null,
-            "switch_joycon_right": null,
-            "switch_pro": null,
-            "neptune": null,
-            "steamcontroller_gordon": null
-        },
-        "imageProviderAPIs": {
-            "sgdb": {
-                "nsfw": false,
-                "humor": false,
-                "styles": [],
-                "stylesHero": [],
-                "stylesLogo": [],
-                "stylesIcon": [],
-                "imageMotionTypes": [
-                    "static"
-                ],
-                "sizes": [],
-                "sizesHero": [],
-                "sizesIcon": []
-            }
-        },
-        "defaultImage": {
-            "tall": null,
-            "long": null,
-            "hero": null,
-            "logo": null,
-            "icon": null
-        },
-        "localImages": {
-            "tall": null,
-            "long": null,
-            "hero": null,
-            "logo": null,
-            "icon": null
-        },
-        "parserId": "173205255051734150",
-        "version": 25
-    },
-    {
-        "parserType": "Glob",
-        "configTitle": "Snes9x",
-        "steamDirectory": "${steamdirglobal}",
-        "romDirectory": "ROMS_DIR/snes",
-        "steamCategories": [
-            "SNES"
-        ],
-        "executableArgs": "\"${filePath}\"",
-        "executableModifier": "",
-        "startInDirectory": "",
-        "titleModifier": "",
-        "steamInputEnabled": "1",
-        "imageProviders": [
-            "sgdb",
-            "steamCDN"
-        ],
-        "onlineImageQueries": [
-            "${fuzzyTitle}"
-        ],
-        "imagePool": "",
-        "drmProtect": false,
-        "userAccounts": {
-            "specifiedAccounts": [
-                "Global"
-            ]
-        },
-        "parserInputs": {
-            "glob": "${title}.@(ZIP|zip|SFC|sfc)"
-        },
-        "executable": {
-            "path": "EMUBOX_DIR/launchers/snes9x.sh",
-            "shortcutPassthrough": false,
-            "appendArgsToExecutable": false
-        },
-        "titleFromVariable": {
-            "limitToGroups": [],
-            "caseInsensitiveVariables": false,
-            "skipFileIfVariableWasNotFound": false
-        },
-        "fuzzyMatch": {
-            "replaceDiacritics": true,
-            "removeCharacters": true,
-            "removeBrackets": true
-        },
-        "controllers": {
-            "ps4": null,
-            "ps5": null,
-            "ps5_edge": null,
-            "xbox360": null,
-            "xboxone": null,
-            "xboxelite": null,
-            "switch_joycon_left": null,
-            "switch_joycon_right": null,
-            "switch_pro": null,
-            "neptune": null,
-            "steamcontroller_gordon": null
-        },
-        "imageProviderAPIs": {
-            "sgdb": {
-                "nsfw": false,
-                "humor": false,
-                "styles": [],
-                "stylesHero": [],
-                "stylesLogo": [],
-                "stylesIcon": [],
-                "imageMotionTypes": [
-                    "static"
-                ],
-                "sizes": [],
-                "sizesHero": [],
-                "sizesIcon": []
-            }
-        },
-        "defaultImage": {
-            "tall": null,
-            "long": null,
-            "hero": null,
-            "logo": null,
-            "icon": null
-        },
-        "localImages": {
-            "tall": null,
-            "long": null,
-            "hero": null,
-            "logo": null,
-            "icon": null
-        },
-        "parserId": "173205188551156199",
-        "version": 25
-    },
-    {
-        "parserType": "Glob",
-        "configTitle": "Dolphin - GameCube",
-        "steamDirectory": "${steamdirglobal}",
-        "romDirectory": "ROMS_DIR/gc",
-        "steamCategories": [
-            "GameCube"
-        ],
-        "executableArgs": "-f \"${filePath}\"",
-        "executableModifier": "",
-        "startInDirectory": "",
-        "titleModifier": "",
-        "steamInputEnabled": "1",
-        "imageProviders": [
-            "sgdb",
-            "steamCDN"
-        ],
-        "onlineImageQueries": [
-            "${fuzzyTitle}"
-        ],
-        "imagePool": "",
-        "drmProtect": false,
-        "userAccounts": {
-            "specifiedAccounts": [
-                "Global"
-            ]
-        },
-        "parserInputs": {
-            "glob": "${title}.@(ZIP|zip|ISO|iso|CISO|ciso|RVZ|rvz)"
-        },
-        "executable": {
-            "path": "EMUBOX_DIR/launchers/dolphin-emu.sh",
-            "shortcutPassthrough": false,
-            "appendArgsToExecutable": false
-        },
-        "titleFromVariable": {
-            "limitToGroups": [],
-            "caseInsensitiveVariables": false,
-            "skipFileIfVariableWasNotFound": false
-        },
-        "fuzzyMatch": {
-            "replaceDiacritics": true,
-            "removeCharacters": true,
-            "removeBrackets": true
-        },
-        "controllers": {
-            "ps4": null,
-            "ps5": null,
-            "ps5_edge": null,
-            "xbox360": null,
-            "xboxone": null,
-            "xboxelite": null,
-            "switch_joycon_left": null,
-            "switch_joycon_right": null,
-            "switch_pro": null,
-            "neptune": null,
-            "steamcontroller_gordon": null
-        },
-        "imageProviderAPIs": {
-            "sgdb": {
-                "nsfw": false,
-                "humor": false,
-                "styles": [],
-                "stylesHero": [],
-                "stylesLogo": [],
-                "stylesIcon": [],
-                "imageMotionTypes": [
-                    "static"
-                ],
-                "sizes": [],
-                "sizesHero": [],
-                "sizesIcon": []
-            }
-        },
-        "defaultImage": {
-            "tall": null,
-            "long": null,
-            "hero": null,
-            "logo": null,
-            "icon": null
-        },
-        "localImages": {
-            "tall": null,
-            "long": null,
-            "hero": null,
-            "logo": null,
-            "icon": null
-        },
-        "parserId": "17320527076135886",
-        "version": 25
-    },
-    {
-        "parserType": "Glob",
-        "configTitle": "Dolphin - Wii",
-        "steamDirectory": "${steamdirglobal}",
-        "romDirectory": "ROMS_DIR/wii",
-        "steamCategories": [
-            "Wii"
-        ],
-        "executableArgs": "-e \"${filePath}\"",
-        "executableModifier": "",
-        "startInDirectory": "",
-        "titleModifier": "",
-        "steamInputEnabled": "1",
-        "imageProviders": [
-            "sgdb",
-            "steamCDN"
-        ],
-        "onlineImageQueries": [
-            "${fuzzyTitle}"
-        ],
-        "imagePool": "",
-        "drmProtect": false,
-        "userAccounts": {
-            "specifiedAccounts": [
-                "Global"
-            ]
-        },
-        "parserInputs": {
-            "glob": "${title}.@(ZIP|zip|ISO|iso|CISO|ciso|RVZ|rvz|WBFS|wbfs|WAD|wad)"
-        },
-        "executable": {
-            "path": "EMUBOX_DIR/launchers/dolphin-emu.sh",
-            "shortcutPassthrough": false,
-            "appendArgsToExecutable": false
-        },
-        "titleFromVariable": {
-            "limitToGroups": [],
-            "caseInsensitiveVariables": false,
-            "skipFileIfVariableWasNotFound": false
-        },
-        "fuzzyMatch": {
-            "replaceDiacritics": true,
-            "removeCharacters": true,
-            "removeBrackets": true
-        },
-        "controllers": {
-            "ps4": null,
-            "ps5": null,
-            "ps5_edge": null,
-            "xbox360": null,
-            "xboxone": null,
-            "xboxelite": null,
-            "switch_joycon_left": null,
-            "switch_joycon_right": null,
-            "switch_pro": null,
-            "neptune": null,
-            "steamcontroller_gordon": null
-        },
-        "imageProviderAPIs": {
-            "sgdb": {
-                "nsfw": false,
-                "humor": false,
-                "styles": [],
-                "stylesHero": [],
-                "stylesLogo": [],
-                "stylesIcon": [],
-                "imageMotionTypes": [
-                    "static"
-                ],
-                "sizes": [],
-                "sizesHero": [],
-                "sizesIcon": []
-            }
-        },
-        "defaultImage": {
-            "tall": null,
-            "long": null,
-            "hero": null,
-            "logo": null,
-            "icon": null
-        },
-        "localImages": {
-            "tall": null,
-            "long": null,
-            "hero": null,
-            "logo": null,
-            "icon": null
-        },
-        "parserId": "173205280242940528",
-        "version": 25
-    },
-    {
-        "parserType": "Glob",
-        "configTitle": "Torzu",
-        "steamDirectory": "${steamdirglobal}",
-        "romDirectory": "ROMS_DIR/switch",
-        "steamCategories": [
-            "Nintendo Switch"
-        ],
-        "executableArgs": "-f -g \"${filePath}\"",
-        "executableModifier": "",
-        "startInDirectory": "",
-        "titleModifier": "",
-        "steamInputEnabled": "1",
-        "imageProviders": [
-            "sgdb",
-            "steamCDN"
-        ],
-        "onlineImageQueries": [
-            "${fuzzyTitle}"
-        ],
-        "imagePool": "",
-        "drmProtect": false,
-        "userAccounts": {
-            "specifiedAccounts": [
-                "Global"
-            ]
-        },
-        "parserInputs": {
-            "glob": "${title}.@(XCI|xci|NSP|nsp)"
-        },
-        "executable": {
-            "path": "EMUBOX_DIR/launchers/torzu.sh",
-            "shortcutPassthrough": false,
-            "appendArgsToExecutable": false
-        },
-        "titleFromVariable": {
-            "limitToGroups": [],
-            "caseInsensitiveVariables": false,
-            "skipFileIfVariableWasNotFound": false
-        },
-        "fuzzyMatch": {
-            "replaceDiacritics": true,
-            "removeCharacters": true,
-            "removeBrackets": true
-        },
-        "controllers": {
-            "ps4": null,
-            "ps5": null,
-            "ps5_edge": null,
-            "xbox360": null,
-            "xboxone": null,
-            "xboxelite": null,
-            "switch_joycon_left": null,
-            "switch_joycon_right": null,
-            "switch_pro": null,
-            "neptune": null,
-            "steamcontroller_gordon": null
-        },
-        "imageProviderAPIs": {
-            "sgdb": {
-                "nsfw": false,
-                "humor": false,
-                "styles": [],
-                "stylesHero": [],
-                "stylesLogo": [],
-                "stylesIcon": [],
-                "imageMotionTypes": [
-                    "static"
-                ],
-                "sizes": [],
-                "sizesHero": [],
-                "sizesIcon": []
-            }
-        },
-        "defaultImage": {
-            "tall": null,
-            "long": null,
-            "hero": null,
-            "logo": null,
-            "icon": null
-        },
-        "localImages": {
-            "tall": null,
-            "long": null,
-            "hero": null,
-            "logo": null,
-            "icon": null
-        },
-        "parserId": "173205302343637694",
+        "parserId": "174737064664212755",
         "version": 25
     },
     {
         "parserType": "Glob",
         "configTitle": "DuckStation",
         "steamDirectory": "${steamdirglobal}",
-        "romDirectory": "ROMS_DIR/psx",
+        "romDirectory": "<emubox>/roms/psx",
         "steamCategories": [
-            "PlayStation"
+            "PS1"
         ],
-        "executableArgs": "-f  \"${filePath}\"",
-        "executableModifier": "",
+        "executableArgs": "run duckstation -batch -fullscreen \"${filePath}\"",
+        "executableModifier": "\"${exePath}\"",
         "startInDirectory": "",
-        "titleModifier": "",
+        "titleModifier": "${fuzzyTitle}",
+        "fetchControllerTemplatesButton": null,
+        "removeControllersButton": null,
         "steamInputEnabled": "1",
         "imageProviders": [
-            "sgdb",
-            "steamCDN"
+            "sgdb"
         ],
         "onlineImageQueries": [
             "${fuzzyTitle}"
         ],
-        "imagePool": "",
+        "imagePool": "${fuzzyTitle}",
         "drmProtect": false,
         "userAccounts": {
             "specifiedAccounts": [
@@ -664,12 +122,12 @@
             ]
         },
         "parserInputs": {
-            "glob": "**/*/${title}.@(BIN|bin)"
+            "glob": "${title}@(.cue|.CUE|.chd|.CHD|.ecm|.ECM|.iso|.ISO|.m3u|.M3U|.mds|.MDS|.pbp|.PBP)"
         },
         "executable": {
-            "path": "EMUBOX_DIR/launchers/duckstation.sh",
+            "path": "<emubox-bin>",
             "shortcutPassthrough": false,
-            "appendArgsToExecutable": false
+            "appendArgsToExecutable": true
         },
         "titleFromVariable": {
             "limitToGroups": [],
@@ -707,47 +165,49 @@
                 ],
                 "sizes": [],
                 "sizesHero": [],
+                "sizesTall": null,
                 "sizesIcon": []
             }
         },
         "defaultImage": {
-            "tall": null,
-            "long": null,
-            "hero": null,
-            "logo": null,
-            "icon": null
+            "tall": "",
+            "long": "",
+            "hero": "",
+            "logo": "",
+            "icon": ""
         },
         "localImages": {
-            "tall": null,
-            "long": null,
-            "hero": null,
-            "logo": null,
-            "icon": null
+            "tall": "",
+            "long": "",
+            "hero": "",
+            "logo": "",
+            "icon": ""
         },
-        "parserId": "173205368221416934",
+        "parserId": "174737224089528265",
         "version": 25
     },
     {
         "parserType": "Glob",
         "configTitle": "PCSX2",
         "steamDirectory": "${steamdirglobal}",
-        "romDirectory": "ROMS_DIR/ps2",
+        "romDirectory": "<emubox>/roms/ps2",
         "steamCategories": [
-            "PlayStation 2"
+            "PS2"
         ],
-        "executableArgs": "-f  \"${filePath}\"",
-        "executableModifier": "",
+        "executableArgs": "run pcsx2 \"${filePath}\" -batch -fullscreen -nogui",
+        "executableModifier": "\"${exePath}\"",
         "startInDirectory": "",
-        "titleModifier": "",
+        "titleModifier": "${fuzzyTitle}",
+        "fetchControllerTemplatesButton": null,
+        "removeControllersButton": null,
         "steamInputEnabled": "1",
         "imageProviders": [
-            "sgdb",
-            "steamCDN"
+            "sgdb"
         ],
         "onlineImageQueries": [
             "${fuzzyTitle}"
         ],
-        "imagePool": "",
+        "imagePool": "${fuzzyTitle}",
         "drmProtect": false,
         "userAccounts": {
             "specifiedAccounts": [
@@ -755,12 +215,12 @@
             ]
         },
         "parserInputs": {
-            "glob": "${title}.@(ISO|iso)"
+            "glob": "${title}@(.bin|.BIN|.chd|.CHD|.cso|.CSO|.dump|.DUMP|.gz|.GZ|.img|.IMG|.iso|.ISO|.mdf|.MDF|.nrg|.NRG)"
         },
         "executable": {
-            "path": "EMUBOX_DIR/launchers/pcsx2.sh",
+            "path": "<emubox-bin>",
             "shortcutPassthrough": false,
-            "appendArgsToExecutable": false
+            "appendArgsToExecutable": true
         },
         "titleFromVariable": {
             "limitToGroups": [],
@@ -798,47 +258,49 @@
                 ],
                 "sizes": [],
                 "sizesHero": [],
+                "sizesTall": null,
                 "sizesIcon": []
             }
         },
         "defaultImage": {
-            "tall": null,
-            "long": null,
-            "hero": null,
-            "logo": null,
-            "icon": null
+            "tall": "",
+            "long": "",
+            "hero": "",
+            "logo": "",
+            "icon": ""
         },
         "localImages": {
-            "tall": null,
-            "long": null,
-            "hero": null,
-            "logo": null,
-            "icon": null
+            "tall": "",
+            "long": "",
+            "hero": "",
+            "logo": "",
+            "icon": ""
         },
-        "parserId": "17320533241153908",
+        "parserId": "174737229190769136",
         "version": 25
     },
     {
         "parserType": "Glob",
-        "configTitle": "PPSSPP",
+        "configTitle": "RPCS3 (ISO)",
         "steamDirectory": "${steamdirglobal}",
-        "romDirectory": "ROMS_DIR/psp",
+        "romDirectory": "<emubox>/roms/ps3",
         "steamCategories": [
-            "PlayStation Portable"
+            "PS3"
         ],
-        "executableArgs": "-f \"${filePath}\"",
-        "executableModifier": "",
+        "executableArgs": "run rpcs3 --no-gui \"${filePath}\"",
+        "executableModifier": "\"${exePath}\"",
         "startInDirectory": "",
-        "titleModifier": "",
+        "titleModifier": "${fuzzyTitle}",
+        "fetchControllerTemplatesButton": null,
+        "removeControllersButton": null,
         "steamInputEnabled": "1",
         "imageProviders": [
-            "sgdb",
-            "steamCDN"
+            "sgdb"
         ],
         "onlineImageQueries": [
             "${fuzzyTitle}"
         ],
-        "imagePool": "",
+        "imagePool": "${fuzzyTitle}",
         "drmProtect": false,
         "userAccounts": {
             "specifiedAccounts": [
@@ -846,15 +308,17 @@
             ]
         },
         "parserInputs": {
-            "glob": "${title}.@(ISO|iso)"
+            "glob": "${title}/PS3_GAME/USRDIR/@(eboot.bin|EBOOT.BIN)"
         },
         "executable": {
-            "path": "/usr/bin/PPSSPPSDL",
+            "path": "<emubox-bin>",
             "shortcutPassthrough": false,
-            "appendArgsToExecutable": false
+            "appendArgsToExecutable": true
         },
         "titleFromVariable": {
-            "limitToGroups": [],
+            "limitToGroups": [
+                "PS3"
+            ],
             "caseInsensitiveVariables": false,
             "skipFileIfVariableWasNotFound": false
         },
@@ -889,47 +353,49 @@
                 ],
                 "sizes": [],
                 "sizesHero": [],
+                "sizesTall": null,
                 "sizesIcon": []
             }
         },
         "defaultImage": {
-            "tall": null,
-            "long": null,
-            "hero": null,
-            "logo": null,
-            "icon": null
+            "tall": "",
+            "long": "",
+            "hero": "",
+            "logo": "",
+            "icon": ""
         },
         "localImages": {
-            "tall": null,
-            "long": null,
-            "hero": null,
-            "logo": null,
-            "icon": null
+            "tall": "",
+            "long": "",
+            "hero": "",
+            "logo": "",
+            "icon": ""
         },
-        "parserId": "173205360756260952",
+        "parserId": "174737254167524729",
         "version": 25
     },
     {
         "parserType": "Glob",
-        "configTitle": "Cemu",
+        "configTitle": "RPCS3 (PKG)",
         "steamDirectory": "${steamdirglobal}",
-        "romDirectory": "ROMS_DIR/wiiu/roms",
+        "romDirectory": "<emubox>/roms/ps3",
         "steamCategories": [
-            "Wii U"
+            "PS3"
         ],
-        "executableArgs": "-f -g \"${filePath}\"",
-        "executableModifier": "",
+        "executableArgs": "run rpcs3 --no-gui \"${filePath}\"",
+        "executableModifier": "\"${exePath}\"",
         "startInDirectory": "",
-        "titleModifier": "",
+        "titleModifier": "${fuzzyTitle}",
+        "fetchControllerTemplatesButton": null,
+        "removeControllersButton": null,
         "steamInputEnabled": "1",
         "imageProviders": [
-            "sgdb",
-            "steamCDN"
+            "sgdb"
         ],
         "onlineImageQueries": [
             "${fuzzyTitle}"
         ],
-        "imagePool": "",
+        "imagePool": "${fuzzyTitle}",
         "drmProtect": false,
         "userAccounts": {
             "specifiedAccounts": [
@@ -937,12 +403,107 @@
             ]
         },
         "parserInputs": {
-            "glob": "**/*/${title}.@(WUA|wua)"
+            "glob": "${title}/USRDIR/@(eboot.bin|EBOOT.BIN)"
         },
         "executable": {
-            "path": "/usr/bin/Cemu",
+            "path": "<emubox-bin>",
             "shortcutPassthrough": false,
-            "appendArgsToExecutable": false
+            "appendArgsToExecutable": true
+        },
+        "titleFromVariable": {
+            "limitToGroups": [
+                "PS3"
+            ],
+            "caseInsensitiveVariables": false,
+            "skipFileIfVariableWasNotFound": false
+        },
+        "fuzzyMatch": {
+            "replaceDiacritics": true,
+            "removeCharacters": true,
+            "removeBrackets": true
+        },
+        "controllers": {
+            "ps4": null,
+            "ps5": null,
+            "ps5_edge": null,
+            "xbox360": null,
+            "xboxone": null,
+            "xboxelite": null,
+            "switch_joycon_left": null,
+            "switch_joycon_right": null,
+            "switch_pro": null,
+            "neptune": null,
+            "steamcontroller_gordon": null
+        },
+        "imageProviderAPIs": {
+            "sgdb": {
+                "nsfw": false,
+                "humor": false,
+                "styles": [],
+                "stylesHero": [],
+                "stylesLogo": [],
+                "stylesIcon": [],
+                "imageMotionTypes": [
+                    "static"
+                ],
+                "sizes": [],
+                "sizesHero": [],
+                "sizesTall": null,
+                "sizesIcon": []
+            }
+        },
+        "defaultImage": {
+            "tall": "",
+            "long": "",
+            "hero": "",
+            "logo": "",
+            "icon": ""
+        },
+        "localImages": {
+            "tall": "",
+            "long": "",
+            "hero": "",
+            "logo": "",
+            "icon": ""
+        },
+        "parserId": "174737256830937989",
+        "version": 25
+    },
+    {
+        "parserType": "Glob",
+        "configTitle": "Snes9x",
+        "steamDirectory": "${steamdirglobal}",
+        "romDirectory": "<emubox>/roms/snes",
+        "steamCategories": [
+            "SNES"
+        ],
+        "executableArgs": "run snes9x \"${filePath}\"",
+        "executableModifier": "\"${exePath}\"",
+        "startInDirectory": "",
+        "titleModifier": "${fuzzyTitle}",
+        "fetchControllerTemplatesButton": null,
+        "removeControllersButton": null,
+        "steamInputEnabled": "1",
+        "imageProviders": [
+            "sgdb"
+        ],
+        "onlineImageQueries": [
+            "${fuzzyTitle}"
+        ],
+        "imagePool": "${fuzzyTitle}",
+        "drmProtect": false,
+        "userAccounts": {
+            "specifiedAccounts": [
+                "Global"
+            ]
+        },
+        "parserInputs": {
+            "glob": "${title}@(.7z|.7Z|.bs|.BS|.fig|.FIG|.sfc|.SFC|.smc|.SMC|.swc|.SWC|.zip|.ZIP)"
+        },
+        "executable": {
+            "path": "<emubox-bin>",
+            "shortcutPassthrough": false,
+            "appendArgsToExecutable": true
         },
         "titleFromVariable": {
             "limitToGroups": [],
@@ -980,38 +541,134 @@
                 ],
                 "sizes": [],
                 "sizesHero": [],
+                "sizesTall": null,
                 "sizesIcon": []
             }
         },
         "defaultImage": {
-            "tall": null,
-            "long": null,
-            "hero": null,
-            "logo": null,
-            "icon": null
+            "tall": "",
+            "long": "",
+            "hero": "",
+            "logo": "",
+            "icon": ""
         },
         "localImages": {
-            "tall": null,
-            "long": null,
-            "hero": null,
-            "logo": null,
-            "icon": null
+            "tall": "",
+            "long": "",
+            "hero": "",
+            "logo": "",
+            "icon": ""
         },
-        "parserId": "173205404806180853",
+        "parserId": "174737277031831113",
         "version": 25
     },
     {
         "parserType": "Glob",
         "configTitle": "Rosalie's Mupen GUI",
         "steamDirectory": "${steamdirglobal}",
-        "romDirectory": "ROMS_DIR/n64",
+        "romDirectory": "<emubox>/roms/n64",
         "steamCategories": [
             "N64"
         ],
-        "executableArgs": "--fullscreen \"${filePath}\"",
+        "executableArgs": "run rmg --fullscreen \"${filePath}\"",
+        "executableModifier": "\"${exePath}\"",
+        "startInDirectory": "",
+        "titleModifier": "${fuzzyTitle}",
+        "fetchControllerTemplatesButton": null,
+        "removeControllersButton": null,
+        "steamInputEnabled": "1",
+        "imageProviders": [
+            "sgdb"
+        ],
+        "onlineImageQueries": [
+            "${fuzzyTitle}"
+        ],
+        "imagePool": "${fuzzyTitle}",
+        "drmProtect": false,
+        "userAccounts": {
+            "specifiedAccounts": [
+                "Global"
+            ]
+        },
+        "parserInputs": {
+            "glob": "${title}@(.n64|.N64|.v64|.V64|.z64|.Z64)"
+        },
+        "executable": {
+            "path": "<emubox-bin>",
+            "shortcutPassthrough": false,
+            "appendArgsToExecutable": true
+        },
+        "titleFromVariable": {
+            "limitToGroups": [],
+            "caseInsensitiveVariables": false,
+            "skipFileIfVariableWasNotFound": false
+        },
+        "fuzzyMatch": {
+            "replaceDiacritics": true,
+            "removeCharacters": true,
+            "removeBrackets": true
+        },
+        "controllers": {
+            "ps4": null,
+            "ps5": null,
+            "ps5_edge": null,
+            "xbox360": null,
+            "xboxone": null,
+            "xboxelite": null,
+            "switch_joycon_left": null,
+            "switch_joycon_right": null,
+            "switch_pro": null,
+            "neptune": null,
+            "steamcontroller_gordon": null
+        },
+        "imageProviderAPIs": {
+            "sgdb": {
+                "nsfw": false,
+                "humor": false,
+                "styles": [],
+                "stylesHero": [],
+                "stylesLogo": [],
+                "stylesIcon": [],
+                "imageMotionTypes": [
+                    "static"
+                ],
+                "sizes": [],
+                "sizesHero": [],
+                "sizesTall": null,
+                "sizesIcon": []
+            }
+        },
+        "defaultImage": {
+            "tall": "",
+            "long": "",
+            "hero": "",
+            "logo": "",
+            "icon": ""
+        },
+        "localImages": {
+            "tall": "",
+            "long": "",
+            "hero": "",
+            "logo": "",
+            "icon": ""
+        },
+        "parserId": "174737772307851138",
+        "version": 25
+    },
+    {
+        "parserType": "Glob",
+        "configTitle": "MGBA",
+        "steamDirectory": "${steamdirglobal}",
+        "romDirectory": "<emubox>/roms/gba",
+        "steamCategories": [
+            "GBA"
+        ],
+        "executableArgs": "run mgba \"${filePath}\"",
         "executableModifier": "",
         "startInDirectory": "",
         "titleModifier": "",
+        "fetchControllerTemplatesButton": null,
+        "removeControllersButton": null,
         "steamInputEnabled": "1",
         "imageProviders": [
             "sgdb",
@@ -1028,10 +685,10 @@
             ]
         },
         "parserInputs": {
-            "glob": "${title}.@(ZIP|zip|N64|n64|Z64|z64)"
+            "glob": "${title}@(.7z|.7Z|.gba|.GBA|.zip|.ZIP)"
         },
         "executable": {
-            "path": "EMUBOX_DIR/launchers/rmg.sh",
+            "path": "<emubox-bin>",
             "shortcutPassthrough": false,
             "appendArgsToExecutable": false
         },
@@ -1071,24 +728,586 @@
                 ],
                 "sizes": [],
                 "sizesHero": [],
+                "sizesTall": null,
                 "sizesIcon": []
             }
         },
         "defaultImage": {
-            "tall": null,
-            "long": null,
-            "hero": null,
-            "logo": null,
-            "icon": null
+            "tall": "",
+            "long": "",
+            "hero": "",
+            "logo": "",
+            "icon": ""
         },
         "localImages": {
-            "tall": null,
-            "long": null,
-            "hero": null,
-            "logo": null,
-            "icon": null
+            "tall": "",
+            "long": "",
+            "hero": "",
+            "logo": "",
+            "icon": ""
         },
-        "parserId": "173205584965865040",
+        "parserId": "174737534572932634",
+        "version": 25
+    },
+    {
+        "parserType": "Glob",
+        "configTitle": "MelonDS",
+        "steamDirectory": "${steamdirglobal}",
+        "romDirectory": "<emubox>/roms/nds",
+        "steamCategories": [
+            "DS"
+        ],
+        "executableArgs": "run melonds -f ${filePath}",
+        "executableModifier": "",
+        "startInDirectory": "",
+        "titleModifier": "",
+        "fetchControllerTemplatesButton": null,
+        "removeControllersButton": null,
+        "steamInputEnabled": "1",
+        "imageProviders": [
+            "sgdb",
+            "steamCDN"
+        ],
+        "onlineImageQueries": [
+            "${fuzzyTitle}"
+        ],
+        "imagePool": "",
+        "drmProtect": false,
+        "userAccounts": {
+            "specifiedAccounts": [
+                "Global"
+            ]
+        },
+        "parserInputs": {
+            "glob": "${title}@(.7z|.7Z|.nds|.NDS|.zip|.ZIP)"
+        },
+        "executable": {
+            "path": "<emubox-bin>",
+            "shortcutPassthrough": false,
+            "appendArgsToExecutable": false
+        },
+        "titleFromVariable": {
+            "limitToGroups": [],
+            "caseInsensitiveVariables": false,
+            "skipFileIfVariableWasNotFound": false
+        },
+        "fuzzyMatch": {
+            "replaceDiacritics": true,
+            "removeCharacters": true,
+            "removeBrackets": true
+        },
+        "controllers": {
+            "ps4": null,
+            "ps5": null,
+            "ps5_edge": null,
+            "xbox360": null,
+            "xboxone": null,
+            "xboxelite": null,
+            "switch_joycon_left": null,
+            "switch_joycon_right": null,
+            "switch_pro": null,
+            "neptune": null,
+            "steamcontroller_gordon": null
+        },
+        "imageProviderAPIs": {
+            "sgdb": {
+                "nsfw": false,
+                "humor": false,
+                "styles": [],
+                "stylesHero": [],
+                "stylesLogo": [],
+                "stylesIcon": [],
+                "imageMotionTypes": [
+                    "static"
+                ],
+                "sizes": [],
+                "sizesHero": [],
+                "sizesTall": null,
+                "sizesIcon": []
+            }
+        },
+        "defaultImage": {
+            "tall": "",
+            "long": "",
+            "hero": "",
+            "logo": "",
+            "icon": ""
+        },
+        "localImages": {
+            "tall": "",
+            "long": "",
+            "hero": "",
+            "logo": "",
+            "icon": ""
+        },
+        "parserId": "174737592071190223",
+        "version": 25
+    },
+    {
+        "parserType": "Glob",
+        "configTitle": "Dolphin - Gamecube",
+        "steamDirectory": "${steamdirglobal}",
+        "romDirectory": "<emubox>/roms/gc",
+        "steamCategories": [
+            "Gamecube"
+        ],
+        "executableArgs": "run dolphin-emu -b -e \"${filePath}\"",
+        "executableModifier": "",
+        "startInDirectory": "",
+        "titleModifier": "",
+        "fetchControllerTemplatesButton": null,
+        "removeControllersButton": null,
+        "steamInputEnabled": "1",
+        "imageProviders": [
+            "sgdb",
+            "steamCDN"
+        ],
+        "onlineImageQueries": [
+            "${fuzzyTitle}"
+        ],
+        "imagePool": "",
+        "drmProtect": false,
+        "userAccounts": {
+            "specifiedAccounts": [
+                "Global"
+            ]
+        },
+        "parserInputs": {
+            "glob": "${title}@(.ciso|.CISO|.dol|.DOL|.elf|.ELF|.gcm|.GCM|.gcz|.GCZ|.iso|.ISO|.nkit.iso|.NKIT.ISO|.rvz|.RVZ|.wad|.WAD|.wia|.WIA)"
+        },
+        "executable": {
+            "path": "<emubox-bin>",
+            "shortcutPassthrough": false,
+            "appendArgsToExecutable": false
+        },
+        "titleFromVariable": {
+            "limitToGroups": [],
+            "caseInsensitiveVariables": false,
+            "skipFileIfVariableWasNotFound": false
+        },
+        "fuzzyMatch": {
+            "replaceDiacritics": true,
+            "removeCharacters": true,
+            "removeBrackets": true
+        },
+        "controllers": {
+            "ps4": null,
+            "ps5": null,
+            "ps5_edge": null,
+            "xbox360": null,
+            "xboxone": null,
+            "xboxelite": null,
+            "switch_joycon_left": null,
+            "switch_joycon_right": null,
+            "switch_pro": null,
+            "neptune": null,
+            "steamcontroller_gordon": null
+        },
+        "imageProviderAPIs": {
+            "sgdb": {
+                "nsfw": false,
+                "humor": false,
+                "styles": [],
+                "stylesHero": [],
+                "stylesLogo": [],
+                "stylesIcon": [],
+                "imageMotionTypes": [
+                    "static"
+                ],
+                "sizes": [],
+                "sizesHero": [],
+                "sizesTall": null,
+                "sizesIcon": []
+            }
+        },
+        "defaultImage": {
+            "tall": "",
+            "long": "",
+            "hero": "",
+            "logo": "",
+            "icon": ""
+        },
+        "localImages": {
+            "tall": "",
+            "long": "",
+            "hero": "",
+            "logo": "",
+            "icon": ""
+        },
+        "parserId": "174737601119382046",
+        "version": 25
+    },
+    {
+        "parserType": "Glob",
+        "configTitle": "Dolphin - Wii",
+        "steamDirectory": "${steamdirglobal}",
+        "romDirectory": "<emubox>/roms/wii",
+        "steamCategories": [
+            "Wii"
+        ],
+        "executableArgs": "run dolphin-emu -b -e \"${filePath}\"",
+        "executableModifier": "",
+        "startInDirectory": "",
+        "titleModifier": "",
+        "fetchControllerTemplatesButton": null,
+        "removeControllersButton": null,
+        "steamInputEnabled": "1",
+        "imageProviders": [
+            "sgdb",
+            "steamCDN"
+        ],
+        "onlineImageQueries": [
+            "${fuzzyTitle}"
+        ],
+        "imagePool": "",
+        "drmProtect": false,
+        "userAccounts": {
+            "specifiedAccounts": [
+                "Global"
+            ]
+        },
+        "parserInputs": {
+            "glob": "${title}@(.ciso|.CISO|.dol|.DOL|.elf|.ELF|.gcm|.GCM|.gcz|.GCZ|.iso|.ISO|.nkit.iso|.NKIT.ISO|.rvz|.RVZ|.wad|.WAD|.wia|.WIA)"
+        },
+        "executable": {
+            "path": "<emubox-bin>",
+            "shortcutPassthrough": false,
+            "appendArgsToExecutable": false
+        },
+        "titleFromVariable": {
+            "limitToGroups": [],
+            "caseInsensitiveVariables": false,
+            "skipFileIfVariableWasNotFound": false
+        },
+        "fuzzyMatch": {
+            "replaceDiacritics": true,
+            "removeCharacters": true,
+            "removeBrackets": true
+        },
+        "controllers": {
+            "ps4": null,
+            "ps5": null,
+            "ps5_edge": null,
+            "xbox360": null,
+            "xboxone": null,
+            "xboxelite": null,
+            "switch_joycon_left": null,
+            "switch_joycon_right": null,
+            "switch_pro": null,
+            "neptune": null,
+            "steamcontroller_gordon": null
+        },
+        "imageProviderAPIs": {
+            "sgdb": {
+                "nsfw": false,
+                "humor": false,
+                "styles": [],
+                "stylesHero": [],
+                "stylesLogo": [],
+                "stylesIcon": [],
+                "imageMotionTypes": [
+                    "static"
+                ],
+                "sizes": [],
+                "sizesHero": [],
+                "sizesTall": null,
+                "sizesIcon": []
+            }
+        },
+        "defaultImage": {
+            "tall": "",
+            "long": "",
+            "hero": "",
+            "logo": "",
+            "icon": ""
+        },
+        "localImages": {
+            "tall": "",
+            "long": "",
+            "hero": "",
+            "logo": "",
+            "icon": ""
+        },
+        "parserId": "174737613425773558",
+        "version": 25
+    },
+    {
+        "parserType": "Glob",
+        "configTitle": "Azahar",
+        "steamDirectory": "${steamdirglobal}",
+        "romDirectory": "<emubox>/roms/3ds",
+        "steamCategories": [
+            "3DS"
+        ],
+        "executableArgs": "run azahar \"${filePath}\"",
+        "executableModifier": "\"${exePath}\"",
+        "startInDirectory": "",
+        "titleModifier": "${fuzzyTitle}",
+        "fetchControllerTemplatesButton": null,
+        "removeControllersButton": null,
+        "steamInputEnabled": "1",
+        "imageProviders": [
+            "sgdb"
+        ],
+        "onlineImageQueries": [
+            "${fuzzyTitle}"
+        ],
+        "imagePool": "${fuzzyTitle}",
+        "drmProtect": false,
+        "userAccounts": {
+            "specifiedAccounts": [
+                "Global"
+            ]
+        },
+        "parserInputs": {
+            "glob": "${title}@(.3ds|.3DS|.3dsx|.3DSX|.app|.APP|.axf|.AXF|.cci|.CCI|.cxi|.CXI|.elf|.ELF)"
+        },
+        "executable": {
+            "path": "<emubox-bin>",
+            "shortcutPassthrough": false,
+            "appendArgsToExecutable": true
+        },
+        "titleFromVariable": {
+            "limitToGroups": [],
+            "caseInsensitiveVariables": false,
+            "skipFileIfVariableWasNotFound": false
+        },
+        "fuzzyMatch": {
+            "replaceDiacritics": true,
+            "removeCharacters": true,
+            "removeBrackets": true
+        },
+        "controllers": {
+            "ps4": null,
+            "ps5": null,
+            "ps5_edge": null,
+            "xbox360": null,
+            "xboxone": null,
+            "xboxelite": null,
+            "switch_joycon_left": null,
+            "switch_joycon_right": null,
+            "switch_pro": null,
+            "neptune": null,
+            "steamcontroller_gordon": null
+        },
+        "imageProviderAPIs": {
+            "sgdb": {
+                "nsfw": false,
+                "humor": false,
+                "styles": [],
+                "stylesHero": [],
+                "stylesLogo": [],
+                "stylesIcon": [],
+                "imageMotionTypes": [
+                    "static"
+                ],
+                "sizes": [],
+                "sizesHero": [],
+                "sizesTall": null,
+                "sizesIcon": []
+            }
+        },
+        "defaultImage": {
+            "tall": "",
+            "long": "",
+            "hero": "",
+            "logo": "",
+            "icon": ""
+        },
+        "localImages": {
+            "tall": "",
+            "long": "",
+            "hero": "",
+            "logo": "",
+            "icon": ""
+        },
+        "parserId": "174737688795722424",
+        "version": 25
+    },
+    {
+        "parserType": "Glob",
+        "configTitle": "Ryujinx",
+        "steamDirectory": "${steamdirglobal}",
+        "romDirectory": "<emubox>/roms/switch",
+        "steamCategories": [
+            "Nintendo Switch"
+        ],
+        "executableArgs": "run ryujinx --fullscreen \"${filePath}\"",
+        "executableModifier": "\"${exePath}\"",
+        "startInDirectory": "",
+        "titleModifier": "${fuzzyTitle}",
+        "fetchControllerTemplatesButton": null,
+        "removeControllersButton": null,
+        "steamInputEnabled": "1",
+        "imageProviders": [
+            "sgdb"
+        ],
+        "onlineImageQueries": [
+            "${fuzzyTitle}"
+        ],
+        "imagePool": "${fuzzyTitle}",
+        "drmProtect": false,
+        "userAccounts": {
+            "specifiedAccounts": [
+                "Global"
+            ]
+        },
+        "parserInputs": {
+            "glob": "${title}@(.nca|.NCA|.nro|.NRO|.nso|.NSO|.nsp|.NSP|.xci|.XCI)"
+        },
+        "executable": {
+            "path": "<emubox-bin>",
+            "shortcutPassthrough": false,
+            "appendArgsToExecutable": true
+        },
+        "titleFromVariable": {
+            "limitToGroups": [],
+            "caseInsensitiveVariables": false,
+            "skipFileIfVariableWasNotFound": false
+        },
+        "fuzzyMatch": {
+            "replaceDiacritics": true,
+            "removeCharacters": true,
+            "removeBrackets": true
+        },
+        "controllers": {
+            "ps4": null,
+            "ps5": null,
+            "ps5_edge": null,
+            "xbox360": null,
+            "xboxone": null,
+            "xboxelite": null,
+            "switch_joycon_left": null,
+            "switch_joycon_right": null,
+            "switch_pro": null,
+            "neptune": null,
+            "steamcontroller_gordon": null
+        },
+        "imageProviderAPIs": {
+            "sgdb": {
+                "nsfw": false,
+                "humor": false,
+                "styles": [],
+                "stylesHero": [],
+                "stylesLogo": [],
+                "stylesIcon": [],
+                "imageMotionTypes": [
+                    "static"
+                ],
+                "sizes": [],
+                "sizesHero": [],
+                "sizesTall": null,
+                "sizesIcon": []
+            }
+        },
+        "defaultImage": {
+            "tall": "",
+            "long": "",
+            "hero": "",
+            "logo": "",
+            "icon": ""
+        },
+        "localImages": {
+            "tall": "",
+            "long": "",
+            "hero": "",
+            "logo": "",
+            "icon": ""
+        },
+        "parserId": "174737727100179243",
+        "version": 25
+    },
+    {
+        "parserType": "Glob",
+        "configTitle": "Yuzu",
+        "steamDirectory": "${steamdirglobal}",
+        "romDirectory": "<emubox>/roms/switch",
+        "steamCategories": [
+            "Nintendo Switch"
+        ],
+        "executableArgs": "run yuzu -f -g \"${filePath}\"",
+        "executableModifier": "\"${exePath}\"",
+        "startInDirectory": "",
+        "titleModifier": "${fuzzyTitle}",
+        "fetchControllerTemplatesButton": null,
+        "removeControllersButton": null,
+        "steamInputEnabled": "1",
+        "imageProviders": [
+            "sgdb"
+        ],
+        "onlineImageQueries": [
+            "${fuzzyTitle}"
+        ],
+        "imagePool": "${fuzzyTitle}",
+        "drmProtect": false,
+        "userAccounts": {
+            "specifiedAccounts": [
+                "Global"
+            ]
+        },
+        "parserInputs": {
+            "glob": "${title}@(.nca|.NCA|.nro|.NRO|.nso|.NSO|.nsp|.NSP|.xci|.XCI)"
+        },
+        "executable": {
+            "path": "<emubox-bin>",
+            "shortcutPassthrough": false,
+            "appendArgsToExecutable": true
+        },
+        "titleFromVariable": {
+            "limitToGroups": [],
+            "caseInsensitiveVariables": false,
+            "skipFileIfVariableWasNotFound": false
+        },
+        "fuzzyMatch": {
+            "replaceDiacritics": true,
+            "removeCharacters": true,
+            "removeBrackets": true
+        },
+        "controllers": {
+            "ps4": null,
+            "ps5": null,
+            "ps5_edge": null,
+            "xbox360": null,
+            "xboxone": null,
+            "xboxelite": null,
+            "switch_joycon_left": null,
+            "switch_joycon_right": null,
+            "switch_pro": null,
+            "neptune": null,
+            "steamcontroller_gordon": null
+        },
+        "imageProviderAPIs": {
+            "sgdb": {
+                "nsfw": false,
+                "humor": false,
+                "styles": [],
+                "stylesHero": [],
+                "stylesLogo": [],
+                "stylesIcon": [],
+                "imageMotionTypes": [
+                    "static"
+                ],
+                "sizes": [],
+                "sizesHero": [],
+                "sizesTall": null,
+                "sizesIcon": []
+            }
+        },
+        "defaultImage": {
+            "tall": "",
+            "long": "",
+            "hero": "",
+            "logo": "",
+            "icon": ""
+        },
+        "localImages": {
+            "tall": "",
+            "long": "",
+            "hero": "",
+            "logo": "",
+            "icon": ""
+        },
+        "parserId": "174737739470387555",
         "version": 25
     }
 ]
