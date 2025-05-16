@@ -233,9 +233,7 @@
             "aur": "azahar-git",
             "aurExportName": "azahar",
             "gitRepo": "azahar-emu/azahar",
-            "gitRe": "azahar-.*-linux-appimage.tar.gz",
-            "unzipSubdir": "azahar-.*-linux-appimage",
-            "unzipTarget": "azahar.AppImage"
+            "gitRe": "azahar.AppImage"
         }
     }
 ]
