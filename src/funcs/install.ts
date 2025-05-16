@@ -11,6 +11,7 @@ import select from "@inquirer/select";
 import confirm from "@inquirer/confirm";
 import input from "@inquirer/input";
 import getLatestRelease from "utils/getLatestRelease";
+
 import userConfigurations from "utils/userConfigurations.json";
 
 export default async function(app: string, installOpt: InstallationTypes) {
@@ -66,7 +67,7 @@ export default async function(app: string, installOpt: InstallationTypes) {
         }));
 
         emu.installOptions = emu.installOptions.multi[selectIndex];
-        emu.name = emu.installOptions.multi![selectIndex].multiName!;
+        emu.name = emu.installOptions.multiName!;
     }
 
     const extraInstallData: { file?: string, releaseId?: string, mIndex?: number } = {};
@@ -147,7 +148,7 @@ export default async function(app: string, installOpt: InstallationTypes) {
                 );
                 break;
             case "manual":
- 
+                await $`chmod +x ${manualPath}`;
                 if (manualPath.toLowerCase().endsWith("appimage")) {
                     console.log("Getting icon...");
                     await $`${manualPath} --appimage-extract`.quiet().cwd("/tmp");
@@ -165,7 +166,7 @@ export default async function(app: string, installOpt: InstallationTypes) {
                     );
                 }
                 
-                await $`chmod +x ${manualPath}`;
+                
                 extraInstallData.file = manualPath;
                 
                 break;
@@ -178,6 +179,9 @@ export default async function(app: string, installOpt: InstallationTypes) {
         }
 
         switch (emu.id) {
+            case "yuzu-legacy":
+                break;
+
             case "srm":
                 console.log("post-install: adding custom parser list...");
                 let srmPath = "";
