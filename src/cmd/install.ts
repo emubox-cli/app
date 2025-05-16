@@ -1,3 +1,4 @@
+import { generateManifest } from "utils/manifests";
 import install from "../funcs/install";
 import { InstallationTypes } from "../utils/config";
 
@@ -47,4 +48,6 @@ export default async function(...toInstall: string[]) {
     for (const i of toInstall) {
         install(i, method);
     }
+
+    await generateManifest("emulators");
 }
