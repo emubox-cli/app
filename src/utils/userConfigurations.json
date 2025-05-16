@@ -1,5 +1,100 @@
 [
     {
+        "parserType": "Manual",
+        "configTitle": "Emulators",
+        "steamDirectory": "${steamdirglobal}",
+        "romDirectory": "",
+        "steamCategories": [
+            "Emulators"
+        ],
+        "executableArgs": "",
+        "executableModifier": "",
+        "startInDirectory": "",
+        "titleModifier": "",
+        "fetchControllerTemplatesButton": null,
+        "removeControllersButton": null,
+        "steamInputEnabled": "1",
+        "imageProviders": [
+            "sgdb",
+            "steamCDN"
+        ],
+        "onlineImageQueries": [
+            "${fuzzyTitle}"
+        ],
+        "imagePool": "",
+        "drmProtect": false,
+        "userAccounts": {
+            "specifiedAccounts": [
+                "Global"
+            ]
+        },
+        "parserInputs": {
+            "manualManifests": "<emubox>/manifests"
+        },
+        "executable": {
+            "path": "",
+            "shortcutPassthrough": false,
+            "appendArgsToExecutable": false
+        },
+        "titleFromVariable": {
+            "limitToGroups": [],
+            "caseInsensitiveVariables": false,
+            "skipFileIfVariableWasNotFound": false
+        },
+        "fuzzyMatch": {
+            "replaceDiacritics": true,
+            "removeCharacters": true,
+            "removeBrackets": true
+        },
+        "controllers": {
+            "ps4": null,
+            "ps5": null,
+            "ps5_edge": null,
+            "xbox360": null,
+            "xboxone": null,
+            "xboxelite": null,
+            "switch_joycon_left": null,
+            "switch_joycon_right": null,
+            "switch_pro": null,
+            "neptune": null,
+            "steamcontroller_gordon": null
+        },
+        "imageProviderAPIs": {
+            "sgdb": {
+                "nsfw": false,
+                "humor": false,
+                "styles": [],
+                "stylesHero": [],
+                "stylesLogo": [],
+                "stylesIcon": [],
+                "imageMotionTypes": [
+                    "static"
+                ],
+                "sizes": [],
+                "sizesHero": [],
+                "sizesTall": null,
+                "sizesIcon": []
+            }
+        },
+        "defaultImage": {
+            "tall": "",
+            "long": "",
+            "hero": "",
+            "logo": "",
+            "icon": ""
+        },
+        "localImages": {
+            "tall": "",
+            "long": "",
+            "hero": "",
+            "logo": "",
+            "icon": ""
+        },
+        "parserId": "174742029915863495",
+        "disabled": false,
+        "version": 25
+    },
+    {
         "parserType": "Glob",
         "configTitle": "PPSSPP",
         "steamDirectory": "${steamdirglobal}",
@@ -11,8 +106,6 @@
         "executableModifier": "",
         "startInDirectory": "",
         "titleModifier": "",
-        "fetchControllerTemplatesButton": null,
-        "removeControllersButton": null,
         "steamInputEnabled": "1",
         "imageProviders": [
             "sgdb",
@@ -72,7 +165,6 @@
                 ],
                 "sizes": [],
                 "sizesHero": [],
-                "sizesTall": null,
                 "sizesIcon": []
             }
         },
@@ -91,7 +183,8 @@
             "icon": null
         },
         "parserId": "174737064664212755",
-        "version": 25
+        "version": 25,
+        "disabled": false
     },
     {
         "parserType": "Glob",
@@ -105,8 +198,6 @@
         "executableModifier": "\"${exePath}\"",
         "startInDirectory": "",
         "titleModifier": "${fuzzyTitle}",
-        "fetchControllerTemplatesButton": null,
-        "removeControllersButton": null,
         "steamInputEnabled": "1",
         "imageProviders": [
             "sgdb"
@@ -165,7 +256,6 @@
                 ],
                 "sizes": [],
                 "sizesHero": [],
-                "sizesTall": null,
                 "sizesIcon": []
             }
         },
@@ -184,7 +274,8 @@
             "icon": ""
         },
         "parserId": "174737224089528265",
-        "version": 25
+        "version": 25,
+        "disabled": false
     },
     {
         "parserType": "Glob",
@@ -198,8 +289,6 @@
         "executableModifier": "\"${exePath}\"",
         "startInDirectory": "",
         "titleModifier": "${fuzzyTitle}",
-        "fetchControllerTemplatesButton": null,
-        "removeControllersButton": null,
         "steamInputEnabled": "1",
         "imageProviders": [
             "sgdb"
@@ -258,7 +347,6 @@
                 ],
                 "sizes": [],
                 "sizesHero": [],
-                "sizesTall": null,
                 "sizesIcon": []
             }
         },
@@ -277,7 +365,8 @@
             "icon": ""
         },
         "parserId": "174737229190769136",
-        "version": 25
+        "version": 25,
+        "disabled": false
     },
     {
         "parserType": "Glob",
@@ -291,8 +380,6 @@
         "executableModifier": "\"${exePath}\"",
         "startInDirectory": "",
         "titleModifier": "${fuzzyTitle}",
-        "fetchControllerTemplatesButton": null,
-        "removeControllersButton": null,
         "steamInputEnabled": "1",
         "imageProviders": [
             "sgdb"
@@ -353,7 +440,6 @@
                 ],
                 "sizes": [],
                 "sizesHero": [],
-                "sizesTall": null,
                 "sizesIcon": []
             }
         },
@@ -372,7 +458,8 @@
             "icon": ""
         },
         "parserId": "174737254167524729",
-        "version": 25
+        "version": 25,
+        "disabled": false
     },
     {
         "parserType": "Glob",
@@ -386,8 +473,6 @@
         "executableModifier": "\"${exePath}\"",
         "startInDirectory": "",
         "titleModifier": "${fuzzyTitle}",
-        "fetchControllerTemplatesButton": null,
-        "removeControllersButton": null,
         "steamInputEnabled": "1",
         "imageProviders": [
             "sgdb"
@@ -448,7 +533,6 @@
                 ],
                 "sizes": [],
                 "sizesHero": [],
-                "sizesTall": null,
                 "sizesIcon": []
             }
         },
@@ -467,7 +551,8 @@
             "icon": ""
         },
         "parserId": "174737256830937989",
-        "version": 25
+        "version": 25,
+        "disabled": false
     },
     {
         "parserType": "Glob",
@@ -481,8 +566,6 @@
         "executableModifier": "\"${exePath}\"",
         "startInDirectory": "",
         "titleModifier": "${fuzzyTitle}",
-        "fetchControllerTemplatesButton": null,
-        "removeControllersButton": null,
         "steamInputEnabled": "1",
         "imageProviders": [
             "sgdb"
@@ -541,7 +624,6 @@
                 ],
                 "sizes": [],
                 "sizesHero": [],
-                "sizesTall": null,
                 "sizesIcon": []
             }
         },
@@ -560,7 +642,8 @@
             "icon": ""
         },
         "parserId": "174737277031831113",
-        "version": 25
+        "version": 25,
+        "disabled": false
     },
     {
         "parserType": "Glob",
@@ -574,8 +657,6 @@
         "executableModifier": "\"${exePath}\"",
         "startInDirectory": "",
         "titleModifier": "${fuzzyTitle}",
-        "fetchControllerTemplatesButton": null,
-        "removeControllersButton": null,
         "steamInputEnabled": "1",
         "imageProviders": [
             "sgdb"
@@ -634,7 +715,6 @@
                 ],
                 "sizes": [],
                 "sizesHero": [],
-                "sizesTall": null,
                 "sizesIcon": []
             }
         },
@@ -653,7 +733,8 @@
             "icon": ""
         },
         "parserId": "174737772307851138",
-        "version": 25
+        "version": 25,
+        "disabled": false
     },
     {
         "parserType": "Glob",
@@ -667,8 +748,6 @@
         "executableModifier": "",
         "startInDirectory": "",
         "titleModifier": "",
-        "fetchControllerTemplatesButton": null,
-        "removeControllersButton": null,
         "steamInputEnabled": "1",
         "imageProviders": [
             "sgdb",
@@ -728,7 +807,6 @@
                 ],
                 "sizes": [],
                 "sizesHero": [],
-                "sizesTall": null,
                 "sizesIcon": []
             }
         },
@@ -747,7 +825,8 @@
             "icon": ""
         },
         "parserId": "174737534572932634",
-        "version": 25
+        "version": 25,
+        "disabled": false
     },
     {
         "parserType": "Glob",
@@ -761,8 +840,6 @@
         "executableModifier": "",
         "startInDirectory": "",
         "titleModifier": "",
-        "fetchControllerTemplatesButton": null,
-        "removeControllersButton": null,
         "steamInputEnabled": "1",
         "imageProviders": [
             "sgdb",
@@ -822,7 +899,6 @@
                 ],
                 "sizes": [],
                 "sizesHero": [],
-                "sizesTall": null,
                 "sizesIcon": []
             }
         },
@@ -841,7 +917,8 @@
             "icon": ""
         },
         "parserId": "174737592071190223",
-        "version": 25
+        "version": 25,
+        "disabled": false
     },
     {
         "parserType": "Glob",
@@ -855,8 +932,6 @@
         "executableModifier": "",
         "startInDirectory": "",
         "titleModifier": "",
-        "fetchControllerTemplatesButton": null,
-        "removeControllersButton": null,
         "steamInputEnabled": "1",
         "imageProviders": [
             "sgdb",
@@ -916,7 +991,6 @@
                 ],
                 "sizes": [],
                 "sizesHero": [],
-                "sizesTall": null,
                 "sizesIcon": []
             }
         },
@@ -935,7 +1009,8 @@
             "icon": ""
         },
         "parserId": "174737601119382046",
-        "version": 25
+        "version": 25,
+        "disabled": false
     },
     {
         "parserType": "Glob",
@@ -949,8 +1024,6 @@
         "executableModifier": "",
         "startInDirectory": "",
         "titleModifier": "",
-        "fetchControllerTemplatesButton": null,
-        "removeControllersButton": null,
         "steamInputEnabled": "1",
         "imageProviders": [
             "sgdb",
@@ -1010,7 +1083,6 @@
                 ],
                 "sizes": [],
                 "sizesHero": [],
-                "sizesTall": null,
                 "sizesIcon": []
             }
         },
@@ -1029,7 +1101,8 @@
             "icon": ""
         },
         "parserId": "174737613425773558",
-        "version": 25
+        "version": 25,
+        "disabled": false
     },
     {
         "parserType": "Glob",
@@ -1040,6 +1113,97 @@
             "3DS"
         ],
         "executableArgs": "run azahar \"${filePath}\"",
+        "executableModifier": "\"${exePath}\"",
+        "startInDirectory": "",
+        "titleModifier": "${fuzzyTitle}",
+        "steamInputEnabled": "1",
+        "imageProviders": [
+            "sgdb"
+        ],
+        "onlineImageQueries": [
+            "${fuzzyTitle}"
+        ],
+        "imagePool": "${fuzzyTitle}",
+        "drmProtect": false,
+        "userAccounts": {
+            "specifiedAccounts": [
+                "Global"
+            ]
+        },
+        "parserInputs": {
+            "glob": "${title}@(.3ds|.3DS|.3dsx|.3DSX|.app|.APP|.axf|.AXF|.cci|.CCI|.cxi|.CXI|.elf|.ELF)"
+        },
+        "executable": {
+            "path": "<emubox-bin>",
+            "shortcutPassthrough": false,
+            "appendArgsToExecutable": true
+        },
+        "titleFromVariable": {
+            "limitToGroups": [],
+            "caseInsensitiveVariables": false,
+            "skipFileIfVariableWasNotFound": false
+        },
+        "fuzzyMatch": {
+            "replaceDiacritics": true,
+            "removeCharacters": true,
+            "removeBrackets": true
+        },
+        "controllers": {
+            "ps4": null,
+            "ps5": null,
+            "ps5_edge": null,
+            "xbox360": null,
+            "xboxone": null,
+            "xboxelite": null,
+            "switch_joycon_left": null,
+            "switch_joycon_right": null,
+            "switch_pro": null,
+            "neptune": null,
+            "steamcontroller_gordon": null
+        },
+        "imageProviderAPIs": {
+            "sgdb": {
+                "nsfw": false,
+                "humor": false,
+                "styles": [],
+                "stylesHero": [],
+                "stylesLogo": [],
+                "stylesIcon": [],
+                "imageMotionTypes": [
+                    "static"
+                ],
+                "sizes": [],
+                "sizesHero": [],
+                "sizesIcon": []
+            }
+        },
+        "defaultImage": {
+            "tall": "",
+            "long": "",
+            "hero": "",
+            "logo": "",
+            "icon": ""
+        },
+        "localImages": {
+            "tall": "",
+            "long": "",
+            "hero": "",
+            "logo": "",
+            "icon": ""
+        },
+        "parserId": "174737688795722424",
+        "version": 25,
+        "disabled": false
+    },
+    {
+        "parserType": "Glob",
+        "configTitle": "Ryujinx (Legacy)",
+        "steamDirectory": "${steamdirglobal}",
+        "romDirectory": "<emubox>/roms/switch",
+        "steamCategories": [
+            "Nintendo Switch"
+        ],
+        "executableArgs": "run ryujinx-legacy --fullscreen \"${filePath}\"",
         "executableModifier": "\"${exePath}\"",
         "startInDirectory": "",
         "titleModifier": "${fuzzyTitle}",
@@ -1060,7 +1224,7 @@
             ]
         },
         "parserInputs": {
-            "glob": "${title}@(.3ds|.3DS|.3dsx|.3DSX|.app|.APP|.axf|.AXF|.cci|.CCI|.cxi|.CXI|.elf|.ELF)"
+            "glob": "${title}@(.nca|.NCA|.nro|.NRO|.nso|.NSO|.nsp|.NSP|.xci|.XCI)"
         },
         "executable": {
             "path": "<emubox-bin>",
@@ -1121,12 +1285,13 @@
             "logo": "",
             "icon": ""
         },
-        "parserId": "174737688795722424",
-        "version": 25
+        "parserId": "174742019142239131",
+        "version": 25,
+        "disabled": false
     },
     {
         "parserType": "Glob",
-        "configTitle": "Ryujinx",
+        "configTitle": "Ryujinx (Ryubing)",
         "steamDirectory": "${steamdirglobal}",
         "romDirectory": "<emubox>/roms/switch",
         "steamCategories": [
@@ -1215,17 +1380,18 @@
             "icon": ""
         },
         "parserId": "174737727100179243",
-        "version": 25
+        "version": 25,
+        "disabled": false
     },
     {
         "parserType": "Glob",
-        "configTitle": "Yuzu",
+        "configTitle": "Yuzu (Legacy)",
         "steamDirectory": "${steamdirglobal}",
         "romDirectory": "<emubox>/roms/switch",
         "steamCategories": [
             "Nintendo Switch"
         ],
-        "executableArgs": "run yuzu -f -g \"${filePath}\"",
+        "executableArgs": "run yuzu-legacy -f -g \"${filePath}\"",
         "executableModifier": "\"${exePath}\"",
         "startInDirectory": "",
         "titleModifier": "${fuzzyTitle}",
@@ -1308,6 +1474,101 @@
             "icon": ""
         },
         "parserId": "174737739470387555",
-        "version": 25
+        "version": 25,
+        "disabled": false
+    },
+    {
+        "parserType": "Glob",
+        "configTitle": "Yuzu (Fork)",
+        "steamDirectory": "${steamdirglobal}",
+        "romDirectory": "<emubox>/roms/switch",
+        "steamCategories": [
+            "Nintendo Switch"
+        ],
+        "executableArgs": "run yuzu-fork -f -g \"${filePath}\"",
+        "executableModifier": "\"${exePath}\"",
+        "startInDirectory": "",
+        "titleModifier": "${fuzzyTitle}",
+        "fetchControllerTemplatesButton": null,
+        "removeControllersButton": null,
+        "steamInputEnabled": "1",
+        "imageProviders": [
+            "sgdb"
+        ],
+        "onlineImageQueries": [
+            "${fuzzyTitle}"
+        ],
+        "imagePool": "${fuzzyTitle}",
+        "drmProtect": false,
+        "userAccounts": {
+            "specifiedAccounts": [
+                "Global"
+            ]
+        },
+        "parserInputs": {
+            "glob": "${title}@(.nca|.NCA|.nro|.NRO|.nso|.NSO|.nsp|.NSP|.xci|.XCI)"
+        },
+        "executable": {
+            "path": "<emubox-bin>",
+            "shortcutPassthrough": false,
+            "appendArgsToExecutable": true
+        },
+        "titleFromVariable": {
+            "limitToGroups": [],
+            "caseInsensitiveVariables": false,
+            "skipFileIfVariableWasNotFound": false
+        },
+        "fuzzyMatch": {
+            "replaceDiacritics": true,
+            "removeCharacters": true,
+            "removeBrackets": true
+        },
+        "controllers": {
+            "ps4": null,
+            "ps5": null,
+            "ps5_edge": null,
+            "xbox360": null,
+            "xboxone": null,
+            "xboxelite": null,
+            "switch_joycon_left": null,
+            "switch_joycon_right": null,
+            "switch_pro": null,
+            "neptune": null,
+            "steamcontroller_gordon": null
+        },
+        "imageProviderAPIs": {
+            "sgdb": {
+                "nsfw": false,
+                "humor": false,
+                "styles": [],
+                "stylesHero": [],
+                "stylesLogo": [],
+                "stylesIcon": [],
+                "imageMotionTypes": [
+                    "static"
+                ],
+                "sizes": [],
+                "sizesHero": [],
+                "sizesTall": null,
+                "sizesIcon": []
+            }
+        },
+        "defaultImage": {
+            "tall": "",
+            "long": "",
+            "hero": "",
+            "logo": "",
+            "icon": ""
+        },
+        "localImages": {
+            "tall": "",
+            "long": "",
+            "hero": "",
+            "logo": "",
+            "icon": ""
+        },
+        "parserId": "174742017198479281",
+        "version": 25,
+        "disabled": false
     }
 ]
