@@ -1201,7 +1201,7 @@
         "steamDirectory": "${steamdirglobal}",
         "romDirectory": "<emubox>/roms/switch",
         "steamCategories": [
-            "Nintendo Switch"
+            "Nintendo Switch - Ryujinx (Legacy)"
         ],
         "executableArgs": "run ryujinx-legacy --fullscreen \"${filePath}\"",
         "executableModifier": "\"${exePath}\"",
@@ -1295,7 +1295,7 @@
         "steamDirectory": "${steamdirglobal}",
         "romDirectory": "<emubox>/roms/switch",
         "steamCategories": [
-            "Nintendo Switch"
+            "Nintendo Switch - Ryujinx"
         ],
         "executableArgs": "run ryujinx --fullscreen \"${filePath}\"",
         "executableModifier": "\"${exePath}\"",
@@ -1389,7 +1389,7 @@
         "steamDirectory": "${steamdirglobal}",
         "romDirectory": "<emubox>/roms/switch",
         "steamCategories": [
-            "Nintendo Switch"
+            "Nintendo Switch - Yuzu (Legacy)"
         ],
         "executableArgs": "run yuzu-legacy -f -g \"${filePath}\"",
         "executableModifier": "\"${exePath}\"",
@@ -1483,7 +1483,7 @@
         "steamDirectory": "${steamdirglobal}",
         "romDirectory": "<emubox>/roms/switch",
         "steamCategories": [
-            "Nintendo Switch"
+            "Nintendo Switch - Yuzu"
         ],
         "executableArgs": "run yuzu-fork -f -g \"${filePath}\"",
         "executableModifier": "\"${exePath}\"",
