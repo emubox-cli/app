@@ -3,19 +3,19 @@ import install from "../funcs/install";
 import { InstallationTypes } from "../utils/config";
 
 const HELP_MSG = `
-emubox install: emubox install [--appimage] [--flatpak] <...EMULATOR_IDS>
+emubox install: emubox install [--flags] <...EMULATOR_IDS>
     Install emulators/utilites from "emubox list" in your container.
 
     The installed apps will be exported to your app menu/desktop files.
 
     Options:
-        --appimage        Install the appimage variant of targeted apps
-        --flatpak         Install the flatpak variant
+        -a|--appimage       Install the appimage variant of targeted apps
+        -f|--flatpak         Install the flatpak variant
 `;
 export default async function(...toInstall: string[]) {
     let method: InstallationTypes = "aur";
-    const useAppimage = toInstall.indexOf("--appimage");
-    const useFlatpak = toInstall.indexOf("--flatpak");
+    const useAppimage = toInstall.indexOf("--appimage") || toInstall.indexOf("-a");
+    const useFlatpak = toInstall.indexOf("--flatpak") || toInstall.indexOf("-f");
 
     if (useAppimage !== -1) {
         method = "github";
@@ -48,6 +48,4 @@ export default async function(...toInstall: string[]) {
     for (const i of toInstall) {
         install(i, method);
     }
-
-    await generateManifest("emulators");
 }

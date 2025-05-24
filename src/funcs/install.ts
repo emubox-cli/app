@@ -13,6 +13,7 @@ import input from "@inquirer/input";
 import getLatestRelease from "utils/getLatestRelease";
 
 import userConfigurations from "utils/userConfigurations.json";
+import genManifest from "cmd/gen-manifest";
 
 export default async function(app: string, installOpt: InstallationTypes) {
     const config = await openConfig();
@@ -166,7 +167,6 @@ export default async function(app: string, installOpt: InstallationTypes) {
                     );
                 }
                 
-                
                 extraInstallData.file = manualPath;
                 
                 break;
@@ -198,6 +198,8 @@ export default async function(app: string, installOpt: InstallationTypes) {
     
                 await $`mkdir -p ${srmPath}`;
                 for (const parser of userConfigurations) {
+                    if (parser.parserType === "Manual") 
+                        parser.parserInputs.manualManifests = parser.parserInputs.manualManifests?.replace("<emubox>", join(homedir(), ".emubox"))
                     parser.romDirectory = parser.romDirectory.replace("<emubox>", join(homedir(), ".emubox"));
                     parser.executable.path = parser.executable.path.replace("<emubox-bin>", join(homedir(), ".local", "bin", "emubox"));
                 }
@@ -216,6 +218,9 @@ export default async function(app: string, installOpt: InstallationTypes) {
         });
 
         writeConfig(config);
+
+        if (!emu.consoles.includes("#util"))
+            await genManifest("emulators");
 
     } catch (e) {
         console.error(red(`Failed to install '${emu.name}': ${(e as Error).message}`));

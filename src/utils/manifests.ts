@@ -47,14 +47,13 @@ export async function generateManifest(dirId: SupportedConsoles | "emulators") {
         return;
     }
 
-    for (const i of await readdir(targetRomDir)) {
+    const roms = await readdir(targetRomDir);
+    for (const i of roms) {
         const title = i.split(".").shift()!;
         
         const parserRe = new RegExp(parserData.query);
         if (!parserRe.test(i)) 
             continue;
-
-        console.log(`+ ${i}`);
 
         coolData.push({
             title,
@@ -64,6 +63,8 @@ export async function generateManifest(dirId: SupportedConsoles | "emulators") {
             appendArgsToExecutable: false
         });
     }
+
+    console.log(`manifest-generator:Saved ${roms.length} entries to ${dirId}.json`)
 
     write(
         join(MANIFEST_DIR, dirId, dirId + ".json"),

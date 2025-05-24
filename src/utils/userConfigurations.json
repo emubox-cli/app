@@ -29,7 +29,7 @@
             ]
         },
         "parserInputs": {
-            "manualManifests": "<emubox>/manifests"
+            "manualManifests": "<emubox>/manifests/emulators"
         },
         "executable": {
             "path": "",
