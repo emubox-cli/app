@@ -52,5 +52,6 @@ export default async function() {
         }
     }
 
-    console.log("Update the package manager itself using 'emubox-update'");
+    process.on("exit", async () => await $`~/.local/bin/emubox-update`);
+    // console.log("Update the package manager itself using 'emubox-update'");
 }

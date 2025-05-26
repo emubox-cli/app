@@ -1,6 +1,8 @@
 #!/bin/bash
 
 debug=0
+assemble_file="https://emubox.wolves-are.gay/emubox.ini"
+emubox_bin="$HOME/.local/bin/emubox"
 while getopts ":d" arg; do
     case $arg in
         d) debug=1
@@ -23,22 +25,29 @@ mkdir -p $HOME/.local/applications
 mkdir -p $HOME/.local/share/icons/emubox
 mkdir -p $HOME/.local/bin
 
-distrobox assemble create --file https://emubox.wolves-are.gay/emubox.ini
-
 if [ $debug == 0 ]; then
     echo "Downloading emubox package manager..."
-    curl -o $HOME/.local/bin/emubox https://emubox.wolves-are.gay/emubox
-    chmod +x $HOME/.local/bin/emubox
-
-    curl -o $HOME/.local/bin/emubox-update https://emubox.wolves-are.gay/update
-    chmod +x $HOME/.local/bin/emubox-update
-    echo "Initializing emubox..."
+    curl -o $emubox_bin https://emubox.wolves-are.gay/emubox
+    curl -o $emubox_bin-update https://emubox.wolves-are.gay/update
 else
-    echo "Skipping binary install..." 
+    echo "Building emubox..."
+    bash ./build
+    cp ./dist/emubox $emubox_bin
+    cp ./update $emubox_bin-update
+    assemble_file="emubox.ini"
 fi
 
+chmod +x $emubox_bin
+chmod +x $emubox_bin-update
+
+echo "Creating container..."
+
+distrobox assemble create --file $assemble_file
+
+echo "Initializing emubox..."
+
 if [ -f $HOME/.emubox/config.json ]; then
-    $HOME/.local/bin/emubox init --restore
+    $emubox_bin init --restore
 else
-    $HOME/.local/bin/emubox init
+    $emubox_bin init
 fi

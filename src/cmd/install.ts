@@ -1,4 +1,4 @@
-import { generateManifest } from "utils/manifests";
+import parseFlags from "utils/parseFlags";
 import install from "../funcs/install";
 import { InstallationTypes } from "../utils/config";
 
@@ -10,21 +10,26 @@ emubox install: emubox install [--flags] <...EMULATOR_IDS>
 
     Options:
         -a|--appimage       Install the appimage variant of targeted apps
-        -f|--flatpak         Install the flatpak variant
+        -f|--flatpak        Install the flatpak variant
 `;
 export default async function(...toInstall: string[]) {
     let method: InstallationTypes = "aur";
-    const useAppimage = toInstall.indexOf("--appimage") || toInstall.indexOf("-a");
-    const useFlatpak = toInstall.indexOf("--flatpak") || toInstall.indexOf("-f");
+    const {
+        flags: { appimage: useAppimage, flatpak: useFlatpak },
+        args
+    } = parseFlags(toInstall, {
+        appimage: ["-a", "--appimage"],
+        flatpak: ["-f", "--flatpak"]
+    });
 
-    if (useAppimage !== -1) {
+    toInstall = args;
+
+    if (useAppimage) {
         method = "github";
-        toInstall.splice(useAppimage, 1);
     }
 
-    if (useFlatpak !== -1) {
+    if (useFlatpak) {
         method = "flatpak";
-        toInstall.splice(useFlatpak, 1);
     }
 
     if (!toInstall.length) {
@@ -32,20 +37,7 @@ export default async function(...toInstall: string[]) {
         return;
     }
 
-    /*const raCore = (toInstall.indexOf("--core") ?? toInstall.indexOf("-c"));
-    if (raCore != -1) {
-        const config = await openConfig();
-        if (!config.installed.find(d => d.short === "retroarch")) {
-            console.error("Install retroarch before installing cores (emubox install retroarch)");
-            return;
-        }
-
-        toInstall.splice(
-            raCore,
-            1
-        );
-    }*/
     for (const i of toInstall) {
-        install(i, method);
+        await install(i, method);
     }
 }

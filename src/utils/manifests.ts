@@ -19,7 +19,14 @@ export async function generateManifest(dirId: SupportedConsoles | "emulators") {
             if (targetApp?.makeLauncher === false)
                 continue;
 
-            console.log(`+ ${targetApp.name}`);
+            if (targetApp.installOptions.multi) {
+                const config = await openConfig();
+                const leApp = config.installed.find(m => m.id == targetApp.id)!;
+                const userChoice = targetApp.installOptions.multi[leApp.mIndex!];
+                targetApp.name = userChoice.multiName!;
+            }
+
+            console.log(`manifest-generator: Saved ${roms.length} entries to ${dirId}.json`);
 
             coolData.push({
                 title: targetApp.name,
@@ -64,7 +71,7 @@ export async function generateManifest(dirId: SupportedConsoles | "emulators") {
         });
     }
 
-    console.log(`manifest-generator:Saved ${roms.length} entries to ${dirId}.json`)
+    console.log(`manifest-generator: Saved ${roms.length} entries to ${dirId}.json`);
 
     write(
         join(MANIFEST_DIR, dirId, dirId + ".json"),

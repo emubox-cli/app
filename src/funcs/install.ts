@@ -63,7 +63,7 @@ export default async function(app: string, installOpt: InstallationTypes) {
     if (emu.installOptions.multi) {
         const choices = emu.installOptions.multi.map(d => d.multiId!);
         selectIndex = choices.indexOf(await select({
-            message: "There are multiple installation choices for this app, please select one.",
+            message: `There are multiple installation choices for ${emu.name}, please select one.`,
             choices
         }));
 
@@ -114,7 +114,7 @@ export default async function(app: string, installOpt: InstallationTypes) {
                         `.quiet().cwd("/tmp");
                     else 
                         await $`${containerPrefix}unzip -q ${targetAsset.name} -d ${emu.id}`.quiet().cwd("/tmp");
-                    let subDir = null;
+                    let subDir = "";
                     if (emu.installOptions.unzipSubdir) {
                         const dir = (await readdir(join("/", "tmp", emu.id))).find(d => d.match(emu.installOptions.unzipSubdir!));
                         if (!dir)
@@ -122,7 +122,7 @@ export default async function(app: string, installOpt: InstallationTypes) {
 
                         subDir = dir + "/";
                     }
-                    await $`cp ${emu.id}/${subDir ?? ""}${emu.installOptions.unzipTarget} $HOME/.emubox/apps/${emu.installOptions.unzipTarget}`.cwd("/tmp");
+                    await $`cp ${emu.id}/${subDir}${emu.installOptions.unzipTarget} $HOME/.emubox/apps/${emu.installOptions.unzipTarget}`.cwd("/tmp");
                     targetAsset.name = emu.installOptions.unzipTarget;
                 }
                 else {
@@ -199,7 +199,7 @@ export default async function(app: string, installOpt: InstallationTypes) {
                 await $`mkdir -p ${srmPath}`;
                 for (const parser of userConfigurations) {
                     if (parser.parserType === "Manual") 
-                        parser.parserInputs.manualManifests = parser.parserInputs.manualManifests?.replace("<emubox>", join(homedir(), ".emubox"))
+                        parser.parserInputs.manualManifests = parser.parserInputs.manualManifests?.replace("<emubox>", join(homedir(), ".emubox"));
                     parser.romDirectory = parser.romDirectory.replace("<emubox>", join(homedir(), ".emubox"));
                     parser.executable.path = parser.executable.path.replace("<emubox-bin>", join(homedir(), ".local", "bin", "emubox"));
                 }
@@ -218,8 +218,7 @@ export default async function(app: string, installOpt: InstallationTypes) {
         });
 
         writeConfig(config);
-
-        if (!emu.consoles.includes("#util"))
+        if (!emu.consoles.includes("#util") && config.installed.find(app => app.id === "srm"))
             await genManifest("emulators");
 
     } catch (e) {
