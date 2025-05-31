@@ -11,6 +11,7 @@ export default async function() {
     const config = await openConfig();
     const aurUpdatesNeeded = await $`${containerPrefix}paru --query --upgrades`.nothrow().text();
     const flatpakUpdatesNeeded = await $`${containerPrefix}flatpak list -u`.nothrow().text();
+    
     for (const i of config.installed) {
         const dumbIndex = config.installed.indexOf(i);
         const app = getAppFromId(i.id)!;
@@ -52,5 +53,13 @@ export default async function() {
         }
     }
 
-    console.log("Update the package manager itself using 'emubox-update'");
+    const lastestVer = await fetch("https://emubox.wolves-are.gay/latest");
+    const currentVer = await $`~/.local/bin/emubox -v`.text();
+    if (await lastestVer.text() !== currentVer) {
+        console.log(`Updating package manager to ${await lastestVer.text()}...`)
+        await $`curl -O https://emubox.wolves-are.gay/emubox`.cwd("/tmp");
+        await $`mv /tmp/emubox ~/.local/bin/emubox`;
+    }
+
+    // console.log("Update the package manager itself using 'emubox-update'");
 }
