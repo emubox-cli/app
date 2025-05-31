@@ -222,6 +222,6 @@ export default async function(app: string, installOpt: InstallationTypes) {
             await genManifest("emulators");
 
     } catch (e) {
-        console.error(red(`Failed to install '${emu.name}': ${(e as Error).message}`));
+        console.error(red(`Failed to install '${emu.name}': ${(e as Error).message}\n${(e as Error).stack}`));
     }
 }
