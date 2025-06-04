@@ -209,7 +209,9 @@
                     "multiName": "Eden",
                     "multiId": "eden",
                     "aur": "eden-git",
-                    "aurExportName": "eden"
+                    "aurExportName": "eden",
+                    "gitRepo": "eden-emulator/Releases",
+                    "gitRe": "Eden-Linux-.*-pre-alpha-amd64.AppImage"
                 }
             ]
         }
