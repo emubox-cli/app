@@ -54,17 +54,17 @@ export default async function() {
     }
 
     const lastestVer = await fetch("https://emubox.wolves-are.gay/latest");
-    const lastestTxt = await lastestVer.text();
-    const currentVer = await $`~/.local/bin/emubox -v`.text();
-    console.log(`Current version: ${lastestTxt}`);
-    console.log(`Latest version: ${currentVer}`);
+    const lastestTxt = (await lastestVer.text()).replace("\n", "");
+    const currentVer = (await $`~/.local/bin/emubox -v`.text()).replace("\n", "");
+    
     if (lastestTxt !== currentVer) {
-        console.log(`Updating package manager to ${await lastestVer.text()}...`)
+        console.log(`Updating package manager to ${lastestTxt}...`);
         await $`curl -O https://emubox.wolves-are.gay/emubox`.cwd("/tmp");
-        await $`mv /tmp/emubox ~/.local/bin/emubox`;
+
+        await $`cp /tmp/emubox $HOME/.local/bin/emubox`;
     }
     else {
-        console.log("Package manager is up to date...")
+        console.log("Package manager is up to date!")
     }
 
     // console.log("Update the package manager itself using 'emubox-update'");
