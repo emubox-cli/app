@@ -28,17 +28,14 @@ mkdir -p $HOME/.local/bin
 if [ $debug == 0 ]; then
     echo "Downloading emubox package manager..."
     curl -o $emubox_bin https://emubox.wolves-are.gay/emubox
-    curl -o $emubox_bin-update https://emubox.wolves-are.gay/update
 else
     echo "Building emubox..."
     bash ./build
     cp ./dist/emubox $emubox_bin
-    cp ./update $emubox_bin-update
     assemble_file="emubox.ini"
 fi
 
 chmod +x $emubox_bin
-chmod +x $emubox_bin-update
 
 echo "Creating container..."
 
