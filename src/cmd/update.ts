@@ -34,6 +34,9 @@ export default async function() {
                 await $`${containerPrefix}flatpak update ${app?.installOptions.flatpak}`;
                 break;
             case "github":
+                if (app.installOptions.multi) {
+                    app.installOptions = app.installOptions.multi[i.mIndex!];
+                }
                 const latest = await getLatestRelease(app.installOptions.gitRepo!);
                 if (String(latest.id) === i.releaseId) {
                     console.log(green(`Up to date`));

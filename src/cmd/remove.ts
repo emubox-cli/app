@@ -12,7 +12,7 @@ export default async function(...toRemove: string[]) {
     }
     
     for (const i of toRemove) {
-        remove(i);
+        await remove(i);
     }
 
     await generateManifest("emulators");

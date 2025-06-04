@@ -26,8 +26,6 @@ export async function generateManifest(dirId: SupportedConsoles | "emulators") {
                 targetApp.name = userChoice.multiName!;
             }
 
-            console.log(`manifest-generator: Saved ${roms.length} entries to ${dirId}.json`);
-
             coolData.push({
                 title: targetApp.name,
                 target: join(homedir(), ".local", "bin", "emubox"),
@@ -36,6 +34,8 @@ export async function generateManifest(dirId: SupportedConsoles | "emulators") {
                 appendArgsToExecutable: false
             });
         }
+
+        console.log(`manifest-generator: Saved entries to ${dirId}.json`);
 
         write(
             join(MANIFEST_DIR, dirId, dirId + ".json"),

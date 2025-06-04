@@ -14,7 +14,9 @@ export default function(args: string[], flags: Flags): {
                 args.splice(argI, 1);
                 continue;
             }
-            preparedFlags[flag] = false;
+            
+            if (preparedFlags[flag] === undefined) 
+                preparedFlags[flag] = false;
         }
     }
     return {

@@ -1,6 +1,7 @@
 #!/bin/bash
 
 bun build ./src/main.ts \
+    --sourcemap \
     --target=bun-linux-x64 \
     --compile \
     --minify \
