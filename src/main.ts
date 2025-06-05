@@ -11,7 +11,6 @@ import { configExists } from "utils/config";
 import { yellow } from "yoctocolors";
 import { version } from "../package.json";
 import displayVersion from "utils/displayVersion";
-import makeLauncher from "cmd/make-launcher";
 
 const HELP_MSG = 
 `
@@ -74,10 +73,6 @@ switch (cmd) {
     case "run":
         await doContainerCheck();
         run(...rest);
-        break;
-    case "make-launcher":
-        await doContainerCheck();
-        makeLauncher(rest[0], rest[1]);
         break;
     case "-v":
     case "--version":
