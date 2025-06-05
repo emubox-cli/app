@@ -7,7 +7,6 @@ import uninstall from "cmd/uninstall";
 import update from "cmd/update";
 import init from "cmd/init";
 import run from "cmd/run";
-import genManifest from "cmd/gen-manifest";
 import { configExists } from "utils/config";
 import { yellow } from "yoctocolors";
 import { version } from "../package.json";
@@ -27,7 +26,6 @@ emubox (${version}-${displayVersion}): emubox [--help|-h] [COMMAND]
     Commands:
         init                      initialize emubox directories and config 
         list, ls                  list all availible emulators in emubox
-        gen-manifest <EMU_ID>     create manual manifest file for steam rom manager
         uninstall                 remove emubox and the distrobox container
         install, i <...EMU_IDS>   install provided emulators
         remove, rm <...EMU_IDS>   remove provided emulators
@@ -76,10 +74,6 @@ switch (cmd) {
     case "run":
         await doContainerCheck();
         run(...rest);
-        break;
-    case "gen-manifest":
-        await doContainerCheck();
-        genManifest(rest[0]);
         break;
     case "make-launcher":
         await doContainerCheck();

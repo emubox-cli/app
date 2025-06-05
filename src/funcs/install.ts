@@ -13,7 +13,7 @@ import input from "@inquirer/input";
 import getLatestRelease from "utils/getLatestRelease";
 
 import userConfigurations from "utils/userConfigurations.json";
-import genManifest from "cmd/gen-manifest";
+import { generateManifest } from "utils/manifests";
 
 export default async function(app: string, installOpt: InstallationTypes) {
     const config = await openConfig();
@@ -219,7 +219,7 @@ export default async function(app: string, installOpt: InstallationTypes) {
 
         writeConfig(config);
         if (!emu.consoles.includes("#util") && config.installed.find(app => app.id === "srm"))
-            await genManifest("emulators");
+            await generateManifest("emulators");
 
     } catch (e) {
         console.error(red(`Failed to install '${emu.name}': ${(e as Error).message}\n${(e as Error).stack}`));
