@@ -1,5 +1,5 @@
 # 🎮 Emubox
-A command-line based package manager for emulators, in a distrobox container.
+A package manager for emulators, in a distrobox container.
 
 I like the ideas utilized by the [Emudeck](https://github.com/dragoonDorise/EmuDeck) project, but think their scope reaches a little too far for my preferences. Emubox is supposed to be a smaller alternative.
 
