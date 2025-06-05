@@ -7,6 +7,7 @@ import getLatestRelease from "utils/getLatestRelease";
 import { bold, green } from "yoctocolors";
 
 export default async function() {
+    await $`${containerPrefix}pacman -Syy`;
     console.log("Updating apps...");
     const config = await openConfig();
     const aurUpdatesNeeded = await $`${containerPrefix}paru --query --upgrades`.nothrow().text();
@@ -63,7 +64,6 @@ export default async function() {
     if (lastestTxt !== currentVer) {
         console.log(`Updating package manager to ${lastestTxt}...`);
         await $`curl -O https://emubox.wolves-are.gay/emubox`.cwd("/tmp");
-
         await $`cp /tmp/emubox $HOME/.local/bin/emubox`;
     }
     else {
