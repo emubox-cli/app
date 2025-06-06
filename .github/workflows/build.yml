@@ -20,11 +20,10 @@ jobs:
             - name: Setup Just
               uses: extractions/setup-just@v3
 
-
             - name: Install Modules and Build
               run: |
                 bun i --production
-                just build --define="_SHA='${{ github.sha }}'"
+                just build ${{ github.sha }}
             
             - name: Copy Installer and README
               run: |
@@ -32,7 +31,7 @@ jobs:
                 cp README.md dist/README.md
                 cp emubox.ini dist/emubox.ini
                 echo "emubox.wolves-are.gay" >> dist/CNAME
-                echo $(bun dev -v) >> dist/latest
+                echo $(just debug -v) >> dist/latest
 
             - name: Push to Dist
               uses: s0/git-publish-subdir-action@develop

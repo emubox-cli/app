@@ -1,12 +1,12 @@
-build ext="":
-   bun build ./src/main.ts \
-    --sourcemap \
-    --target=bun-linux-x64 \
-    --compile \
-    --minify \
-    --outfile dist/emubox \
-    --define="_SHA='debug-$(just _make-build-date)'" \
-    {{ext}}
+set quiet
+build identifier="debug-$(just _make-build-date)":
+    bun build ./src/main.ts \
+        --sourcemap \
+        --target=bun-linux-x64 \
+        --compile \
+        --minify \
+        --outfile dist/emubox \
+        --define="_SHA='{{identifier}}'"
 
 _make-build-date:
     #!/usr/bin/env bun
