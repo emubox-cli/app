@@ -177,13 +177,149 @@ export default async function(app: string, installOpt: InstallationTypes) {
                 throw new TypeError("Invalid installation type provided");
 
         }
+        
+
+        if (emu.postInstall) {
+            let basePath = "";
+            switch (installOpt) {
+                case "flatpak":
+                    basePath = join(homedir(), ".var", "app", emu.installOptions.flatpak!);
+                    break;
+                default:
+                    basePath = join(homedir(), ".emubox");
+                    break;
+            }
+    
+            let configPath = "";
+            switch (installOpt) {
+                case "flatpak":
+                    configPath = join(basePath, "config");
+                    break;
+                default:
+                    configPath = join(basePath, ".config");
+                    break;
+            }
+    
+            let sharePath = "";
+            switch (installOpt) {
+                case "flatpak":
+                    sharePath = join(basePath, "data");
+                    break;
+                default:
+                    sharePath = join(basePath, ".local", "share");
+                    break;
+            }
+    
+            console.log(`post-install[${emu.id}]`);
+            for (const dir of emu.postInstall.makeDirs) {
+                const finalDir = dir
+                    .replaceAll("<save>", config.saveDir)
+                    .replaceAll("<share>", sharePath)
+                    .replaceAll("<config>", configPath);
+
+                // console.log(`Making ${finalDir}...`);
+                await $`mkdir -p ${finalDir}`;
+            }
+    
+            for (const file of emu.postInstall.makeFiles) {
+                const finalPath = file.path
+                    .replaceAll("<save>", config.saveDir)
+                    .replaceAll("<share>", sharePath)
+                    .replaceAll("<config>", configPath);
+
+                if (!await exists(finalPath)) {
+                    write(
+                        finalPath,
+                        file.content.replaceAll("<save>", config.saveDir)
+                    );
+                }
+            }
+        }
 
         switch (emu.id) {
-            case "yuzu-legacy":
+            /*case "citron":
+            case "sudachi":
+            case "torzu":
+            case "eden":
+                lePath = join(lePath, emu.id);
+
+                await $`
+                    mkdir -p ${lePath}
+                    mkdir -p ${config.saveDir}/${emu.id}/nand
+                    mkdir -p ${config.saveDir}/${emu.id}/sdmc
+                `;
+
+                write(
+                    join(lePath, "qt-config.ini"),
+                    `[Data%20Storage]\nsdmc_directory=${config.saveDir}/${emu.id}/sdmc\nnand_directory=${config.saveDir}/${emu.id}/nand`
+                );
+                break;
+            case "melonds":
+                break;
+            case "dolphin-emu":
+                switch (installOpt) {
+                    case "aur":
+                    case "github": 
+                        lePath = join(lePath, "..", ".local", "share");
+                }
+
+                lePath = join(lePath, "dolphin-emu");
+
+                await $`
+                    mkdir -p ${config.saveDir}/dolphin-emu
+                    mkdir -p ${lePath}/Wii
+                    mkdir -p ${lePath}/GC
+
+                    ln -s ${lePath}/GC ${config.saveDir}/dolphin-emu
+                    ln -s ${lePath}/Wii ${config.saveDir}/dolphin-emu
+                `;
+                break;
+                
+            case "mgba":
+                // patch based on 0.10.5
+                console.log("post-install[mgba]: overwriting config...");
+
+                lePath = join(lePath, "mgba");
+
+                await $`mkdir -p ${lePath}`;
+                await $`mkdir -p ${config.saveDir}/mgba/states`;
+
+                write(
+                    join(lePath, "config.ini"),
+                    `[ports.qt]\nsavegamePath=${join(config.saveDir, "mgba")}\nsavestatePath=${join(config.saveDir, "mgba", "states")}`
+                );
                 break;
 
+            case "snes9x":
+                // patch based on 1.63
+                console.log("post-install[snes9x]: overwriting config...");
+                let path = "";
+                switch (installOpt) {
+                    case "aur":
+                    case "github":
+                        path = join(homedir(), ".emubox", ".config");
+                        break;
+                    case "flatpak":
+                        path = join(homedir(), ".var", "app", emu.installOptions.flatpak!, "config");
+                        break;
+                }
+
+                path = join(path, "snes9x");
+
+                await $`mkdir -p ${path}`;
+                await $`mkdir -p ${config.saveDir}/snes9x/states`;
+
+                // config file reference:
+                // https://raw.githubusercontent.com/snes9xgit/snes9x/refs/heads/master/unix/snes9x.conf.default
+                write(
+                    join(path, "snes9x.conf"),
+                    `[Files]\nSRAMDirectory=${join(config.saveDir, "snes9x")}\nSaveStateDirectory=${join(config.saveDir, "snes9x", "states")}`
+                );
+
+                break;
+            */
             case "srm":
-                console.log("post-install: adding custom parser list...");
+                console.log("post-install[srm]: adding custom parser list...");
                 let srmPath = "";
                 switch (installOpt) {
                     case "aur":

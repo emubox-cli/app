@@ -37,6 +37,14 @@ export interface BoxApp {
     consoles: SupportedConsoles[];
     makeLauncher?: boolean;
     overrideAvailible?: boolean;
+    postInstall: {
+        _basedOn?: string;
+        makeDirs: string[];
+        makeFiles: {
+            path: string;
+            content: string;
+        }[]; 
+    };
     installOptions: {
         multi?: BoxApp["installOptions"][];
         multiName?: string;

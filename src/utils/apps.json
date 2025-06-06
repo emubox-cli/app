@@ -78,6 +78,19 @@
         "name": "Snes9x",
         "id": "snes9x",
         "consoles": ["snes"],
+        "postInstall": {
+            "makeDirs": [
+                "<config>/snes9x",
+                "<save>/snes9x/saves",
+                "<save>/snes9x/states"
+            ],
+            "makeFiles": [
+                {
+                    "path": "<config>/snes9x/snes9x.conf",
+                    "content": "[Files]\nSRAMDirectory=<save>/snes9x/saves\nSaveStateDirectory=<save>/snes9x/states"
+                }
+            ]
+        },
         "installOptions": {
             "flatpak": "com.snes9x.Snes9x",
             "flatpakOverrideFs": true,
@@ -137,7 +150,7 @@
             "aurExportName": "dolphin-emu",
             "libretroCore": "dolphin",
             "gitRepo": "pkgforge-dev/Dolphin-emu-AppImage",
-            "gitRe": "Dolphin_Emulator-.*-.*-anylinux.squashfs-x86_64.AppImage"
+            "gitRe": "Dolphin_Emulator-.*-anylinux.squashfs-x86_64.AppImage"
         }
     },
     {
@@ -214,17 +227,6 @@
                     "gitRe": "Eden-Linux-.*-pre-alpha-amd64.AppImage"
                 }
             ]
-        }
-    },
-    {
-        "name": "Citron",
-        "id": "citron",
-        "consoles": ["switch"],
-        "installOptions": {
-            "aur": "citron-bin",
-            "aurExportName": "citron",
-            "gitRepo": "pkgforge-dev/Citron-AppImage",
-            "gitRe": "Citron-v.*-anylinux-x86_64_v3.AppImage"
         }
     },
     {
