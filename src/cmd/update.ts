@@ -67,7 +67,7 @@ export default async function() {
         await $`cp /tmp/emubox $HOME/.local/bin/emubox`;
     }
     else {
-        console.log("Package manager is up to date!")
+        console.log("Package manager is up to date!");
     }
 
     // console.log("Update the package manager itself using 'emubox-update'");
