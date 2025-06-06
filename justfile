@@ -1,4 +1,8 @@
 set quiet
+
+alias dev := debug
+alias b := build
+
 build identifier="debug-$(just _make-build-date)":
     bun build ./src/main.ts \
         --sourcemap \
@@ -14,6 +18,6 @@ _make-build-date:
     console.log(String(rn.getFullYear()) + rn.getMonth() + rn.getDate() + rn.getHours() + rn.getMinutes() + rn.getSeconds());
 
 
-debug args="":
+debug +args="":
     ./dist/emubox {{args}}
     
