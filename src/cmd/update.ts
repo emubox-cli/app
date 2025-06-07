@@ -4,7 +4,7 @@ import { getAppFromId } from "utils/apps";
 import { openConfig, writeConfig } from "utils/config";
 import containerPrefix from "utils/containerPrefix";
 import getLatestRelease from "utils/getLatestRelease";
-import { bold, green } from "yoctocolors";
+import { bold, green, red } from "yoctocolors";
 
 export default async function() {
     await $`${containerPrefix}pacman -Syy`;
@@ -17,43 +17,49 @@ export default async function() {
         const dumbIndex = config.installed.indexOf(i);
         const app = getAppFromId(i.id)!;
         console.log(bold(`[${dumbIndex+1}/${config.installed.length}] ${app.name}`));
-        switch (i.source) {
-            case "aur":
-                if (!aurUpdatesNeeded.includes(app.installOptions.aur!)) {
-                    console.log(green(`Up to date`));
-                    continue;
-                }
+        if (app.installOptions.multi) {
+            app.installOptions = app.installOptions.multi[config.installed[dumbIndex].mIndex!];
+        }
 
-                await $`${containerPrefix}paru -S ${app?.installOptions.aurBin}`;
-                break;
-            case "flatpak":
-                if (!flatpakUpdatesNeeded.includes(app.installOptions.flatpak!)) {
-                    console.log(green(`Up to date`));
-                    continue;
-                }
-
-                await $`${containerPrefix}flatpak update ${app?.installOptions.flatpak}`;
-                break;
-            case "github":
-                if (app.installOptions.multi) {
-                    app.installOptions = app.installOptions.multi[i.mIndex!];
-                }
-                const latest = await getLatestRelease(app.installOptions.gitRepo!);
-                if (String(latest.id) === i.releaseId) {
-                    console.log(green(`Up to date`));
-                    continue;
-                }
-                
-                console.log(bold(`New release availible: ${i.releaseId} ~> ${latest.id}`));
-
-                const targetAsset = latest.assets.find((d: { name: string }) => d.name.match(app.installOptions.gitRe!));
-                if (!targetAsset) 
-                    throw new Error("No asset found");
-                await $`rm ~/.emubox/apps/${i.file!}`;
-                console.log(`Updating ${app.name}...`);
-                config.installed.splice(dumbIndex, 1);
-                writeConfig(config);
-                await install(app.id, "github");
+        try {
+            switch (i.source) {
+                case "aur":
+                    if (!aurUpdatesNeeded.includes(app.installOptions.aur!)) {
+                        console.log(green(`Up to date`));
+                        continue;
+                    }
+    
+                    await $`${containerPrefix}paru -S ${app?.installOptions.aurBin}`;
+                    break;
+                case "flatpak":
+                    if (!flatpakUpdatesNeeded.includes(app.installOptions.flatpak!)) {
+                        console.log(green(`Up to date`));
+                        continue;
+                    }
+    
+                    await $`${containerPrefix}flatpak update ${app?.installOptions.flatpak}`;
+                    break;
+                case "github":
+                    const latest = await getLatestRelease(app.installOptions.gitRepo!);
+                    if (String(latest.id) === i.releaseId) {
+                        console.log(green(`Up to date`));
+                        continue;
+                    }
+                    
+                    console.log(bold(`New release availible: ${i.releaseId} ~> ${latest.id}`));
+    
+                    const targetAsset = latest.assets.find((d: { name: string }) => d.name.match(app.installOptions.gitRe!));
+                    if (!targetAsset) 
+                        throw new Error("No asset found");
+                    await $`rm ~/.emubox/apps/${i.file!}`;
+                    console.log(`Updating ${app.name}...`);
+                    config.installed.splice(dumbIndex, 1);
+                    writeConfig(config);
+                    await install(app.id, "github");
+            }
+        }
+        catch (e) {
+            console.log(red(`Failed to update '${app.name}'`), e);
         }
     }
 
