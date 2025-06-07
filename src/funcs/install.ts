@@ -215,7 +215,8 @@ export default async function(app: string, installOpt: InstallationTypes) {
                 const finalDir = dir
                     .replaceAll("<save>", config.saveDir)
                     .replaceAll("<share>", sharePath)
-                    .replaceAll("<config>", configPath);
+                    .replaceAll("<config>", configPath)
+                    .replaceAll("<id>", emu.installOptions.multiId ?? emu.id);
 
                 // console.log(`Making ${finalDir}...`);
                 await $`mkdir -p ${finalDir}`;
@@ -225,12 +226,15 @@ export default async function(app: string, installOpt: InstallationTypes) {
                 const finalPath = file.path
                     .replaceAll("<save>", config.saveDir)
                     .replaceAll("<share>", sharePath)
-                    .replaceAll("<config>", configPath);
+                    .replaceAll("<config>", configPath)
+                    .replaceAll("<id>", emu.installOptions.multiId ?? emu.id);
 
                 if (!await exists(finalPath)) {
                     write(
                         finalPath,
-                        file.content.replaceAll("<save>", config.saveDir)
+                        file.content
+                            .replaceAll("<save>", config.saveDir)
+                            .replaceAll("<id>", emu.installOptions.multiId ?? emu.id)
                     );
                 }
             }

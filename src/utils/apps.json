@@ -194,6 +194,19 @@
         "name": "Yuzu (Fork)",
         "id": "yuzu-fork",
         "consoles": ["switch"],
+        "postInstall": {
+            "makeDirs": [
+                "<config>/<id>",
+                "<save>/<id>/nand",
+                "<save>/<id>/sdmc"
+            ],
+            "makeFiles": [
+                {
+                    "path": "<config>/<id>/qt-config.ini",
+                    "content": "[Data%20Storage]\nnand_directory=<save>/<id>/nand\nsdmc_directory=<save>/<id>/sdmc"
+                }
+            ]
+        },
         "installOptions": {
             "multi": [
                 {
