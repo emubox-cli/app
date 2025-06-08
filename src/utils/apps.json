@@ -111,7 +111,6 @@
                 "<save>/mgba/saves",
                 "<saves>/mgba/states"
             ], 
-
             "makeFiles": [{
                 "path": "<config>/mgba/config.ini",
                 "content": "[ports.qt]\nsavegamePath=<save>/mgba/saves\nsavestatePath=<save>/mgba/states"
@@ -168,6 +167,20 @@
         "name": "Dolphin Emulator",
         "id": "dolphin-emu",
         "consoles": ["gc", "wii"],
+        "postInstall": {
+            "makeDirs": [
+                "<config>/dolphin-emu",
+                "<save>/dolphin-emu/GC/USA",
+                "<save>/dolphin-emu/GC/EUR",
+                "<save>/dolphin-emu/GC/JPN",
+                "<save>/dolphin-emu/GC/JAP",
+                "<save>/dolphin-emu/Wii"
+            ],
+            "makeFiles": [{
+                "path": "<config>/dolphin-emu/Dolphin.ini",
+                "content": "[Core]\nGCIFolderAPath=<save>/dolphin-emu/GC\n[General]\nNANDRootPath=<save>/dolphin-emu/Wii"
+            }]
+        },
         "installOptions": {
             "flatpak": "org.DolphinEmu.dolphin-emu",
             "aur": "dolphin-emu-git",
