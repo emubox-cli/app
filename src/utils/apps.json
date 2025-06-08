@@ -105,6 +105,18 @@
         "name": "mGBA",
         "id": "mgba",
         "consoles": ["gba"],
+        "postInstall": {
+            "makeDirs": [
+                "<config>/mgba",
+                "<save>/mgba/saves",
+                "<saves>/mgba/states"
+            ], 
+
+            "makeFiles": [{
+                "path": "<config>/mgba/config.ini",
+                "content": "[ports.qt]\nsavegamePath=<save>/mgba/saves\nsavestatePath=<save>/mgba/states"
+            }]
+        },
         "installOptions": {
             "flatpak": "io.mgba.mGBA",
             "aur": "mgba-qt-git",
@@ -130,6 +142,18 @@
         "name": "MelonDS",
         "id": "melonds",
         "consoles": ["nds"],
+        "postInstall": {
+            "makeDirs": [
+                "<config>/melonDS",
+                "<save>/melonds/saves",
+                "<save>/melonds/states"
+            ],
+            
+            "makeFiles": [{
+                "path": "<config>/melonDS/melonDS.toml",
+                "content": "[Instance0]\nSaveFilePath=\"<save>/melonds/saves\"\nSavestatePath=\"<save>/melonds/states\""
+            }]
+        },
         "installOptions": {
             "flatpak": "net.kuribo64.melonDS",
             "aur": "melonds-git",
@@ -178,13 +202,24 @@
         "consoles": ["switch"],
         "installOptions": {
             "aur": "ryujinx-git",
-            "aurExportName": "ryujinx",
-            "gitRepo": "Ryubing/Stable-Releases",
-            "gitRe": "ryujinx-.*-x64.AppImage"
+            "aurExportName": "ryujinx"
         }
     },
     {
         "name": "Yuzu (Legacy)",
+        "postInstall": {
+            "makeDirs": [
+                "<config>/yuzu",
+                "<save>/yuzu/nand",
+                "<save>/yuzu/sdmc"
+            ],
+            "makeFiles": [
+                {
+                    "path": "<config>/yuzu/qt-config.ini",
+                    "content": "[Data%20Storage]\nnand_directory=<save>/yuzu/nand\nsdmc_directory=<save>/yuzu/sdmc"
+                }
+            ]
+        },
         "id": "yuzu-legacy",
         "installOptions": {
             "manual": true
