@@ -7,7 +7,7 @@ import getLatestRelease from "utils/getLatestRelease";
 import { bold, green, red } from "yoctocolors";
 
 export default async function() {
-    await $`${containerPrefix}pacman -Syy`;
+    await $`${containerPrefix}paru -Syy`;
     console.log("Updating apps...");
     const config = await openConfig();
     const aurUpdatesNeeded = await $`${containerPrefix}paru --query --upgrades`.nothrow().text();
