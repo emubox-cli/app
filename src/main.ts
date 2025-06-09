@@ -45,6 +45,8 @@ if (debugMode)
     rest.splice(debug, 1);
 
 switch (cmd) {
+    case "steam-on":
+        
     case "init":
         init(...rest);
         break;

@@ -63,13 +63,13 @@ export default async function() {
         }
     }
 
-    const lastestVer = await fetch("https://emubox.wolves-are.gay/latest");
+    const lastestVer = await fetch("https://emubox.pupper.space/latest");
     const lastestTxt = (await lastestVer.text()).replace("\n", "");
     const currentVer = (await $`~/.local/bin/emubox -v`.text()).replace("\n", "");
     
     if (lastestTxt !== currentVer) {
         console.log(`Updating package manager to ${lastestTxt}...`);
-        await $`curl -O https://emubox.wolves-are.gay/emubox`.cwd("/tmp");
+        await $`curl -O https://emubox.pupper.space/emubox`.cwd("/tmp");
         await $`cp /tmp/emubox $HOME/.local/bin/emubox`;
     }
     else {
