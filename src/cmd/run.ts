@@ -16,11 +16,6 @@ export default async function(...remainingArgs: string[]) {
     }
 
     const config = await openConfig();
-    if (config.customLaunchers[emuId]) {
-        await $`${containerPrefix}${config.customLaunchers[emuId]} ${remainingArgs}`;
-        return;
-    }
-    
     const targetApp = getAppFromId(emuId)!;
     const installData = config.installed.find(d => d.id === emuId);
     if (!installData) {

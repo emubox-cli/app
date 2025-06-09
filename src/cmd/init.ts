@@ -75,8 +75,7 @@ export default async function(...dumbArgs: string[]) {
     const config = {
         saveDir,
         romDir,
-        installed: [],
-        customLaunchers: {}
+        installed: []
     };
     
     writeConfig(config);

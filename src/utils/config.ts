@@ -13,7 +13,6 @@ export type InstallationTypes = "aur" | "flatpak" | "github" | "manual";
 export interface Config {
     saveDir: string;
     romDir: string;
-    customLaunchers: { [x: string]: string };
     installed: {
         id: string;
         mIndex?: number;
@@ -28,8 +27,7 @@ export async function openConfig(): Promise<Config> {
    config = Object.assign({
         saveDir: dir("saves"),
         romDir: dir("roms"),
-        installed: [],
-        customLaunchers: {}
+        installed: []
     }, config);
 
    return config;
