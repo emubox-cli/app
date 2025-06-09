@@ -109,7 +109,7 @@
             "makeDirs": [
                 "<config>/mgba",
                 "<save>/mgba/saves",
-                "<saves>/mgba/states"
+                "<save>/mgba/states"
             ], 
             "makeFiles": [{
                 "path": "<config>/mgba/config.ini",
