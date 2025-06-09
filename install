@@ -1,7 +1,7 @@
 #!/bin/bash
 
 debug=0
-assemble_file="https://emubox.wolves-are.gay/emubox.ini"
+assemble_file="https://emubox.pupper.space/emubox.ini"
 emubox_bin="$HOME/.local/bin/emubox"
 while getopts ":d" arg; do
     case $arg in
@@ -27,10 +27,10 @@ mkdir -p $HOME/.local/bin
 
 if [ $debug == 0 ]; then
     echo "Downloading emubox package manager..."
-    curl -o $emubox_bin https://emubox.wolves-are.gay/emubox
+    curl -o $emubox_bin https://emubox.pupper.space/emubox
 else
     echo "Building emubox..."
-    bash ./build
+    just build
     cp ./dist/emubox $emubox_bin
     assemble_file="emubox.ini"
 fi
