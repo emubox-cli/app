@@ -14,11 +14,13 @@ import getLatestRelease from "utils/getLatestRelease";
 
 import userConfigurations from "utils/userConfigurations.json";
 import { generateManifest } from "utils/manifests";
+import killSteam from "utils/killSteam";
 
 export default async function(app: string, installOpt: InstallationTypes) {
     const config = await openConfig();
     const emu = getAppFromId(app);
     const appData = config.installed.find(d => d.id === app);
+    const ogName = emu!.name;
 
     if (!emu) {
         console.error(`'${app}' not found`);
@@ -177,6 +179,17 @@ export default async function(app: string, installOpt: InstallationTypes) {
                 throw new TypeError("Invalid installation type provided");
 
         }
+
+        if (config.installed.find(d => d.id === "srm")) {
+            console.log("Enabling SRM parsers...");
+            if (userConfigurations.find(d => d.configTitle === ogName) || emu.srmParsers) {
+                await $`emubox run srm enable --names "${ogName}"`.quiet();
+            }
+            if (emu.srmParsers) {
+                await $`emubox run srm enable --names ${emu.srmParsers.map(d => `"${d}"`).join(" ")}`.quiet();
+            }
+        }
+        
         
 
         if (emu.postInstall) {
@@ -344,10 +357,11 @@ export default async function(app: string, installOpt: InstallationTypes) {
                     parser.executable.path = parser.executable.path.replace("<emubox-bin>", join(homedir(), ".local", "bin", "emubox"));
                 }
     
-                write(
-                    join(srmPath, "userConfigurations.json"),
-                    JSON.stringify(userConfigurations)
-                );
+                if (!await exists(join(srmPath, "userConfigurations.json")))
+                    write(
+                        join(srmPath, "userConfigurations.json"),
+                        JSON.stringify(userConfigurations)
+                    );
                 break;
         }
 
@@ -358,8 +372,17 @@ export default async function(app: string, installOpt: InstallationTypes) {
         });
 
         writeConfig(config);
-        if (!emu.consoles.includes("#util") && config.installed.find(app => app.id === "srm"))
-            await generateManifest("emulators");
+        if (config.installed.find(app => app.id === "srm")) {
+            console.log("Adding games to your steam library...");
+            if (!emu.consoles.includes("#util"))
+                await generateManifest("emulators");
+
+            if (emu.id === "srm")
+                await $`emubox run srm enable --names "Emulators"`.quiet();
+            
+            await killSteam();
+            await $`emubox run srm add`.quiet();   
+        }
 
     } catch (e) {
         console.error(red(`Failed to install '${emu.name}': ${(e as Error).message}\n${(e as Error).stack}`));

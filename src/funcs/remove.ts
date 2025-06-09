@@ -2,6 +2,7 @@ import { $ } from "bun";
 import { getAppFromId } from "../utils/apps";
 import { openConfig, writeConfig } from "../utils/config";
 import containerPrefix from "utils/containerPrefix";
+import killSteam from "utils/killSteam";
 
 export default async function(app: string) {
     const config = await openConfig();
@@ -20,6 +21,17 @@ export default async function(app: string) {
 
     if (emu.installOptions.multi) {
         emu.installOptions = emu.installOptions.multi[target.mIndex!];
+    }
+
+     if (emu.id === "srm") {
+        console.log("Removing all SRM parsers from your steam library...");
+
+        await $`emubox run srm disable --all`;
+    
+        if (emu.id === "srm")
+            await $`emubox run srm enable --names "Emulators"`.quiet();
+                
+        await $`emubox run srm nuke`.quiet();   
     }
     
     switch (target.source) {
@@ -45,7 +57,6 @@ export default async function(app: string) {
             console.log("Removing icon and desktop files...");
             await $`rm $HOME/.local/share/applications/${target.id}.desktop`;
             await $`rm $HOME/.local/share/icons/emubox/${target.id}.png`;
-    
     }
 
     config.installed.splice(
@@ -55,6 +66,13 @@ export default async function(app: string) {
 
     
     writeConfig(config);
+    if (config.installed.find(app => app.id === "srm")) {
+        console.log("Removing games to your steam library...");
+                
+        await killSteam();
+        await $`emubox run srm remove`.quiet();
+        await $`emubox run srm add`.quiet();
+    }
 
     console.log(`'${target.id}' has been removed.`);
 }

@@ -36,7 +36,7 @@ export interface BoxApp {
     id: string;
     consoles: SupportedConsoles[];
     makeLauncher?: boolean;
-    overrideAvailible?: boolean;
+    srmParsers?: string[];
     postInstall: {
         _basedOn?: string;
         makeDirs: string[];
