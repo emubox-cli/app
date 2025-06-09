@@ -12,5 +12,5 @@ I like the ideas utilized by the [Emudeck](https://github.com/dragoonDorise/EmuD
 ### Installation
 Requires distrobox
 ```
-sh -c "$(curl -sSL https://emubox.wolves-are.gay/install)"
+sh -c "$(curl -sSL https://emubox.pupper.space/install)"
 ```

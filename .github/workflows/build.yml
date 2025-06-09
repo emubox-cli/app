@@ -30,7 +30,7 @@ jobs:
                 cp install dist/install
                 cp README.md dist/README.md
                 cp emubox.ini dist/emubox.ini
-                echo "emubox.wolves-are.gay" >> dist/CNAME
+                echo "emubox.pupper.space" >> dist/CNAME
                 echo $(just debug -v) >> dist/latest
 
             - name: Push to Dist
