@@ -738,7 +738,7 @@
     },
     {
         "parserType": "Glob",
-        "configTitle": "MGBA",
+        "configTitle": "mGBA",
         "steamDirectory": "${steamdirglobal}",
         "romDirectory": "<emubox>/roms/gba",
         "steamCategories": [

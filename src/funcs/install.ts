@@ -20,12 +20,12 @@ export default async function(app: string, installOpt: InstallationTypes) {
     const config = await openConfig();
     const emu = getAppFromId(app);
     const appData = config.installed.find(d => d.id === app);
-    const ogName = emu!.name;
 
     if (!emu) {
         console.error(`'${app}' not found`);
         return;
     }
+    const ogName = emu!.name;
 
     if (appData) {
         let appName = app;
@@ -124,7 +124,10 @@ export default async function(app: string, installOpt: InstallationTypes) {
 
                         subDir = dir + "/";
                     }
-                    await $`cp ${emu.id}/${subDir}${emu.installOptions.unzipTarget} $HOME/.emubox/apps/${emu.installOptions.unzipTarget}`.cwd("/tmp");
+                    await $`
+                        cp ${emu.id}/${subDir}${emu.installOptions.unzipTarget} $HOME/.emubox/apps/${emu.installOptions.unzipTarget}
+                        rm -rf ${emu.id}
+                    `.cwd("/tmp");
                     targetAsset.name = emu.installOptions.unzipTarget;
                 }
                 else {
@@ -168,7 +171,6 @@ export default async function(app: string, installOpt: InstallationTypes) {
                         })
                     );
                 }
-                
                 extraInstallData.file = manualPath;
                 
                 break;
@@ -183,9 +185,11 @@ export default async function(app: string, installOpt: InstallationTypes) {
         if (config.installed.find(d => d.id === "srm")) {
             console.log("Enabling SRM parsers...");
             if (userConfigurations.find(d => d.configTitle === ogName) || emu.srmParsers) {
+                console.log("Adding", ogName);
                 await $`emubox run srm enable --names "${ogName}"`.quiet();
             }
             if (emu.srmParsers) {
+                console.log("Adding", emu.srmParsers.map(d => `"${d}"`).join(" "));
                 await $`emubox run srm enable --names ${emu.srmParsers.map(d => `"${d}"`).join(" ")}`.quiet();
             }
         }
@@ -373,15 +377,32 @@ export default async function(app: string, installOpt: InstallationTypes) {
 
         writeConfig(config);
         if (config.installed.find(app => app.id === "srm")) {
-            console.log("Adding games to your steam library...");
             if (!emu.consoles.includes("#util"))
                 await generateManifest("emulators");
 
-            if (emu.id === "srm")
-                await $`emubox run srm enable --names "Emulators"`.quiet();
+            if (emu.id === "srm") {
+                await $`emubox run srm remove`.quiet();
+
+                await $`
+                    emubox run srm enable --names "Emulators" ${
+                    config.installed
+                        .filter(d => d.id !== "srm")
+                        .map(d => {
+                            const app = getAppFromId(d.id);
+                            if (app?.srmParsers) {
+                                return app.srmParsers.map(dd => `"${dd}"`);
+                            }
+                            return `"${app?.name}"`;
+                        })
+                    }
+                `;
+
+            }
+                
             
             await killSteam();
-            await $`emubox run srm add`.quiet();   
+            console.log("Adding games to your steam library...");
+            await $`emubox run srm add`;   
         }
 
     } catch (e) {

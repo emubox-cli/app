@@ -1,4 +1,3 @@
-import { generateManifest } from "utils/manifests";
 import remove from "../funcs/remove";
 
 const HELP_MSG = `
@@ -14,6 +13,4 @@ export default async function(...toRemove: string[]) {
     for (const i of toRemove) {
         await remove(i);
     }
-
-    await generateManifest("emulators");
 }

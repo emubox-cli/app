@@ -167,6 +167,7 @@
         "name": "Dolphin Emulator",
         "id": "dolphin-emu",
         "consoles": ["gc", "wii"],
+        "srmParsers": ["Dolphin - Gamecube", "Dolphin - Wii"],
         "postInstall": {
             "makeDirs": [
                 "<config>/dolphin-emu",

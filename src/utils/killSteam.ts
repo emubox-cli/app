@@ -10,6 +10,6 @@ export default async function() {
     }
 
     if (pidOfSteam.exitCode !== 1) {
-        await $`killall steam`;
+        await $`kill -9 steam`;
     }
 }
