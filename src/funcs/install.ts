@@ -399,10 +399,15 @@ export default async function(app: string, installOpt: InstallationTypes) {
 
             }
                 
+            if (await confirm({
+                message: "Would you like to run steam rom manager?"
+            })) {
+                await killSteam();
+                console.log("Adding games to your steam library...");
+                await $`emubox run srm add`; 
+            }
             
-            await killSteam();
-            console.log("Adding games to your steam library...");
-            await $`emubox run srm add`;   
+             
         }
 
     } catch (e) {
