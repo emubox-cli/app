@@ -53,7 +53,7 @@ export default async function() {
                     console.log(`Updating ${app.name}...`);
                     config.installed.splice(dumbIndex, 1);
                     writeConfig(config);
-                    await install(app.id, "github");
+                    await install(i.id, "github");
             }
         }
         catch (e) {

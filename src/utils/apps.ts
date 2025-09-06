@@ -1,3 +1,6 @@
+import { $, file } from "bun";
+import { dir } from "./config";
+
 export type SupportedConsoles =
     "#util" |
     "snes" |
@@ -31,9 +34,37 @@ export const SUPPORTED_CONSOLES: SupportedConsoles[] = [
     "ps3"
 ];
 
+export interface MinifiedApps {
+    /**
+     * App List Version
+     */
+    v: string;
+    /**
+     * Minified list of apps
+     */
+    a: {
+        /**
+         * App name
+         */
+        n: string;
+        /**
+         * App id
+         */
+        i: string;
+        /**
+         * App consoles
+         */
+        c: string[];
+        /**
+         * App install options
+         */
+        o: string[]
+    }[];
+
+}
 export interface BoxApp {
+    extends?: string;
     name: string;
-    id: string;
     consoles: SupportedConsoles[];
     makeLauncher?: boolean;
     srmParsers?: string[];
@@ -42,14 +73,11 @@ export interface BoxApp {
         makeDirs: string[];
         makeFiles: {
             path: string;
-            content: string;
+            content: { [x: string]: { [x: string]: string } };
         }[]; 
     };
     installOptions: {
-        multi?: BoxApp["installOptions"][];
-        multiName?: string;
-        multiId?: string;
-        manual: boolean;
+        manual?: boolean;
         flatpak?: string;
         flatpakOverrideFs?: boolean;
         aur?: string;
@@ -66,11 +94,15 @@ export interface BoxApp {
     };
 }
 
-// @ts-expect-error "Erm actually string[] doesn't support SupportedConsole[]" 🤓
-const apps: BoxApp[] = (await import("./apps.json")).default;
+export const REQUEST_DOMAIN = "https://emubox-cli.github.io/apps/";
+const apps: MinifiedApps = await file(dir("apps.json")).json() as never;
 
-export function getAppFromId(id: string) {
-    return apps.find(d => d.id === id);
+export async function getAppFromId(id: string): Promise<BoxApp> {
+    try {
+        return JSON.parse(await $`curl ${REQUEST_DOMAIN}${id}.json`.text());
+    } catch {
+        return undefined as unknown as BoxApp;
+    }
 }
 
 export default apps;

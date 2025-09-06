@@ -15,9 +15,8 @@ export interface Config {
     romDir: string;
     installed: {
         id: string;
-        mIndex?: number;
         source: InstallationTypes;
-        file?: string;
+        exec: string;
         releaseId?: string;
     }[];
 }
