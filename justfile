@@ -3,7 +3,7 @@ set quiet
 alias dev := debug
 alias b := build
 
-build identifier="debug-$(just _make-build-date)":
+@build identifier="debug-$(just _make-build-date)":
     bun build ./src/main.ts \
         --sourcemap \
         --target=bun-linux-x64 \
@@ -20,6 +20,7 @@ _make-build-date:
 lint: 
     bun x eslint
 
-debug +args="": build
+debug +args="": 
+    just build >> /dev/null
     ./dist/emubox {{args}}
     

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -euo
+set -euo >> /dev/null
 
 debug=0
 already_present=0
@@ -70,7 +70,7 @@ else
     assemble_file="emubox.ini"
 fi
 
-if [ -z $(distrobox ls | grep emubox) ]; then
+if [ -z "$(distrobox ls | grep emubox)" ]; then
     echo "Creating container..."
     distrobox assemble create --file $assemble_file
 fi
