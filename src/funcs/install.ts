@@ -93,7 +93,12 @@ export default async function(app: string, installOpt: InstallationTypes) {
                 case "flatpak":
                     if (!emu.installOptions.flatpak) 
                         throw TypeError(`No flatpak installation method availible for '${app}'`);
-                    await $`${containerPrefix}flatpak install -y flathub ${emu.installOptions.flatpak}`;
+                    await $`
+                        ${containerPrefix}flatpak install -y flathub ${emu.installOptions.flatpak}
+                        ${containerPrefix}flatpak override \
+                            -u ${emu.installOptions.flatpak}
+                            --filesystem=~/.emubox
+                    `;
                     if (emu.installOptions.flatpakOverrideFs === true) 
                         await $`${containerPrefix}flatpak override \
                             -u ${emu.installOptions.flatpak} \
@@ -290,7 +295,7 @@ export default async function(app: string, installOpt: InstallationTypes) {
 }
 
 async function prepExecutable(filePath: string, id: string, name: string) {
-    if (filePath.toLowerCase().endsWith(".appimage")) {
+    if (filePath.toLowerCase().endsWith(".appimage") && id !== "ppsspp") {
         console.log("Getting icon...");
         await $`chmod +x ${filePath}`;
         await $`${filePath} --appimage-extract`.quiet().cwd("/tmp");
