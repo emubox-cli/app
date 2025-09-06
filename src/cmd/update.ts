@@ -8,6 +8,7 @@ import getLatestRelease from "utils/getLatestRelease";
 import { bold, green, red } from "yoctocolors";
 
 export default async function() {
+    await getAppFile();
     await $`${containerPrefix}paru -Syy`;
     console.log("Updating apps...");
     const config = await openConfig();
@@ -60,7 +61,5 @@ export default async function() {
             console.log(red(`Failed to update '${app.name}'`), e);
         }
     }
-
-    await getAppFile();
     // console.log("Update the package manager itself using 'emubox-update'");
 }
