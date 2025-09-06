@@ -11,7 +11,6 @@ import { configExists } from "utils/config";
 import { yellow } from "yoctocolors";
 import { version } from "../package.json";
 import displayVersion from "utils/displayVersion";
-import containerPrefix from "utils/containerPrefix";
 
 const HELP_MSG = 
 `
@@ -45,25 +44,6 @@ if (debugMode)
     rest.splice(debug, 1);
 
 switch (cmd) {
-    case "steam-on":
-        await doContainerCheck();
-        const flatpakPs = await $`${containerPrefix}flatpak ps`.quiet();
-        const pidOfSteam = await $`pidof steam`.quiet().nothrow();
-        if (flatpakPs.text().includes("com.valvesoftware.Steam")) {
-            console.log("Steam is running as a flatpak!");
-            await $`${containerPrefix}flatpak kill com.valvesoftware.Steam`;
-        }
-
-        if (pidOfSteam.exitCode !== 1) {
-            console.log("Steam is running on system!");
-            await $`killall steam`;
-        }
-
-        console.log("Now it's fucking dead!");
-
-        await $`emubox run srm --help`;
-
-        break;
     case "init":
         init(...rest);
         break;
@@ -74,7 +54,7 @@ switch (cmd) {
         break;
     case "ls":
     case "list":
-        ls();
+        ls(...rest);
         break;
     case "rm":
     case "remove":
