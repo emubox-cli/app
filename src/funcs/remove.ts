@@ -1,40 +1,33 @@
 import { $ } from "bun";
-import { getAppFromId } from "utils/apps";
+import apps, { getAppFromId } from "utils/apps";
 import { openConfig, writeConfig } from "../utils/config";
 import containerPrefix from "utils/containerPrefix";
-import killSteam from "utils/killSteam";
-import { generateManifest } from "utils/manifests";
-import userConfiguratons from "utils/userConfigurations.json";
 
 export default async function(app: string) {
     const config = await openConfig();
     const target = config.installed.find(d => d.id === app);
-    const emu = getAppFromId(app);
+    const emuMin = apps.a[apps.a.findIndex(a => a.i === app)!];
     
-    if (!emu) {
+    if (!emuMin) {
         console.error(`'${app}' not found`);
         return;
     }
-
-    const ogName = emu!.name;
     
     if (!target) {
         console.error(`'${app}' isn't installed`);
         return;
     }
 
-    if (emu.installOptions.multi) {
-        emu.installOptions = emu.installOptions.multi[target.mIndex!];
-    }
-
-     if (emu.id === "srm") {
+    /*if (emu.id === "srm") {
         console.log("Removing all SRM parsers from your steam library...");
         await $`emubox run srm disable --all`;
         
         await killSteam();
         await $`emubox run srm nuke`.quiet();   
-    }
+    }*/
     
+    
+    const emu = await getAppFromId(app);
     switch (target.source) {
         case "aur":
             await $`
@@ -48,16 +41,30 @@ export default async function(app: string) {
             await $`flatpak remove -y ${emu.installOptions.flatpak}`;
             break;
         case "github":
-            console.log("Removing executable...");
-            await $`rm $HOME/.emubox/apps/${target.file!}`;
             console.log("Removing icon and desktop files...");
-            await $`rm $HOME/.local/share/applications/${target.id}.desktop`;
-            await $`rm $HOME/.local/share/icons/emubox/${target.id}.png`;
+            await $`
+                rm ${target.exec}
+                rm $HOME/.local/share/applications/${target.id}.desktop
+                rm $HOME/.local/share/icons/emubox/${target.id}.png
+            `.nothrow();
+            // await $`rm $HOME/.local/share/icons/emubox/${target.id}.png`;
             break;
         case "manual":
-            console.log("Removing icon and desktop files...");
-            await $`rm $HOME/.local/share/applications/${target.id}.desktop`;
-            await $`rm $HOME/.local/share/icons/emubox/${target.id}.png`;
+            console.log("Renaming executable...");
+            let suffix = target.exec.split("/").pop();
+            if (!suffix?.includes(".")) {
+                suffix = "";
+            }
+            else {
+                suffix = "." + suffix.split(".").pop();
+            }
+            await $`mv ${target.exec} $HOME/.emubox/apps/_${target.id}${suffix}`;
+            await $`
+                rm $HOME/.local/share/applications/${target.id}.desktop
+                rm $HOME/.local/share/icons/emubox/${target.id}.png
+            `.nothrow();
+
+            console.log(`The executable you provided will remain availible at '~/.emubox/_${target.id}${suffix}'.`);
     }
 
     config.installed.splice(
@@ -67,11 +74,11 @@ export default async function(app: string) {
 
     
     writeConfig(config);
-    if (config.installed.find(app => app.id === "srm")) {
+    /*if (config.installed.find(app => app.id === "srm")) {
         await $`emubox run srm remove`.quiet();
         
         if (userConfiguratons.find(d => d.configTitle === ogName) || emu.srmParsers) {
-            console.log("Removing", ogName);
+            console.log("Removing", app);
             await $`emubox run srm disable --names "${ogName}"`.quiet();
         }
         if (emu.srmParsers) {
@@ -83,7 +90,7 @@ export default async function(app: string) {
         await killSteam();
         console.log("Removing games to your steam library...");
         await $`emubox run srm add`.quiet();
-    }
+    }*/
 
     console.log(`'${target.id}' has been removed.`);
 }
