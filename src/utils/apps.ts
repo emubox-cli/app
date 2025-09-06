@@ -95,11 +95,16 @@ export interface BoxApp {
     };
 }
 
-if (!await file(dir("apps.json")).exists()) 
-    await getAppFile();
+
 
 export const REQUEST_DOMAIN = "https://emubox-cli.github.io/apps/";
-const apps: MinifiedApps = await file(dir("apps.json")).json() as never;
+let apps: MinifiedApps = await file(dir("apps.json")).json() as never;
+
+// hacky but prevents the binary from breaking on debug
+if (!await file(dir("apps.json")).exists()) 
+    apps = { v: "", a: [] };
+else 
+    apps = await file(dir("apps.json")).json() as never;
 
 export async function getAppFromId(id: string): Promise<BoxApp> {
     try {
