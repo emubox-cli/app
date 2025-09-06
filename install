@@ -1,8 +1,9 @@
 #!/bin/bash
 
-set -e
+set -euo
 
 debug=0
+already_present=0
 do_complete_setup=1
 assemble_file="https://emubox.pupper.space/emubox.ini"
 emubox_url="https://emubox.pupper.space/emubox"
@@ -25,9 +26,14 @@ fi
 
 mkdir -p $HOME/.emubox/apps
 mkdir -p $HOME/.emubox/manifests
-mkdir -p $HOME/.local/applications
+mkdir -p $HOME/.emubox/.local/share
+mkdir -p $HOME/.local/share/applications
 mkdir -p $HOME/.local/share/icons/emubox
 mkdir -p $HOME/.local/bin
+
+#if [ -f $HOME/.local/share/Steam ]; then
+#    ln -s $HOME/.local/share/Steam $HOME/.emubox/.local/share/Steam
+#fi
 
 if [ $debug == 0 ]; then
     if [ -f $emubox_bin ]; then
@@ -53,6 +59,8 @@ if [ $debug == 0 ]; then
         curl -o $emubox_bin $emubox_url
         
         chmod +x $emubox_bin
+
+        do_complete_setup=0
     fi
     
 else
@@ -62,12 +70,13 @@ else
     assemble_file="emubox.ini"
 fi
 
-
-
-if [ $do_complete_setup == 1 ]; then 
+if [ -z $(distrobox ls | grep emubox) ]; then
     echo "Creating container..."
     distrobox assemble create --file $assemble_file
-    
+fi
+
+if [ $do_complete_setup == 1 ]; then 
+
     echo "Initializing emubox..."
     if [ -f $HOME/.emubox/config.json ]; then
         $emubox_bin init --restore
