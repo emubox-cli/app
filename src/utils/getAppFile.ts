@@ -18,5 +18,6 @@ export default async function() {
 }
 
 async function getAppFile() {
-    await $`curl -o $HOME/.emubox/apps.json https://emubox-cli.github.io/apps/apps.json`;
+    console.log("Downloading app file...");
+    await $`curl -o $HOME/.emubox/apps.json https://emubox-cli.github.io/apps/apps.json`.quiet();
 }

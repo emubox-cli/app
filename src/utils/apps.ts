@@ -1,5 +1,6 @@
 import { $, file } from "bun";
 import { dir } from "./config";
+import getAppFile from "./getAppFile";
 
 export type SupportedConsoles =
     "#util" |
@@ -93,6 +94,9 @@ export interface BoxApp {
         libretroCore?: string;
     };
 }
+
+if (!await file(dir("apps.json")).exists()) 
+    await getAppFile();
 
 export const REQUEST_DOMAIN = "https://emubox-cli.github.io/apps/";
 const apps: MinifiedApps = await file(dir("apps.json")).json() as never;

@@ -6,7 +6,6 @@ import { /* getAppFromId, */ SUPPORTED_CONSOLES } from "utils/apps";
 import { exists, stat, } from "fs/promises";
 import install from "funcs/install";
 import { join } from "path";
-import getAppFile from "utils/getAppFile";
 // import containerPrefix from "utils/containerPrefix";
 
 export default async function(...dumbArgs: string[]) {
@@ -81,8 +80,6 @@ export default async function(...dumbArgs: string[]) {
     };
     
     writeConfig(config);
-
-    await getAppFile();
 
     if (!await exists(romDir)) {
         await $`mkdir ${romDir}`;
