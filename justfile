@@ -20,6 +20,6 @@ _make-build-date:
 lint: 
     bun x eslint
 
-debug +args="":
+debug +args="": build
     ./dist/emubox {{args}}
     
