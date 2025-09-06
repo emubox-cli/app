@@ -3,8 +3,10 @@ import { configExists, DEFAULT_ROM_DIR, dir, openConfig, writeConfig } from "uti
 import input from "@inquirer/input";
 import select from "@inquirer/select";
 import { /* getAppFromId, */ SUPPORTED_CONSOLES } from "utils/apps";
-import { exists } from "fs/promises";
+import { exists, stat, } from "fs/promises";
 import install from "funcs/install";
+import { join } from "path";
+import getAppFile from "utils/getAppFile";
 // import containerPrefix from "utils/containerPrefix";
 
 export default async function(...dumbArgs: string[]) {
@@ -80,6 +82,8 @@ export default async function(...dumbArgs: string[]) {
     
     writeConfig(config);
 
+    await getAppFile();
+
     if (!await exists(romDir)) {
         await $`mkdir ${romDir}`;
         for (const i of SUPPORTED_CONSOLES) {
@@ -88,6 +92,16 @@ export default async function(...dumbArgs: string[]) {
     }
     
     await $`mkdir -p ${saveDir}`.quiet().nothrow();
-    if (romDir !== DEFAULT_ROM_DIR)
-        await $`ln -s ${romDir} ${DEFAULT_ROM_DIR}`;
+    if (romDir !== DEFAULT_ROM_DIR) {
+        if (await exists(DEFAULT_ROM_DIR)) {
+            if ((await stat(DEFAULT_ROM_DIR)).isSymbolicLink()) {
+                await $`unlink ${DEFAULT_ROM_DIR}`;
+                await $`ln -s "${romDir}" "${DEFAULT_ROM_DIR}"`;
+            } else {
+                await $`mv ${DEFAULT_ROM_DIR} ${join(DEFAULT_ROM_DIR, "..", "roms.bak")}`;
+                await $`ln -s "${romDir}" "${DEFAULT_ROM_DIR}"`;
+            }
+        }
+        
+    } else await $`mkdir -p ${DEFAULT_ROM_DIR}`;
 }

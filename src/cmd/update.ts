@@ -3,6 +3,7 @@ import install from "funcs/install";
 import { getAppFromId } from "utils/apps";
 import { openConfig, writeConfig } from "utils/config";
 import containerPrefix from "utils/containerPrefix";
+import getAppFile from "utils/getAppFile";
 import getLatestRelease from "utils/getLatestRelease";
 import { bold, green, red } from "yoctocolors";
 
@@ -15,11 +16,8 @@ export default async function() {
     
     for (const i of config.installed) {
         const dumbIndex = config.installed.indexOf(i);
-        const app = getAppFromId(i.id)!;
+        const app = (await getAppFromId(i.id))!;
         console.log(bold(`[${dumbIndex+1}/${config.installed.length}] ${app.name}`));
-        if (app.installOptions.multi) {
-            app.installOptions = app.installOptions.multi[config.installed[dumbIndex].mIndex!];
-        }
 
         try {
             switch (i.source) {
@@ -51,7 +49,7 @@ export default async function() {
                     const targetAsset = latest.assets.find((d: { name: string }) => d.name.match(app.installOptions.gitRe!));
                     if (!targetAsset) 
                         throw new Error("No asset found");
-                    await $`rm ~/.emubox/apps/${i.file!}`;
+                    await $`rm ${i.exec}`;
                     console.log(`Updating ${app.name}...`);
                     config.installed.splice(dumbIndex, 1);
                     writeConfig(config);
@@ -63,5 +61,6 @@ export default async function() {
         }
     }
 
+    await getAppFile();
     // console.log("Update the package manager itself using 'emubox-update'");
 }
