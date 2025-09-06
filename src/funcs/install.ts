@@ -295,9 +295,9 @@ export default async function(app: string, installOpt: InstallationTypes) {
 }
 
 async function prepExecutable(filePath: string, id: string, name: string) {
+    await $`chmod +x ${filePath}`;
     if (filePath.toLowerCase().endsWith(".appimage") && id !== "ppsspp") {
         console.log("Getting icon...");
-        await $`chmod +x ${filePath}`;
         await $`${filePath} --appimage-extract`.quiet().cwd("/tmp");
         await $`cp ./squashfs-root/.DirIcon $HOME/.local/share/icons/emubox/${id}.png`.cwd("/tmp");
         await $`rm -rf squashfs-root`.cwd("/tmp");
