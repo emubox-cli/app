@@ -1,6 +1,5 @@
 import { $, file } from "bun";
 import { dir } from "./config";
-import getAppFile from "./getAppFile";
 
 export type SupportedConsoles =
     "#util" |

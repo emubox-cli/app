@@ -51,6 +51,7 @@ if [ $debug == 0 ]; then
             echo "Updating emubox package manager..."
             rm $emubox_bin
             mv /tmp/emubox $emubox_bin
+.            $emubox_bin update
         fi
 
         do_complete_setup=0
