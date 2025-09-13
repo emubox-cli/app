@@ -18,15 +18,8 @@ _make-build-date:
     const rn = new Date();
     console.log(String(rn.getFullYear()) + rn.getMonth() + rn.getDate() + rn.getHours() + rn.getMinutes() + rn.getSeconds());
 
-_clarify-dev-env:
-    #!/bin/bash
-    lol="$(./dist/emubox -v)"
-    if [[ $lol == *"-debug-"*]]; then
-        touch ./
-    fi
-
-lint: 
-    bun x eslint
+lint +a="": 
+    bun x eslint {{a}}
 
 debug +args="":
     ./dist/emubox {{args}}
