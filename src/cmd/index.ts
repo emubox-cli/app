@@ -11,7 +11,7 @@ export {
 export { default as run } from "./run"; 
 export { default as uninstall } from "./uninstall"; 
 export { default as update } from "./update";
-// export { default as "make-shortcuts" } from "./make-shortcuts";
+export { default as "make-shortcuts" } from "./make-shortcuts";
 export { default as config } from "./config";
 export { 
     version as "-v",
