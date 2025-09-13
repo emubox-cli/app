@@ -1,87 +1,24 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { $ } from "bun";
 import { hostname } from "os";
-import install from "cmd/install";
-import ls from "cmd/ls";
-import remove from "cmd/remove";
-import uninstall from "cmd/uninstall";
-import update from "cmd/update";
-import init from "cmd/init";
-import run from "cmd/run";
 import { configExists } from "utils/config";
 import { yellow } from "yoctocolors";
-import { version } from "../package.json";
-import displayVersion from "utils/displayVersion";
+import * as cmd from "cmd";
 
-const HELP_MSG = 
-`
-emubox (${version}-${displayVersion}): emubox [--flags] [COMMAND]
-    Manage emulator applications via emubox.
+const [ , , userCmd, ...rest ] = process.argv;
+const commandInQuestion = (cmd as any)[userCmd];
 
-    Options:
-        -h, --help                show this help text and exit
-        -v, --version             show emubox version and exit
-
-    Commands:
-        init                      initialize emubox directories and config 
-        list, ls                  list all availible emulators in emubox
-        uninstall                 remove emubox and the distrobox container
-        install, i <...EMU_IDS>   install provided emulators
-        remove, rm <...EMU_IDS>   remove provided emulators
-        update                    update container apps
-        run                       launch an installed emulator
-`;
-
-const [ , , cmd, ...rest ] = process.argv;
-
-if (!cmd || process.argv.length === 2) {
-    console.log(HELP_MSG);
+if (!userCmd || process.argv.length === 2 || !commandInQuestion) {
+    (cmd as any)["-h"]();
     process.exit();
 }
 
-const debug = rest.indexOf("--debug");
-export const debugMode = debug !== -1;
-if (debugMode)
-    rest.splice(debug, 1);
 
-switch (cmd) {
-    case "init":
-        init(...rest);
-        break;
-    case "i":
-    case "install":
-        await doContainerCheck();
-        install(...rest);
-        break;
-    case "ls":
-    case "list":
-        ls(...rest);
-        break;
-    case "rm":
-    case "remove":
-        await doContainerCheck();
-        remove(...rest);
-        break;
-    case "uninstall":
-        await doContainerCheck();
-        uninstall();
-        break;
-    case "update":
-        await doContainerCheck();
-        update();
-        break;
-    case "run":
-        await doContainerCheck();
-        run(...rest);
-        break;
-    case "-v":
-    case "--version":
-        console.log(`${version}-${displayVersion}`);
-        break;
-    case "-h":
-    case "--help":
-    default: 
-        console.log(HELP_MSG);
-}
+if (!cmd.SKIP_CONTAINER_CHECK.includes(userCmd)) 
+    await doContainerCheck();
+
+commandInQuestion(...rest);
+
 
 async function doContainerCheck() {
     if (!await configExists()) {
@@ -99,6 +36,6 @@ async function doContainerCheck() {
 }
 
 process.on("uncaughtException", (e) => {
-   console.error("Emubox ran into an error mid process: " + e.message);
-   console.error(e.stack);
+    console.error("Emubox ran into an error mid process: " + e.message);
+    console.error(e.stack);
 });

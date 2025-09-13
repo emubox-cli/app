@@ -57,7 +57,7 @@ export default async function(...dumbArgs: string[]) {
             `.cwd("/tmp");
         }*/
 
-       for (const i of previouslyInstalled)
+        for (const i of previouslyInstalled)
             await install(i.id, i.source);
         
         return;

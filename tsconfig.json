@@ -10,6 +10,7 @@
         "skipLibCheck": true,
         "noFallthroughCasesInSwitch": true,
         "paths": {
+            "cmd": ["./src/cmd"],
             "cmd/*": ["./src/cmd/*"],
             "funcs/*": ["./src/funcs/*"],
             "utils/*": ["./src/utils/*"]

@@ -58,7 +58,11 @@ export interface MinifiedApps {
         /**
          * App install options
          */
-        o: string[]
+        o: string[];
+        /**
+         * App game exec
+         */
+        e: string;
     }[];
 
 }

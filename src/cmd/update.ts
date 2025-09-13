@@ -56,8 +56,7 @@ export default async function() {
                     writeConfig(config);
                     await install(i.id, "github");
             }
-        }
-        catch (e) {
+        } catch (e) {
             console.log(red(`Failed to update '${app.name}'`), e);
         }
     }

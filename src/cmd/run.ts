@@ -4,7 +4,7 @@ import { openConfig } from "utils/config";
 import containerPrefix from "utils/containerPrefix";
 
 const HELP_MSG = 
-`
+    `
 emubox run: emubox run <EMULATOR_ID> [...args]
     Launch an installed emulator.
 `;

@@ -1,4 +1,4 @@
-import { $, file, write } from "bun";
+import { $, write } from "bun";
 import apps, { getAppFromId, REQUEST_DOMAIN } from "utils/apps";
 import { InstallationTypes, openConfig, writeConfig } from "utils/config";
 import { yellow, red } from "yoctocolors";
@@ -60,9 +60,7 @@ export default async function(app: string, installOpt: InstallationTypes) {
         // it's a binary
         if (!suffix?.includes(".")) {
             suffix = "";
-        }
-        // script/appimage
-        else {
+        } else {
             suffix = "." + suffix.split(".").pop();
         }
         await $`mv ${manualPath} $HOME/.emubox/apps/${emuMin.i}${suffix}`;
@@ -141,8 +139,7 @@ export default async function(app: string, installOpt: InstallationTypes) {
                             rm -rf ${emuMin.i}
                         `.cwd("/tmp");
                         targetAsset.name = emu.installOptions.unzipTarget;
-                    }
-                    else {
+                    } else {
                         await $`curl -o $HOME/.emubox/apps/${targetAsset.name} -L ${targetAsset.browser_download_url}`;
                     }
     
@@ -162,7 +159,7 @@ export default async function(app: string, installOpt: InstallationTypes) {
             }
 
        
-        /*if (config.installed.find(d => d.id === "srm")) {
+            /*if (config.installed.find(d => d.id === "srm")) {
             console.log("Enabling SRM parsers...");
             if (userConfigurations.find(d => d.configTitle === ogName) || emu.srmParsers) {
                 console.log("Adding", ogName);
@@ -174,79 +171,79 @@ export default async function(app: string, installOpt: InstallationTypes) {
             }
         }*/
 
-        if (emu.postInstall) {
-            let basePath = "";
-            switch (installOpt) {
-                case "flatpak":
-                    basePath = join(homedir(), ".var", "app", emu.installOptions.flatpak!);
-                    break;
-                default:
-                    basePath = join(homedir(), ".emubox");
-                    break;
-            }
-    
-            let configPath = "";
-            switch (installOpt) {
-                case "flatpak":
-                    configPath = join(basePath, "config");
-                    break;
-                default:
-                    configPath = join(basePath, ".config");
-                    break;
-            }
-    
-            let sharePath = "";
-            switch (installOpt) {
-                case "flatpak":
-                    sharePath = join(basePath, "data");
-                    break;
-                default:
-                    sharePath = join(basePath, ".local", "share");
-                    break;
-            }
-    
-            for (const dir of emu.postInstall.makeDirs) {
-                const finalDir = dir
-                    .replaceAll("<save>", config.saveDir)
-                    .replaceAll("<share>", sharePath)
-                    .replaceAll("<config>", configPath)
-                    .replaceAll("<id>", emuMin.i);
-
-                // console.log(`Making ${finalDir}...`);
-                await $`mkdir -p ${finalDir}`;
-            }
-    
-            for (const file of emu.postInstall.makeFiles) {
-                const finalPath = file.path
-                    .replaceAll("<save>", config.saveDir)
-                    .replaceAll("<share>", sharePath)
-                    .replaceAll("<config>", configPath)
-                    .replaceAll("<id>", emuMin.i);
-                
-                let content: string = "";
-                switch (file.path.split(".").pop()) {
-                    case "cfg":
-                    case "ini":
-                    case "conf":
-                    case "toml":
-                        console.log("Writing ini-like config...");
-                        content = makeIni(file.content, config.saveDir, emuMin.i);
+            if (emu.postInstall) {
+                let basePath = "";
+                switch (installOpt) {
+                    case "flatpak":
+                        basePath = join(homedir(), ".var", "app", emu.installOptions.flatpak!);
                         break;
                     default:
-                        console.log("lol");
-
+                        basePath = join(homedir(), ".emubox");
+                        break;
                 }
+    
+                let configPath = "";
+                switch (installOpt) {
+                    case "flatpak":
+                        configPath = join(basePath, "config");
+                        break;
+                    default:
+                        configPath = join(basePath, ".config");
+                        break;
+                }
+    
+                let sharePath = "";
+                switch (installOpt) {
+                    case "flatpak":
+                        sharePath = join(basePath, "data");
+                        break;
+                    default:
+                        sharePath = join(basePath, ".local", "share");
+                        break;
+                }
+    
+                for (const dir of emu.postInstall.makeDirs) {
+                    const finalDir = dir
+                        .replaceAll("<save>", config.saveDir)
+                        .replaceAll("<share>", sharePath)
+                        .replaceAll("<config>", configPath)
+                        .replaceAll("<id>", emuMin.i);
 
-                if (!await exists(finalPath)) {
-                    write(
-                        finalPath,
-                        content
-                    );
+                    // console.log(`Making ${finalDir}...`);
+                    await $`mkdir -p ${finalDir}`;
+                }
+    
+                for (const file of emu.postInstall.makeFiles) {
+                    const finalPath = file.path
+                        .replaceAll("<save>", config.saveDir)
+                        .replaceAll("<share>", sharePath)
+                        .replaceAll("<config>", configPath)
+                        .replaceAll("<id>", emuMin.i);
+                
+                    let content: string = "";
+                    switch (file.path.split(".").pop()) {
+                        case "cfg":
+                        case "ini":
+                        case "conf":
+                        case "toml":
+                            console.log("Writing ini-like config...");
+                            content = makeIni(file.content, config.saveDir, emuMin.i);
+                            break;
+                        default:
+                            console.log("lol");
+
+                    }
+
+                    if (!await exists(finalPath)) {
+                        write(
+                            finalPath,
+                            content
+                        );
+                    }
                 }
             }
-        }
 
-    }
+        }
         config.installed.push({
             id: emuMin.i,
             source: installOpt,
@@ -310,12 +307,9 @@ async function prepExecutable(filePath: string, id: string, name: string) {
     await $`xdg-icon-resource forceupdate`;
     
     console.log("Making desktop file...");
-    write(
-        file(join(homedir(), ".local", "share", "applications", id + ".desktop")),
-        makeDesktopFile({
-            name,
-            exec: join(homedir(), ".local", "bin", "emubox") + ` run ${id}`, 
-            icon: join(homedir(), ".local", "share", "icons", "emubox", id + ".png")
-        })
-    );
+    makeDesktopFile(id, {
+        name,
+        exec: id,
+        icon: join(homedir(), ".local", "share", "icons", "emubox", id + ".png") 
+    });
 }

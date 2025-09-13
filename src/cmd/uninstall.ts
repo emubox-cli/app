@@ -3,7 +3,7 @@ import { DEFAULT_ROM_DIR, openConfig } from "../utils/config";
 import { yellow, bold } from "yoctocolors";
 import { $ } from "bun";
 import remove from "funcs/remove";
-import { debugMode } from "../main";
+
 
 const CONFIRMATION_MSG = [
     "Are you sure you want to uninstall emubox?",
@@ -14,7 +14,7 @@ const CONFIRMATION_MSG = [
 export default async function() {
     const config = await openConfig();
     
-    const confirmation = debugMode ? true : await confirm({
+    const confirmation = await confirm({
         message: CONFIRMATION_MSG,
         default: false
     });

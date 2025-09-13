@@ -22,14 +22,14 @@ export interface Config {
 }
 
 export async function openConfig(): Promise<Config> {
-   let config = await file(dir("config.json")).json();
-   config = Object.assign({
+    let config = await file(dir("config.json")).json();
+    config = Object.assign({
         saveDir: dir("saves"),
         romDir: dir("roms"),
         installed: []
     }, config);
 
-   return config;
+    return config;
 }
 
 export function writeConfig(content: Config) {
