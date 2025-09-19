@@ -24,10 +24,10 @@ if ! type distrobox &> /dev/null; then
     exit
 fi
 
-mkdir -p $HOME/.emubox/apps
+mkdir -p $HOME/.emubox/{apps,icons}
 mkdir -p $HOME/.emubox/.local/share
+mkdir -p $HOME/.emubox/icons
 mkdir -p $HOME/.local/share/applications
-mkdir -p $HOME/.local/share/icons/emubox
 mkdir -p $HOME/.local/bin
 
 #if [ -f $HOME/.local/share/Steam ]; then
@@ -49,9 +49,11 @@ if [ $debug == 0 ]; then
         else
             echo "Updating emubox package manager..."
             rm $emubox_bin
-            mv /tmp/emubox $emubox_bin
-.           $emubox_bin update
+            mv /tmp/emubox $emubox_bin           
         fi
+
+        echo "Updating emubox apps..."
+        $emubox_bin update
 
         do_complete_setup=0
     else
