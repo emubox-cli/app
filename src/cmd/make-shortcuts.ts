@@ -86,7 +86,7 @@ export default async function(...args: string[]) {
         await $`
             ${containerPrefix}steamtinkerlaunch ansg \
                 -an="${game.name}" \
-                -ep="~/.local/bin/emubox" \
+                -ep="$HOME/.local/bin/emubox" \
                 -lo="run ${eligibleApps[0].i + " " + exec.replace("{}", `"${path}"`)}" \
                 -ip="$HOME/.emubox/.icons/games/${game.id}.png"
         `;
