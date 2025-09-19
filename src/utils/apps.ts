@@ -98,8 +98,6 @@ export interface BoxApp {
     };
 }
 
-
-
 export const REQUEST_DOMAIN = "https://emubox-cli.github.io/apps/";
 let apps: MinifiedApps;
 
@@ -113,7 +111,7 @@ else
 
 export async function getAppFromId(id: string): Promise<BoxApp> {
     try {
-        return JSON.parse(await $`curl ${REQUEST_DOMAIN}${id}.json`.text());
+        return await $`curl ${REQUEST_DOMAIN}${id}.json`.json();
     } catch {
         return undefined as unknown as BoxApp;
     }
