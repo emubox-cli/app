@@ -5,19 +5,30 @@ import { join } from "path";
 import { homedir } from "os";
 import apps from "utils/apps";
 import { openConfig } from "utils/config";
+import parseFlags from "utils/parseFlags";
+import containerPrefix from "utils/containerPrefix";
 
-export default async function(path: string) {
+export default async function(...args: string[]) {
     const config = await openConfig();
     if (config.sgdbToken === "") {
         console.log("This command requires a SteamGridDB api token to run.");
         console.log("Use 'emubox config set sgdbToken <my-token>' to set your token and try again.");
         return;
     }
-    if (!path) {
+
+    const {
+        flags: { steam },
+        args: _args
+    } = parseFlags(args, {
+        steam: ["-s", "--steam"]
+    });
+
+    if (!_args.length) {
         console.log("No path provided.");
         return;
     }
-    path = join(homedir(), ".emubox", "roms", path);
+
+    const path = join(homedir(), ".emubox", "roms", _args[0]);
     const splitThingy = path.split("/");
     const romDir = splitThingy[splitThingy.length - 2];
     let romName = splitThingy[splitThingy.length - 1]!.split(".").shift();
@@ -63,12 +74,34 @@ export default async function(path: string) {
     }
 
     await $`curl -o $HOME/.local/share/icons/emubox/games/${game.id}.png ${targetIcon}`;
-    makeDesktopFile(
-        game.id,
-        {
-            name: game.name,
-            exec: eligibleApps[0].i + " " + exec.replace("{}", `"${path}"`),
-            icon: join(homedir(), ".local", "share", "icons", "emubox", "games", game.id + ".png")
+    if (steam) {
+        console.log("Checking for steamtinkerlaunch...");
+        try {
+            await $`${containerPrefix}steamtinkerlaunch --help`.quiet();
+        } catch {
+            await $`${containerPrefix}paru -S --noconfirm steamtinkerlaunch`;
         }
-    );
+
+        console.log("Adding game to steam...");
+        await $`
+            ${containerPrefix}steamtinkerlaunch ansg \
+                -an="${game.name}" \
+                -ep="~/.local/bin/emubox" \
+                -lo="run ${eligibleApps[0].i + " " + exec.replace("{}", `"${path}"`)}" \
+                -ip="$HOME/.local/share/icons/emubox/games/${game.id}.png"
+        `;
+    } else {
+        
+        makeDesktopFile(
+            game.id,
+            {
+                name: game.name,
+                exec: eligibleApps[0].i + " " + exec.replace("{}", `"${path}"`),
+                icon: join(homedir(), ".local", "share", "icons", "emubox", "games", game.id + ".png")
+            }
+        );
+    }
+
+
+    
 }
