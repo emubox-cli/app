@@ -13,7 +13,8 @@ export type InstallationTypes = "aur" | "flatpak" | "github" | "manual";
 export interface Config {
     saveDir: string;
     romDir: string;
-    sgdbToken: string;
+    sgdbToken?: string;
+    addDesktopShortcut: boolean;
     installed: {
         id: string;
         source: InstallationTypes;
@@ -27,6 +28,7 @@ export async function openConfig(): Promise<Config> {
     config = Object.assign({
         saveDir: dir("saves"),
         romDir: dir("roms"),
+        addDesktopShorcut: false,
         sgdbToken: "",
         installed: []
     }, config);

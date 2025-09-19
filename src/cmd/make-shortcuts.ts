@@ -97,7 +97,8 @@ export default async function(...args: string[]) {
             {
                 name: game.name,
                 exec: eligibleApps[0].i + " " + exec.replace("{}", `"${path}"`),
-                icon: join(homedir(), ".local", "share", "icons", "emubox", "games", game.id + ".png")
+                icon: join(homedir(), ".local", "share", "icons", "emubox", "games", game.id + ".png"),
+                extraCategories: "Emubox;"
             }
         );
     }

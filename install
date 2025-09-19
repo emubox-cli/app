@@ -25,7 +25,6 @@ if ! type distrobox &> /dev/null; then
 fi
 
 mkdir -p $HOME/.emubox/apps
-mkdir -p $HOME/.emubox/manifests
 mkdir -p $HOME/.emubox/.local/share
 mkdir -p $HOME/.local/share/applications
 mkdir -p $HOME/.local/share/icons/emubox

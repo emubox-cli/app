@@ -2,6 +2,7 @@ import { $ } from "bun";
 import { configExists, DEFAULT_ROM_DIR, dir, openConfig, writeConfig } from "utils/config";
 import input from "@inquirer/input";
 import select from "@inquirer/select";
+import confirm from "@inquirer/confirm";
 import { /* getAppFromId, */ SUPPORTED_CONSOLES } from "utils/apps";
 import { exists, stat, } from "fs/promises";
 import install from "funcs/install";
@@ -72,11 +73,17 @@ export default async function(...dumbArgs: string[]) {
         message: "Please provide a rom directory.",
         default: DEFAULT_ROM_DIR,
     });
+
+    const addDesktopShortcut = await confirm({
+        message: "Would you like to automatically add generated shortcuts to your desktop?",
+        default: false
+    });
     
 
     const config = {
         saveDir,
         romDir,
+        addDesktopaddDesktopShorcutShortcut,
         installed: []
     };
     

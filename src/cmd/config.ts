@@ -16,7 +16,6 @@ export default async function(...args: string[]) {
                 return;
             if (config[args[1]] === undefined || !args[2]) {
                 console.log(args[1]);
-                console.log("fuck");
                 return;
             }
 
