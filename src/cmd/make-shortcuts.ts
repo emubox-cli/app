@@ -4,7 +4,7 @@ import makeDesktopFile from "utils/makeDesktopFile";
 import { join } from "path";
 import { homedir } from "os";
 import apps from "utils/apps";
-import { openConfig } from "utils/config";
+import { dir, openConfig } from "utils/config";
 import parseFlags from "utils/parseFlags";
 import containerPrefix from "utils/containerPrefix";
 
@@ -73,7 +73,7 @@ export default async function(...args: string[]) {
         exec = eligibleApps[0].e;
     }
 
-    await $`curl -o $HOME/.local/share/icons/emubox/games/${game.id}.png ${targetIcon}`;
+    await $`curl -o $HOME/.emubox/.icons/games/${game.id}.png ${targetIcon}`;
     if (steam) {
         console.log("Checking for steamtinkerlaunch...");
         try {
@@ -88,7 +88,7 @@ export default async function(...args: string[]) {
                 -an="${game.name}" \
                 -ep="~/.local/bin/emubox" \
                 -lo="run ${eligibleApps[0].i + " " + exec.replace("{}", `"${path}"`)}" \
-                -ip="$HOME/.local/share/icons/emubox/games/${game.id}.png"
+                -ip="$HOME/.emubox/.icons/games/${game.id}.png"
         `;
     } else {
         
@@ -97,7 +97,7 @@ export default async function(...args: string[]) {
             {
                 name: game.name,
                 exec: eligibleApps[0].i + " " + exec.replace("{}", `"${path}"`),
-                icon: join(homedir(), ".local", "share", "icons", "emubox", "games", game.id + ".png"),
+                icon: dir(".icons", "games", game.id + ".png"),
                 extraCategories: "Emubox;"
             }
         );

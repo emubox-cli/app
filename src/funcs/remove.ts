@@ -45,7 +45,7 @@ export default async function(app: string) {
             await $`
                 rm ${target.exec}
                 rm $HOME/.local/share/applications/${target.id}.desktop
-                rm $HOME/.local/share/icons/emubox/${target.id}.png
+                rm $HOME/.emubox/.icons/${target.id}.png
             `.nothrow();
             // await $`rm $HOME/.local/share/icons/emubox/${target.id}.png`;
             break;
@@ -54,14 +54,13 @@ export default async function(app: string) {
             let suffix = target.exec.split("/").pop();
             if (!suffix?.includes(".")) {
                 suffix = "";
-            }
-            else {
+            }else {
                 suffix = "." + suffix.split(".").pop();
             }
             await $`mv ${target.exec} $HOME/.emubox/apps/_${target.id}${suffix}`;
             await $`
                 rm $HOME/.local/share/applications/${target.id}.desktop
-                rm $HOME/.local/share/icons/emubox/${target.id}.png
+                rm $HOME/.emubox/.icons/${target.id}.png
             `.nothrow();
 
             console.log(`The executable you provided will remain availible at '~/.emubox/_${target.id}${suffix}'.`);

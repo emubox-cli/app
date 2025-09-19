@@ -1,9 +1,8 @@
 #!/bin/bash
 
-set -euo >> /dev/null
+set -euo pipefail
 
 debug=0
-already_present=0
 do_complete_setup=1
 assemble_file="https://emubox.pupper.space/emubox.ini"
 emubox_url="https://emubox.pupper.space/emubox"
@@ -16,17 +15,17 @@ done
 
 if [ "$EUID" == 0 ]; then 
     echo "Please don't run this as root."
-    exit
+    exit 1
 fi
 
 if ! type distrobox &> /dev/null; then
     echo "Distrobox not found on system. Exitting..."
-    exit
+    exit 1
 fi
 
-mkdir -p $HOME/.emubox/{apps,icons}
+mkdir -p $HOME/.emubox/{.icons,apps,bios}
+mkdir -p $HOME/.emubox/.icons/games
 mkdir -p $HOME/.emubox/.local/share
-mkdir -p $HOME/.emubox/icons
 mkdir -p $HOME/.local/share/applications
 mkdir -p $HOME/.local/bin
 
@@ -62,9 +61,7 @@ if [ $debug == 0 ]; then
         
         chmod +x $emubox_bin
 
-        do_complete_setup=0
     fi
-    
 else
     echo "Building emubox..."
     just build

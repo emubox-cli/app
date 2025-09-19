@@ -1,6 +1,6 @@
 import { $, write } from "bun";
 import apps, { getAppFromId, REQUEST_DOMAIN } from "utils/apps";
-import { InstallationTypes, openConfig, writeConfig } from "utils/config";
+import { dir, InstallationTypes, openConfig, writeConfig } from "utils/config";
 import { yellow, red } from "yoctocolors";
 import containerPrefix from "utils/containerPrefix";
 import { homedir } from "os";
@@ -296,12 +296,12 @@ async function prepExecutable(filePath: string, id: string, name: string) {
     if (filePath.toLowerCase().endsWith(".appimage") && id !== "ppsspp") {
         console.log("Getting icon...");
         await $`${filePath} --appimage-extract`.quiet().cwd("/tmp");
-        await $`cp ./squashfs-root/.DirIcon $HOME/.local/share/icons/emubox/${id}.png`.cwd("/tmp");
+        await $`cp ./squashfs-root/.DirIcon $HOME/.emubox/.icons/${id}.png`.cwd("/tmp");
         await $`rm -rf squashfs-root`.cwd("/tmp");
         
     } else {
         console.log("Downloading icon...");
-        await $`curl -o $HOME/.local/share/icons/emubox/${id}.png ${REQUEST_DOMAIN}icons/${id}.png`;
+        await $`curl -o $HOME/.emubox/.icons/${id}.png ${REQUEST_DOMAIN}icons/${id}.png`;
     }
 
     await $`xdg-icon-resource forceupdate`;
@@ -310,6 +310,6 @@ async function prepExecutable(filePath: string, id: string, name: string) {
     makeDesktopFile(id, {
         name,
         exec: id,
-        icon: join(homedir(), ".local", "share", "icons", "emubox", id + ".png") 
+        icon: dir(".icons", id + ".png") 
     });
 }
