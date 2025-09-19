@@ -41,13 +41,13 @@ export default async function(...args: string[]) {
 
     while (!nameValid) {
         if (!games.success) {
-            console.log("SteamGridDB search failed:", games.errors);
+            console.log("SteamGridDB search failed: ", games.errors);
             successful = false;
             break;
-        } else if (!games.data) {
+        } else if (!games.data.length) {
             console.log("No results found...");
             romName = await input({
-                message: "Enter the name of your game: "
+                message: "Enter the name of your game:"
             });
 
             games = await $`curl -H "Authorization: Bearer ${config.sgdbToken}" https://www.steamgriddb.com/api/v2/search/autocomplete/${encodeURIComponent(romName!)}`.json();
