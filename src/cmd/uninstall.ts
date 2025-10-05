@@ -38,8 +38,6 @@ export default async function() {
         await $`unlink ${DEFAULT_ROM_DIR}`;
 
     await $`distrobox rm emubox -Y`.nothrow();
-    if (!debugMode)
-        await $`rm $HOME/.local/bin/emubox`;
 
     console.log(bold("Emubox has been removed from your system."));
 }
