@@ -83,7 +83,7 @@ export default async function(...dumbArgs: string[]) {
     const config = {
         saveDir,
         romDir,
-        addDesktopaddDesktopShorcutShortcut,
+        addDesktopShortcut,
         installed: []
     };
     
