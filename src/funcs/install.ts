@@ -94,7 +94,7 @@ export default async function(app: string, installOpt: InstallationTypes) {
                     await $`
                         ${containerPrefix}flatpak install -y flathub ${emu.installOptions.flatpak}
                         ${containerPrefix}flatpak override \
-                            -u ${emu.installOptions.flatpak}
+                            -u ${emu.installOptions.flatpak} \
                             --filesystem=~/.emubox
                     `;
                     if (emu.installOptions.flatpakOverrideFs === true) 

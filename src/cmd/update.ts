@@ -28,7 +28,7 @@ export default async function() {
                         continue;
                     }
     
-                    await $`${containerPrefix}paru -S ${app?.installOptions.aur}`;
+                    await $`${containerPrefix}paru -S --noconfirm ${app?.installOptions.aur}`;
                     break;
                 case "flatpak":
                     if (!flatpakUpdatesNeeded.includes(app.installOptions.flatpak!)) {
