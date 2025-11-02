@@ -34,7 +34,7 @@ export default async function(app: string, installOpt: InstallationTypes) {
     }
     // const ogName = emu!.name;
 
-    if (appData) {
+    if (appData && !ghTag) {
         console.error(yellow(`'${app}' already installed`));
         return;
     }
@@ -139,10 +139,13 @@ export default async function(app: string, installOpt: InstallationTypes) {
                         
 
                         console.log("Couldn't find pre-queried file to download");
-                        targetAsset = await select({
+                        const filename = await select({
                             message: "Please select the appimage to download.",
                             choices: release.assets.filter(d => d.name.toLowerCase().endsWith(".appimage")).map(d => d.name)
                         });
+
+                        targetAsset = release.assets.find(d => d.name === filename);
+
                     }
                         
     
