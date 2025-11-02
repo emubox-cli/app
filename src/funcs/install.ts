@@ -129,15 +129,20 @@ export default async function(app: string, installOpt: InstallationTypes) {
                     if (!release)
                         throw new Error("Release not found");
                     
-                    const targetAsset = release.assets.find((d: { name: string }) => d.name.match(emu.installOptions.gitRe!));
+                    let targetAsset;
+                    targetAsset = release.assets.find((d: { name: string }) => d.name.match(emu.installOptions.gitRe!));
+
                     if (!targetAsset) {
+                        const appimages = release.assets.filter(d => d.name.toLowerCase().endsWith(".appimage"));
+                        if (!appimages.length)
+                            throw new Error("No asset found");
+                        
+
                         console.log("Couldn't find pre-queried file to download");
-                        await select({
+                        targetAsset = await select({
                             message: "Please select the appimage to download.",
                             choices: release.assets.filter(d => d.name.toLowerCase().endsWith(".appimage")).map(d => d.name)
                         });
-
-                        throw new Error("No asset found");
                     }
                         
     
