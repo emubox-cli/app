@@ -20,6 +20,7 @@ export interface Config {
         source: InstallationTypes;
         exec: string;
         releaseId?: string;
+        tag?: string;
     }[];
 }
 

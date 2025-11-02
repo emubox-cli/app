@@ -9,7 +9,8 @@ import { join } from "path";
 import { readdir, exists } from "fs/promises";
 import confirm from "@inquirer/confirm";
 import input from "@inquirer/input";
-import getLatestRelease from "utils/getLatestRelease";
+import select from "@inquirer/select";
+import { getLatestRelease, getTaggedRelease } from "utils/releases";
 
 // import userConfigurations from "utils/userConfigurations.json";
 // import { generateManifest } from "utils/manifests";
@@ -17,6 +18,12 @@ import getLatestRelease from "utils/getLatestRelease";
 import makeIni from "utils/makeIni";
 
 export default async function(app: string, installOpt: InstallationTypes) {
+    let ghTag = "";
+    if (installOpt === "github" && app.includes("@")) {
+        const split = app.split("@");
+        app = split[0];
+        ghTag = split[1];
+    }
     const config = await openConfig();
     const emuMin = apps.a[apps.a.findIndex(a => a.i === app)!];
     const appData = config.installed.find(d => d.id === app);
@@ -69,7 +76,7 @@ export default async function(app: string, installOpt: InstallationTypes) {
 
         installOpt = "manual";
     }
-    const extraInstallData: { releaseId?: string } = {};
+    const extraInstallData: { releaseId?: string, tag?: string } = {};
     
     console.log("Getting install data...");
     
@@ -109,11 +116,30 @@ export default async function(app: string, installOpt: InstallationTypes) {
                 case "github":
                     if (!emu.installOptions.gitRepo) 
                         throw TypeError(`No github releases availible for '${app}'`);
-                    console.log(`Looking for latest release at ${emu.installOptions.gitRepo}...`);
-                    const latest = await getLatestRelease(emu.installOptions.gitRepo);
-                    const targetAsset = latest.assets.find((d: { name: string }) => d.name.match(emu.installOptions.gitRe!));
-                    if (!targetAsset) 
+
+                    let release;
+                    if (ghTag) {
+                        console.log(`Looking for tagged release: ${emu.installOptions.gitRepo}@${ghTag}`);
+                        release = await getTaggedRelease(emu.installOptions.gitRepo, ghTag);
+                    } else {
+                        console.log(`Looking for latest release at ${emu.installOptions.gitRepo}...`);
+                        release = await getLatestRelease(emu.installOptions.gitRepo);
+                    }
+
+                    if (!release)
+                        throw new Error("Release not found");
+                    
+                    const targetAsset = release.assets.find((d: { name: string }) => d.name.match(emu.installOptions.gitRe!));
+                    if (!targetAsset) {
+                        console.log("Couldn't find pre-queried file to download");
+                        await select({
+                            message: "Please select the appimage to download.",
+                            choices: release.assets.filter(d => d.name.toLowerCase().endsWith(".appimage")).map(d => d.name)
+                        });
+
                         throw new Error("No asset found");
+                    }
+                        
     
                     console.log(`Downloading ${targetAsset.name}...`);
                     if (emu.installOptions.unzipTarget) {
@@ -143,7 +169,10 @@ export default async function(app: string, installOpt: InstallationTypes) {
                         await $`curl -o $HOME/.emubox/apps/${targetAsset.name} -L ${targetAsset.browser_download_url}`;
                     }
     
-                    extraInstallData.releaseId = String(latest.id);
+                    extraInstallData.releaseId = String(release.id);
+                    if (ghTag) 
+                        extraInstallData.tag = ghTag;
+
                     prepExecutable(join(homedir(), ".emubox", "apps", targetAsset.name), emuMin.i, emu.name);
 
                     exec = join(homedir(), ".emubox", "apps", targetAsset.name);
@@ -242,8 +271,8 @@ export default async function(app: string, installOpt: InstallationTypes) {
                     }
                 }
             }
-
         }
+        
         config.installed.push({
             id: emuMin.i,
             source: installOpt,

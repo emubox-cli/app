@@ -4,8 +4,8 @@ import { getAppFromId } from "utils/apps";
 import { openConfig, writeConfig } from "utils/config";
 import containerPrefix from "utils/containerPrefix";
 import getAppFile from "utils/getAppFile";
-import getLatestRelease from "utils/getLatestRelease";
-import { bold, green, red } from "yoctocolors";
+import { getLatestRelease } from "utils/releases";
+import { bold, green, red, yellow } from "yoctocolors";
 
 export default async function() {
     await getAppFile();
@@ -39,6 +39,11 @@ export default async function() {
                     await $`${containerPrefix}flatpak update ${app?.installOptions.flatpak}`;
                     break;
                 case "github":
+                    if (i.tag) {
+                        console.log(yellow("Tagged release installed, skipping."));
+                        continue;
+                    }
+                    
                     const latest = await getLatestRelease(app.installOptions.gitRepo!);
                     if (String(latest.id) === i.releaseId) {
                         console.log(green(`Up to date`));
