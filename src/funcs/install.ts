@@ -280,13 +280,21 @@ export default async function(app: string, installOpt: InstallationTypes) {
                 }
             }
         }
+
+        if (ghTag && appData) {
+            await $`rm "${appData.exec}"`;
+            appData.exec = exec;
+            appData.releaseId = extraInstallData.releaseId;
+            appData.tag = ghTag;
+        } else {
+            config.installed.push({
+                id: emuMin.i,
+                source: installOpt,
+                exec,
+                ...extraInstallData
+            });
+        }
         
-        config.installed.push({
-            id: emuMin.i,
-            source: installOpt,
-            exec,
-            ...extraInstallData
-        });
 
         writeConfig(config);
         /*if (config.installed.find(app => app.id === "srm")) {
