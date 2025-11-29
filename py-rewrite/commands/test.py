@@ -1,5 +1,5 @@
-
-container_check = False
+from utils import config
+skip_precheck = True
 
 def exec(*args):
     print("test!", args)

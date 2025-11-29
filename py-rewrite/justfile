@@ -1,5 +1,17 @@
-build:
-    pyinstaller -n emubox-py --add-data "commands:commands" -F main.py
+
+init:
+    python3 -m venv ./.venv
+    ./.venv/bin/pip install pyinstaller
+    just create-debug-box
+
+create-debug-box:
+    distrobox assemble create --file emubox.ini -n emubox-debug
+
+build debug="1" sha="DEBUG":
+    cp ./env-hook.py /tmp/emubox-env.py
+    echo -e '\nenv["EMUBOX_VERSION"]="2.0";env["EMUBOX_DEBUG"]="{{debug}}";env["EMUBOX_SHA"]="{{sha}}"' >> /tmp/emubox-env.py
+    ./.venv/bin/pyinstaller --onefile --runtime-tmpdir /tmp -n emubox-py --runtime-hook /tmp/emubox-env.py main.py
+    rm /tmp/emubox-env.py
 
 
 @run +args="":
