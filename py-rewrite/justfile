@@ -1,0 +1,6 @@
+build:
+    pyinstaller -n emubox-py --add-data "commands:commands" -F main.py
+
+
+@run +args="":
+    ./dist/emubox-py {{ args }}
