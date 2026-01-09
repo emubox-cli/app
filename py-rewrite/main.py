@@ -1,12 +1,20 @@
+
 from sys import exit, argv
 from os import popen, path, environ
 from pathlib import Path
+import asyncio
 
 from utils import config
 from commands import test, \
-    init
+    init, \
+    run, \
+    install, \
+    sync
 
-def _precheck():
+from utils.apps import fetch_file
+
+async def _precheck():
+    await fetch_file()
     if not config.exists():
         print("Init required")
         exit(1)
@@ -17,7 +25,7 @@ def _precheck():
         exit(1)
 
 if environ["EMUBOX_DEBUG"] == "1":
-    print("DEBUGGING!")
+    print("DEBUG BUILD -", environ["BUILD_DATE"])
 
 command = ""
 try:    
@@ -30,7 +38,10 @@ extra = argv[2:]
 
 COMMANDS = {
     "init": init,
-    "test": test
+    "test": test,
+    "run": run,
+    "sync": sync,
+    "install": install
 }
 
 target = COMMANDS.get(command)
@@ -38,8 +49,9 @@ if not target:
     print("Invalid command detected...")
     exit(1)
 
-if not target.skip_precheck:
-    _precheck()
-target.exec(*extra)
+async def run_command():
+    if not target.skip_precheck:
+       await _precheck()
+    await target.exec(*extra)
 
-
+asyncio.run(run_command())

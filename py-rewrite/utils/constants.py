@@ -1,7 +1,9 @@
 from pathlib import Path
 from os import environ
 
-EMUBOX_PATH = f"{Path.home()}/.emubox" + ("-debug" if environ["EMUBOX_DEBUG"] == "1" else "") 
+_debug_suffix = ("-debug" if environ["EMUBOX_DEBUG"] == "1" else "")
+EMUBOX_PATH = f"{Path.home()}/.emubox" + _debug_suffix
+CONTAINER_PREFIX = "distrobox enter emubox" + _debug_suffix + " -- "
 ASSET_URL = "https://emubox-cli.github.io/apps/"
 
 # TODO: more supported consoles
