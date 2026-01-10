@@ -11,6 +11,7 @@ async def exec(*args):
         exit(1)
 
     emu_data = config.get_install_data(args[0])
-    print(args[1:])
 
-    system(f"{CONTAINER_PREFIX}{EMUBOX_PATH}/apps/{emu_data['exec']}")
+    clean_args = [f'"{i}"' for i in args[1:]]
+
+    system(f"{CONTAINER_PREFIX}{EMUBOX_PATH}/apps/{emu_data['exec']} {' '.join(clean_args)}")

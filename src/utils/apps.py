@@ -3,13 +3,12 @@ from json import loads, load, dumps
 from utils.constants import EMUBOX_PATH, ASSET_URL
 from utils.ez_http import request
 
+
 local = { "v": "", "a": [] } 
 
 async def fetch_file():
-    global local
+    data = { "v": "", "a": [] } 
 
-    data = None
-    
     if path.exists(f"{EMUBOX_PATH}/apps.json"):
         print("apps.json exists")
         if path.exists(f"{EMUBOX_PATH}/apps.json"):
@@ -18,12 +17,11 @@ async def fetch_file():
                  
                 data = loads(f.read())
     else:
-        data = await request(f"{ASSET_URL}/apps.json")
+        data = await request(f"{ASSET_URL}apps.json")
 
         with open(f"{EMUBOX_PATH}/apps.json", "w") as f:
-            f.write(dumps(local))
-
-    local = data
+            f.write(dumps(data))
+    return data
     
 def exists(id: str) -> bool:
     for i in local.get("a"):

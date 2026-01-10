@@ -1,6 +1,5 @@
-node_modules
 dist
-
 __pycache__
 build
 emubox-py.spec
+.venv

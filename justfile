@@ -1,29 +1,21 @@
-set quiet
+init:
+    python3 -m venv ./.venv
+    ./.venv/bin/pip install pyinstaller aiohttp aiofiles pillow
+    just create-debug-box
 
-alias b := build
+create-debug-box:
+    distrobox assemble create --file emubox.ini
+
+@build debug="1" sha="DEBUG":
+    cp src/env-hook.py /tmp/emubox-env.py
+    echo -e '\nenv["EMUBOX_DEBUG"]="{{debug}}";env["EMUBOX_SHA"]="{{sha}}"' >> /tmp/emubox-env.py
+    .venv/bin/pyinstaller --onefile --runtime-tmpdir /tmp -n emubox-py --runtime-hook /tmp/emubox-env.py src/main.py
+    rm /tmp/emubox-env.py
 
 
-@build identifier="debug-$(just _make-build-date)":
-    bun build ./src/main.ts \
-        --sourcemap \
-        --target=bun-linux-x64 \
-        --compile \
-        --minify \
-        --outfile dist/emubox \
-        --define="_SHA='{{identifier}}'"
-    
+@run +args="":
+    ./dist/emubox-py {{ args }}
 
-_make-build-date:
-    #!/usr/bin/env bun
-    const rn = new Date();
-    console.log(String(rn.getFullYear()) + rn.getMonth() + rn.getDate() + rn.getHours() + rn.getMinutes() + rn.getSeconds());
-
-lint +a="": 
-    bun x eslint {{a}}
-
-debug +args="":
-    ./dist/emubox {{args}}
-
-dev +args="": build
-    just debug {{args}}
-    
+@debug +args="":
+    just build
+    just run {{ args }}

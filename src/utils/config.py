@@ -15,7 +15,6 @@ def exists() -> bool:
 
 def app_installed(id: str) -> bool:
     conf = fetch()
-    print(conf)
 
     return len([i for i in conf["installed"] if i["id"] == id]) != 0
 

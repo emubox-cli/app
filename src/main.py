@@ -1,24 +1,27 @@
-
 from sys import exit, argv
-from os import popen, path, environ
+from os import popen, path, environ, listdir
 from pathlib import Path
 import asyncio
 
-from utils import config
+from utils import config, constants
 from commands import test, \
     init, \
     run, \
     install, \
     sync
-
-from utils.apps import fetch_file
+    
+from utils import apps
 
 async def _precheck():
-    await fetch_file()
+    apps.local = await apps.fetch_file()
+    # print("updated app file", apps.local)
     if not config.exists():
         print("Init required")
         exit(1)
     
+    if constants.IN_DISTROBOX:
+        return
+
     distrobox_check = popen("distrobox ls").read()
     if not "emubox" in distrobox_check:
         print("Emubox container is missing. Run the installer script again.")
@@ -52,6 +55,9 @@ if not target:
 async def run_command():
     if not target.skip_precheck:
        await _precheck()
-    await target.exec(*extra)
+    try:
+        await target.exec(*extra)
+    except Exception as e:
+        print("An issue occured while running the command", e)
 
 asyncio.run(run_command())
