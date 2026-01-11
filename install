@@ -71,7 +71,7 @@ fi
 
 if [ -z "$(distrobox ls | grep emubox)" ]; then
     echo "Creating container..."
-    distrobox assemble create --file $assemble_file
+    distrobox assemble create --file $assemble_file -n emubox
 fi
 
 if [ $do_complete_setup == 1 ]; then 
