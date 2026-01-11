@@ -1,19 +1,20 @@
 from sys import exit, argv
 from os import popen, path, environ, listdir
 from pathlib import Path
-import asyncio
+import asyncio, traceback
 
 from utils import config, constants
 from commands import test, \
     init, \
     run, \
     install, \
-    sync
+    sync, \
+    remove, \
+    run_cartridges
     
 from utils import apps
 
 async def _precheck():
-    apps.local = await apps.fetch_file()
     # print("updated app file", apps.local)
     if not config.exists():
         print("Init required")
@@ -42,9 +43,11 @@ extra = argv[2:]
 COMMANDS = {
     "init": init,
     "test": test,
+    "run-cartridges": run_cartridges,
     "run": run,
     "sync": sync,
-    "install": install
+    "install": install,
+    "remove": remove
 }
 
 target = COMMANDS.get(command)
@@ -56,8 +59,10 @@ async def run_command():
     if not target.skip_precheck:
        await _precheck()
     try:
-        await target.exec(*extra)
-    except Exception as e:
-        print("An issue occured while running the command", e)
+        apps_file = await apps.fetch_file()
+        print(apps_file)
+        await target.exec(*extra, apps=apps_file)
+    except Exception:
+        print("An issue occured while running the command;", traceback.format_exc())
 
 asyncio.run(run_command())

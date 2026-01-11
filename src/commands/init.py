@@ -4,6 +4,7 @@ from os import path, mkdir, rmdir, symlink, rename, unlink
 from sys import exit
 from utils.apps import fetch_file
 import json
+from pathlib import Path
 
 import re
 
@@ -13,7 +14,7 @@ DEFAULT_ROM_DIR = f"{EMUBOX_PATH}/roms"
 DEFAULT_SAVE_DIR = f"{EMUBOX_PATH}/saves"
 
 
-async def exec(*_args):
+async def exec(*_args, **_kwargs):
     if path.exists(f"{EMUBOX_PATH}/config.json"):
         print("Already initialized")
         exit(1)
@@ -33,6 +34,17 @@ async def exec(*_args):
     await fetch_file()
 
     write(new_config)
+    
+    desktop_file = f"""\
+[Desktop Entry]
+Type=Application
+Name=Cartridges (Emubox)
+Exec={Path.home()}/.local/bin/emubox
+Icon=page.kramo.Cartridges
+Categories=Game;Emulator;
+"""
+    with open(f"{Path.home()}/.local/share/applications", "w") as f:
+        f.write(desktop_file)
 
 def update_save_dir(save_dir: str):
     try:

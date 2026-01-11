@@ -1,22 +1,23 @@
 from utils.config import fetch
 from utils.ez_http import request, download_file
-from utils import apps
 from utils.constants import EMUBOX_PATH, SUPPORTED_CONSOLES
-from utils.hash import match, encode
+from utils.hash import encode
+from utils import cartridges
 from urllib.parse import quote, quote_plus
-from os import listdir, path, remove, readlink
+from os import listdir, path, remove, readlink, environ
 from json import dumps
 from PIL import Image
+
 import time
 
 skip_precheck = False
 
-async def exec(*args):
+async def exec(*args, **kwargs):
     config = fetch()
     
-    for iii in listdir(f"{EMUBOX_PATH}/.local/share/cartridges/games/"):
-        if iii.split("_").pop(0) in SUPPORTED_CONSOLES:
-            remove(f"{EMUBOX_PATH}/.local/share/cartridges/games/{iii}")
+    # for iii in listdir(f"{EMUBOX_PATH}/.local/share/cartridges/games/"):
+    #    if iii.split("_").pop(0) in SUPPORTED_CONSOLES:
+    #        remove(f"{EMUBOX_PATH}/.local/share/cartridges/games/{iii}")
     
     
     for i in SUPPORTED_CONSOLES:
@@ -25,29 +26,48 @@ async def exec(*args):
             rom_dir = readlink(rom_dir)
         
         if not path.isdir(f"{EMUBOX_PATH}/roms/{i}"):
-            print("not a valid console?")
+            print(f"{i}: Invalid path(?)")
             continue
+        print(f"Parsing roms in {i}...")
 
         roms = listdir(f"{EMUBOX_PATH}/roms/{i}")
 
-        runner = [___i for ___i in apps.local["a"]if i in ___i["c"]]
+
+        # TODO: Make this readable
+        runner = [___i for ___i in kwargs["apps"]["a"] if i in ___i["c"]]
+        runner_ids = [___i["i"] for ___i in runner]
+        config_ids = [___i["id"] for ___i in config["installed"]]
         le_runner = None
-        if len(runner) == 1:
-            le_runner = runner[0]
+
+        for __i in runner_ids:
+            if __i in config_ids:
+                le_runner = __i
+                break
+        
+        if not le_runner == None:
+            le_runner = [ii for ii in runner if ii["i"] == le_runner][0]
+        print("HELP")
+
         #print(f"{i}: {roms.__len__()}")
         for ii in range(len(roms)):
             rom = roms[ii]
+            display_name = rom
             # not an actual hash of a game, just an identifier for game names
             rom_hash = encode(rom)
+            cartridges_file_path = f"{EMUBOX_PATH}/.local/share/cartridges/games/{i}_{rom_hash}.json"
+            if path.exists(cartridges_file_path):
+                continue
             runner_suffix = ""
             if le_runner and le_runner.get("e"):
                 runner_suffix = f'run {le_runner['i']} {le_runner['e'].format(f"\"{EMUBOX_PATH}/roms/{i}/{rom}\"")}'
+            else:
+                print("No apps availiable to run...")
             #print(rom, rom_hash)
             dumbshit = {
                 "added": int(time.time()),
                 "blacklisted": False,
                 "developer": None,
-                "executable": f"/var/home/skullbite/Code/emubox/py-rewrite/dist/emubox-py {runner_suffix}",
+                "executable": f"{environ['PWD']}/dist/emubox-py {runner_suffix}",
                 "game_id": f"{i}_{rom_hash}",
                 "hidden": False,
                 "last_played": 0,
@@ -55,19 +75,21 @@ async def exec(*args):
                 "source": "imported",
                 "version": 1.5
             }
+            
 
             if config.get("sgdbToken"):
                 cartridges_cover_path = f"{EMUBOX_PATH}/.local/share/cartridges/covers/"
                 cover_id = f"{i}_{rom_hash}"
                 quick_check = [__i for __i in listdir(cartridges_cover_path) if cover_id in __i]
                 if len(quick_check):
-                    print(f"cover already downloaded for '{rom}', skipping...")
+                    print(f"Cover already downloaded for '{rom}', skipping...")
                 else:
                     # print(f"getting art for {rom_hash}...")
                     headers = {"Authorization": f"Bearer {config['sgdbToken']}"}
                     names = await request(f"https://www.steamgriddb.com/api/v2/search/autocomplete/{quote(rom)}", headers)
                     if names["success"] and len(names["data"]):
                         da_game = names["data"][0]
+                        display_name = da_game["name"]
                         grids = await request(f"https://www.steamgriddb.com/api/v2/grids/game/{da_game['id']}?dimensions=600x900", headers)
                         if not grids["success"] or not len(grids["data"]):
                             print(f"No grids found for '{rom}', skipping...")
@@ -78,11 +100,10 @@ async def exec(*args):
                             final_path = da_path.replace(grid_suffix, "tiff")
         
                             if not path.exists(final_path):
-                                print("new icon downloading...")
+                                print("Downloading new grid...")
                                 await download_file(grid_url, da_path)
                                 Image.open(da_path).save(final_path)
                                 remove(da_path)
 
-            with open(f"{EMUBOX_PATH}/.local/share/cartridges/games/{i}_{rom_hash}.json", "w") as f:
-                f.write(dumps(dumbshit))
+            cartridges.make_file(f"{i}_{rom_hash}", display_name, runner_suffix)
 

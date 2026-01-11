@@ -5,7 +5,7 @@ from sys import exit
 
 skip_precheck = False
 
-async def exec(*args):
+async def exec(*args, **kwargs):
     if not config.app_installed(args[0]):
         print("NOT AVAILIBLE")
         exit(1)
