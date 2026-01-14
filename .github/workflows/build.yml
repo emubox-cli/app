@@ -4,6 +4,10 @@ on:
     push:
         branches:
             - py-rewrite
+        paths:
+            - src
+            - install
+            - emubox.ini
 
 jobs:
     build:

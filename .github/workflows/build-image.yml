@@ -6,6 +6,7 @@ on:
       - py-rewrite
     paths: 
       - Containerfile
+      - .github/workflows/build-image.yml
   
 jobs:
   build-image:
