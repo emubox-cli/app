@@ -18,7 +18,7 @@ def app_installed(id: str) -> bool:
 
     return len([i for i in conf["installed"] if i["id"] == id]) != 0
 
-def get_install_data(id: str) -> None[dict]:
+def get_install_data(id: str):
     conf = fetch()
 
     data = [i for i in conf["installed"] if i["id"] == id]
