@@ -1,0 +1,31 @@
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - py-rewrite
+    paths: 
+      - Containerfile
+  
+jobs:
+  build-image:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+
+        - name: Setup Podman
+          uses: redhat-actions/podman-login@v1
+          with:
+            registry: ghcr.io
+            username: ${{ github.actor }}
+            password: ${{ secrets.GITHUB_TOKEN }}
+        
+        - name: Decache
+          run: podman system prune -a -f
+
+        - name: Build Containerfile
+          run: podman build -t ghcr.io/${{ github.repository_owner }}/emubox:latest
+
+        - name: Push Image
+          run: podman push ghrcr.io/${{ github.repository_owner }}/emubox:latest
