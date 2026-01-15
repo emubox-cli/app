@@ -1,5 +1,3 @@
-import pip_system_certs.wrapt_requests
-pip_system_certs.wrapt_requests.inject_truststore()
 
 import aiohttp, aiofiles, certifi, ssl
 from os import chmod

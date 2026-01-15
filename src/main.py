@@ -1,3 +1,7 @@
+import pip_system_certs.wrapt_requests
+pip_system_certs.wrapt_requests.inject_truststore()
+
+
 from sys import exit, argv
 from os import popen, path, environ, listdir
 from pathlib import Path
