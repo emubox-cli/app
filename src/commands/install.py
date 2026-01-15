@@ -24,7 +24,7 @@ async def exec(*args, **kwargs):
             release_id = thing[1]
             print(f"Getting tag {release_id}...")
         
-        if not exists(i):
+        if not await exists(i):
             print(f"'{i}' not found")
             exit(1)
         

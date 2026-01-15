@@ -20,8 +20,8 @@ async def fetch_file():
             f.write(dumps(data))
     return data
     
-def exists(id: str) -> bool:
-    for i in local.get("a"):
+async def exists(id: str) -> bool:
+    for i in (await fetch_file()).get("a"):
         if i.get("i") == id:
             return True
     return False
