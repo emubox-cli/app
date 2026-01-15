@@ -1,6 +1,7 @@
 FROM ghcr.io/ublue-os/arch-toolbox:latest
 
 RUN paru -Syy --noconfirm \
+    archlinux-keyring \
     cartridges \
     fuse2 \
     jack2 \
