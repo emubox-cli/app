@@ -8,7 +8,7 @@ from os import listdir, path, remove, readlink, makedirs, environ
 from json import dumps
 from PIL import Image
 
-import time
+import time, re
 
 skip_precheck = False
 
@@ -50,6 +50,9 @@ async def exec(*args, **kwargs):
         #print(f"{i}: {roms.__len__()}")
         for ii in range(len(roms)):
             rom = roms[ii]
+            if not re.match(le_runner['r'], rom):
+                print("Not a valid rom:", rom)
+                continue
             display_name = rom
             # not an actual hash of a game, just an identifier for game names
             rom_hash = encode(rom)
@@ -78,7 +81,10 @@ async def exec(*args, **kwargs):
 
             if config.get("sgdbToken"):
                 cartridges_cover_path = f"{EMUBOX_PATH}/.local/share/cartridges/covers/"
-                makedirs(cartridges_cover_path)
+                try:
+                    makedirs(cartridges_cover_path)
+                except:
+                    pass
                 cover_id = f"{i}_{rom_hash}"
                 quick_check = [__i for __i in listdir(cartridges_cover_path) if cover_id in __i]
                 if len(quick_check):
