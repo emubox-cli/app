@@ -5,7 +5,7 @@ on:
         branches:
             - py-rewrite
         paths:
-            - src/*
+            - "**.py"
             - install
             - emubox.ini
             - justfile
