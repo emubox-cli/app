@@ -9,7 +9,7 @@ skip_precheck = False
 async def exec(*args, **kwargs):
     config = fetch()
     for i in args:
-        if not exists(i):
+        if not await exists(i):
             print(f"'{i}' not found")
             exit(1)
         
