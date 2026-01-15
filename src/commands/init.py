@@ -30,12 +30,12 @@ async def exec(*_args, **_kwargs):
     new_config["saveDir"] = save_dir
     sgdb_token = input("If you have one, please provide a SteamGridDB API token. (This will be used to fetch art for games) ")
     new_config["sgdbToken"] = sgdb_token
-    
+
     desktop_file = f"""\
 [Desktop Entry]
 Type=Application
 Name=Cartridges (Emubox)
-Exec={Path.home()}/.local/bin/emubox
+Exec={Path.home()}/.local/bin/emubox run-cartridges
 Icon=page.kramo.Cartridges
 Categories=Game;Emulator;
 """
