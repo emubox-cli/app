@@ -30,10 +30,6 @@ async def exec(*_args, **_kwargs):
     new_config["saveDir"] = save_dir
     sgdb_token = input("If you have one, please provide a SteamGridDB API token. (This will be used to fetch art for games) ")
     new_config["sgdbToken"] = sgdb_token
-
-    await fetch_file()
-
-    write(new_config)
     
     desktop_file = f"""\
 [Desktop Entry]
@@ -43,8 +39,10 @@ Exec={Path.home()}/.local/bin/emubox
 Icon=page.kramo.Cartridges
 Categories=Game;Emulator;
 """
-    with open(f"{Path.home()}/.local/share/applications", "w") as f:
+    with open(f"{Path.home()}/.local/share/applications/emubox-cartridges.desktop", "w") as f:
         f.write(desktop_file)
+
+    write(new_config)
 
 def update_save_dir(save_dir: str):
     try:

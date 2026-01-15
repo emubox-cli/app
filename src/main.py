@@ -14,7 +14,8 @@ from commands import test, \
     install, \
     sync, \
     remove, \
-    run_cartridges
+    run_cartridges, \
+    version
     
 from utils import apps
 
@@ -51,7 +52,8 @@ COMMANDS = {
     "run": run,
     "sync": sync,
     "install": install,
-    "remove": remove
+    "remove": remove,
+    "-v": version
 }
 
 target = COMMANDS.get(command)
