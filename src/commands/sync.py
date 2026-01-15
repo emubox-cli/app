@@ -21,6 +21,11 @@ async def exec(*args, **kwargs):
     #        remove(f"{EMUBOX_PATH}/.local/share/cartridges/games/{iii}")
 
     handled_launchers = []
+
+    try:
+        makedirs(f"{CARTRIDGES_PATH}/games")
+    except:
+        pass
     
     
     for i in SUPPORTED_CONSOLES:
@@ -76,7 +81,7 @@ async def exec(*args, **kwargs):
                 "added": int(time.time()),
                 "blacklisted": False,
                 "developer": None,
-                "executable": f"{environ['PWD'] + '/dist' if environ["EMUBOX_DEBUG"] == "1" else (Path.home() + "/.local/bin")}/emubox {runner_suffix}",
+                "executable": f"{environ['PWD'] + '/dist' if environ["EMUBOX_DEBUG"] == "1" else (str(Path.home()) + "/.local/bin")}/emubox {runner_suffix}",
                 "game_id": rom_launcher,
                 "hidden": False,
                 "last_played": 0,
