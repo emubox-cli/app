@@ -1,5 +1,5 @@
 from os import makedirs
-from constants import EMUBOX_PATH, CARTRIDGES_PATH
+from utils.constants import EMUBOX_PATH, CARTRIDGES_PATH
 
 def ensure():
     HOME_FOLDERS = [".local/share", ".config", "apps"]
