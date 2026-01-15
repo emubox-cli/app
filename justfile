@@ -10,7 +10,6 @@ create-debug-box:
 @build debug="1" sha="DEBUG":
     cp src/env-hook.py /tmp/emubox-env.py
     printf 'env["EMUBOX_DEBUG"]="{{debug}}"\nenv["EMUBOX_SHA"]="{{sha}}"\n' >> /tmp/emubox-env.py
-    cat /tmp/emubox-env.py
     .venv/bin/pyinstaller --onefile --runtime-tmpdir /tmp -n emubox --runtime-hook /tmp/emubox-env.py src/main.py
     rm /tmp/emubox-env.py
 
