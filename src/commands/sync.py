@@ -50,6 +50,9 @@ async def exec(*args, **kwargs):
         #print(f"{i}: {roms.__len__()}")
         for ii in range(len(roms)):
             rom = roms[ii]
+            if not le_runner:
+                print("No runner availible for game...")
+                continue
             if not re.match(le_runner['r'], rom):
                 print("Not a valid rom:", rom)
                 continue
