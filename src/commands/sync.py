@@ -53,6 +53,7 @@ async def exec(*args, **kwargs):
             if not le_runner:
                 print("No runner availible for game...")
                 continue
+            print(le_runner)
             if not re.match(le_runner['r'], rom):
                 print("Not a valid rom:", rom)
                 continue

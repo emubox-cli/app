@@ -64,7 +64,6 @@ async def run_command():
        await _precheck()
     try:
         apps_file = await apps.fetch_file()
-        print(apps_file)
         await target.exec(*extra, apps=apps_file)
     except Exception:
         print("An issue occured while running the command;", traceback.format_exc())
