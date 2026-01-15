@@ -1,6 +1,6 @@
 init:
     python3 -m venv ./.venv
-    ./.venv/bin/pip install pyinstaller aiohttp aiofiles pillow
+    ./.venv/bin/pip install certifi pyinstaller aiohttp aiofiles pillow
 
 create-debug-box:
     distrobox assemble create --file emubox.ini -n emubox
