@@ -1,5 +1,5 @@
 dist
 __pycache__
 build
-emubox-py.spec
+emubox.spec
 .venv
