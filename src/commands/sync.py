@@ -4,7 +4,7 @@ from utils.constants import EMUBOX_PATH, SUPPORTED_CONSOLES
 from utils.hash import encode
 from utils import cartridges
 from urllib.parse import quote, quote_plus
-from os import listdir, path, remove, readlink, environ
+from os import listdir, path, remove, readlink, makedirs, environ
 from json import dumps
 from PIL import Image
 
@@ -46,7 +46,6 @@ async def exec(*args, **kwargs):
         
         if not le_runner == None:
             le_runner = [ii for ii in runner if ii["i"] == le_runner][0]
-        print("HELP")
 
         #print(f"{i}: {roms.__len__()}")
         for ii in range(len(roms)):
@@ -79,6 +78,7 @@ async def exec(*args, **kwargs):
 
             if config.get("sgdbToken"):
                 cartridges_cover_path = f"{EMUBOX_PATH}/.local/share/cartridges/covers/"
+                makedirs(cartridges_cover_path)
                 cover_id = f"{i}_{rom_hash}"
                 quick_check = [__i for __i in listdir(cartridges_cover_path) if cover_id in __i]
                 if len(quick_check):
