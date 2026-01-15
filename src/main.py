@@ -7,7 +7,7 @@ from os import popen, path, environ, listdir
 from pathlib import Path
 import asyncio, traceback
 
-from utils import config, constants
+from utils import config, constants, ensure_paths
 from commands import test, \
     init, \
     run, \
@@ -65,6 +65,7 @@ async def run_command():
     if not target.skip_precheck:
        await _precheck()
     try:
+        ensure_paths
         apps_file = await apps.fetch_file()
         await target.exec(*extra, apps=apps_file)
     except Exception:

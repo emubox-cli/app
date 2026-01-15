@@ -21,12 +21,6 @@ async def exec(*args, **kwargs):
     #        remove(f"{EMUBOX_PATH}/.local/share/cartridges/games/{iii}")
 
     handled_launchers = []
-
-    try:
-        makedirs(f"{CARTRIDGES_PATH}/games")
-    except:
-        pass
-    
     
     for i in SUPPORTED_CONSOLES:
         rom_dir = f"{EMUBOX_PATH}/roms/{i}"
@@ -93,10 +87,6 @@ async def exec(*args, **kwargs):
 
             if config.get("sgdbToken"):
                 cartridges_cover_path = f"{CARTRIDGES_PATH}/covers/"
-                try:
-                    makedirs(cartridges_cover_path)
-                except:
-                    pass
                 quick_check = [__i for __i in listdir(cartridges_cover_path) if rom_launcher in __i]
                 if len(quick_check):
                     print(f"Cover already downloaded for '{rom}', skipping...")
