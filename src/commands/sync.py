@@ -1,9 +1,10 @@
 from utils.config import fetch
 from utils.ez_http import request, download_file
-from utils.constants import EMUBOX_PATH, SUPPORTED_CONSOLES
+from utils.constants import EMUBOX_PATH, CARTRIDGES_PATH, SUPPORTED_CONSOLES
 from utils.hash import encode
 from utils import cartridges
 from urllib.parse import quote, quote_plus
+from pathlib import Path
 from os import listdir, path, remove, readlink, makedirs, environ
 from json import dumps
 from PIL import Image
@@ -18,6 +19,8 @@ async def exec(*args, **kwargs):
     # for iii in listdir(f"{EMUBOX_PATH}/.local/share/cartridges/games/"):
     #    if iii.split("_").pop(0) in SUPPORTED_CONSOLES:
     #        remove(f"{EMUBOX_PATH}/.local/share/cartridges/games/{iii}")
+
+    handled_launchers = []
     
     
     for i in SUPPORTED_CONSOLES:
@@ -31,7 +34,6 @@ async def exec(*args, **kwargs):
         print(f"Parsing roms in {i}...")
 
         roms = listdir(f"{EMUBOX_PATH}/roms/{i}")
-
 
         # TODO: Make this readable
         runner = [___i for ___i in kwargs["apps"]["a"] if i in ___i["c"]]
@@ -53,14 +55,15 @@ async def exec(*args, **kwargs):
             if not le_runner:
                 print("No runner availible for game...")
                 continue
-            print(le_runner)
             if not re.match(le_runner['r'], rom):
                 print("Not a valid rom:", rom)
                 continue
             display_name = rom
             # not an actual hash of a game, just an identifier for game names
             rom_hash = encode(rom)
-            cartridges_file_path = f"{EMUBOX_PATH}/.local/share/cartridges/games/{i}_{rom_hash}.json"
+            rom_launcher = f"{i}_{rom_hash}"
+            handled_launchers.append(rom_launcher + ".json")
+            cartridges_file_path = f"{CARTRIDGES_PATH}/games/{rom_launcher}.json"
             if path.exists(cartridges_file_path):
                 continue
             runner_suffix = ""
@@ -73,8 +76,8 @@ async def exec(*args, **kwargs):
                 "added": int(time.time()),
                 "blacklisted": False,
                 "developer": None,
-                "executable": f"{environ['PWD']}/dist/emubox-py {runner_suffix}",
-                "game_id": f"{i}_{rom_hash}",
+                "executable": f"{environ['PWD'] + '/dist' if environ["EMUBOX_DEBUG"] == "1" else (Path.home() + "/.local/bin")}/emubox {runner_suffix}",
+                "game_id": rom_launcher,
                 "hidden": False,
                 "last_played": 0,
                 "name": rom,
@@ -84,13 +87,12 @@ async def exec(*args, **kwargs):
             
 
             if config.get("sgdbToken"):
-                cartridges_cover_path = f"{EMUBOX_PATH}/.local/share/cartridges/covers/"
+                cartridges_cover_path = f"{CARTRIDGES_PATH}/covers/"
                 try:
                     makedirs(cartridges_cover_path)
                 except:
                     pass
-                cover_id = f"{i}_{rom_hash}"
-                quick_check = [__i for __i in listdir(cartridges_cover_path) if cover_id in __i]
+                quick_check = [__i for __i in listdir(cartridges_cover_path) if rom_launcher in __i]
                 if len(quick_check):
                     print(f"Cover already downloaded for '{rom}', skipping...")
                 else:
@@ -106,7 +108,7 @@ async def exec(*args, **kwargs):
                         else:
                             grid_url = grids['data'][0]['url']
                             grid_suffix = grid_url.split(".").pop()
-                            da_path = f"{cartridges_cover_path}/{cover_id}.{grid_suffix}"
+                            da_path = f"{cartridges_cover_path}/{rom_launcher}.{grid_suffix}"
                             final_path = da_path.replace(grid_suffix, "tiff")
         
                             if not path.exists(final_path):
@@ -114,6 +116,17 @@ async def exec(*args, **kwargs):
                                 await download_file(grid_url, da_path)
                                 Image.open(da_path).save(final_path)
                                 remove(da_path)
+                    else:
+                        print("SteamGridDB request failed! Is your API token valid?")
+                                
 
-            cartridges.make_file(f"{i}_{rom_hash}", display_name, runner_suffix)
+            cartridges.make_file(rom_launcher, display_name, runner_suffix)
+    for i in listdir(f"{CARTRIDGES_PATH}/games"):
+        is_rom = [ii for ii in SUPPORTED_CONSOLES if i.startswith(ii)]
+        if not is_rom:
+            print("Skipping", i)
+            continue
 
+        if i not in handled_launchers:
+            print("ROM has left been unhandled, queued", i, "for deletion")
+            remove(f"{CARTRIDGES_PATH}/games/{i}")

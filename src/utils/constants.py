@@ -12,6 +12,8 @@ if IN_DISTROBOX:
     CONTAINER_PREFIX = ""
 ASSET_URL = "https://emubox-cli.github.io/apps/"
 
+CARTRIDGES_PATH = f"{EMUBOX_PATH}/.local/share/cartridges"
+
 # TODO: more supported consoles
 SUPPORTED_CONSOLES = (
     "snes",
