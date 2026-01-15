@@ -19,7 +19,7 @@ async def exec(*args, **kwargs):
             exit(1)
         data = data[0]
 
-        remove(f"{EMUBOX_PATH}/apps/{data['exec']}")
+        remove(data['exec'])
         remove(f"{EMUBOX_PATH}/.local/share/cartridges/games/emu_{i}.json")
 
         config["installed"].remove(data)
