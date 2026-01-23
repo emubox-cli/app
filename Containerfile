@@ -2,6 +2,7 @@ FROM ghcr.io/ublue-os/arch-toolbox:latest
 
 RUN paru -Syy --noconfirm \
     archlinux-keyring \
+    zenity \
     cartridges \
     fuse2 \
     jack2 \
