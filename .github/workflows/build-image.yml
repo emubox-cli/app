@@ -3,7 +3,7 @@ on:
 
   push:
     branches:
-      - py-rewrite
+      - go-rewrite
     paths: 
       - Containerfile
       - .github/workflows/build-image.yml
