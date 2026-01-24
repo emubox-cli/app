@@ -16,15 +16,8 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v4
 
-            - uses: actions/setup-python@v6
-              with:
-                python-version: '3.13' 
-
-            - name: Install Python-Devel
-              run: |
-                sudo apt-get update
-                sudo apt-get install -y python-dev-is-python3
-
+            - uses: actions/setup-go@v6.2.0
+            
             - name: Setup Just
               uses: extractions/setup-just@v3
 
