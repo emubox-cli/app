@@ -1,5 +1,5 @@
 [working-directory: "src"]
-build:
+build IS_DEBUG="1" SHA="DEBUG":
     mkdir -p ../dist
     go build -o emubox -ldflags "-X main.EMUBOX_VERSION=2.0"
     chmod +x emubox
