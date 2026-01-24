@@ -19,6 +19,7 @@ jobs:
             - uses: actions/setup-go@v6.2.0
               with:
                 go-version-file: src/go.mod
+                cache-dependency-path: src/go.sum
             
             - name: Setup Just
               uses: extractions/setup-just@v3
