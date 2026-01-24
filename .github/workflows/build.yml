@@ -17,6 +17,8 @@ jobs:
               uses: actions/checkout@v4
 
             - uses: actions/setup-go@v6.2.0
+              with:
+                go-version-file: src/go.mod
             
             - name: Setup Just
               uses: extractions/setup-just@v3
