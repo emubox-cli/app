@@ -23,12 +23,6 @@ if ! type distrobox &> /dev/null; then
     exit 1
 fi
 
-mkdir -p $HOME/.emubox/{.icons,apps,bios}
-mkdir -p $HOME/.emubox/.icons/games
-mkdir -p $HOME/.emubox/.local/share
-mkdir -p $HOME/.local/share/applications
-mkdir -p $HOME/.local/bin
-
 #if [ -f $HOME/.local/share/Steam ]; then
 #    ln -s $HOME/.local/share/Steam $HOME/.emubox/.local/share/Steam
 #fi
