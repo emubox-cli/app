@@ -45,6 +45,10 @@ func cmdInit(args ...string) {
 	fmt.Scan(&sgdbToken)
 
 	config_obj.SaveDir = sgdbToken
+
+	os.MkdirAll(filepath.Join(EMUBOX_PATH, "apps"), os.ModePerm)
+	// i think i'm gonna get rid of cartridges...
+	os.MkdirAll(filepath.Join(EMUBOX_PATH, ".local", "share", "cartridges"), os.ModePerm)
 	
 	saveConfig(config_obj)
 }
